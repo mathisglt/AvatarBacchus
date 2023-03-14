@@ -8,12 +8,11 @@ class TestIntegration {
   val m = MachineImpl
   m.reinit
 
-  // tests
   @Test
-  def test1_1 {
+  def test1_bdd(): Unit= {
     assertEquals(
-      List("L'adresse de Mairie de Rennes est : Place de la Mairie"),
-      m.test(List("Où est donc la Mairie de Rennes?"))
+      "Mairie",
+      BDDImpl.chercherAdresse("Place de la Mairie")
     )
   }
 
