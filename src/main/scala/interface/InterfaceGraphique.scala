@@ -1,0 +1,5 @@
+package interface
+
+object InterfaceGraphique {
+  
+}
