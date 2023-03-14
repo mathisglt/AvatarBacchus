@@ -1,0 +1,5 @@
+package bdd
+
+trait BaseDeDonnees {
+  
+}
