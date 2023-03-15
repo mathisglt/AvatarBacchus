@@ -16,12 +16,19 @@ class UI extends MainFrame {
     preferredSize = new Dimension (500, 500)
 
     val input = new InField
-    val input2 = new InField
+    input.background_=(Color.WHITE)
+    input.foreground_=(Color.BLACK)
+    val output = new ResultText
+    output.background_=(Color.WHITE)
+    output.foreground_=(Color.BLACK)
+    val send = new SendButton("Envoyer",output,input)
   
   // Ajout des composants à la fenêtre
   contents = new BoxPanel(Orientation.Vertical) {
+   
+    foreground_=(Color.BLACK)
+    contents += output
     contents += input
-    contents += input2
+    contents += send
   }
-    
 }
