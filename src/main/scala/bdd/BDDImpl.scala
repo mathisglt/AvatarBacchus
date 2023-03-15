@@ -6,7 +6,7 @@ import scala.io.Source
 class BDDImpl extends BaseDeDonnees{
     var wordtofind = ""
     val filename = "fileopen.scala"
-    var listwords = Array[String]
+    var listwords = Array[String]()
     for (line <- Source.fromFile(filename).getLines) {
         listwords.apply(line)
     }
