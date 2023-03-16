@@ -23,12 +23,14 @@ class UI extends MainFrame {
     output.foreground_=(Color.BLACK)
     val send = new SendButton("Envoyer",output,input)
   
-  // Ajout des composants à la fenêtre
-  contents = new BoxPanel(Orientation.Vertical) {
-   
-    foreground_=(Color.BLACK)
-    contents += output
-    contents += input
-    contents += send
-  }
+    // Ajout des composants à la fenêtre
+    contents = new BoxPanel(Orientation.Vertical) {
+      contents += new BoxPanel(Orientation.Horizontal) {
+        contents += output
+      }
+      contents += new BoxPanel(Orientation.Horizontal) {
+        contents += input
+        contents += send
+      }
+    }
 }
