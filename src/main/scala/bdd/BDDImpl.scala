@@ -4,11 +4,11 @@ import scala.io.Source
 
 
 class BDDImpl extends BaseDeDonnees{
-    var wordtofind = ""
+//    var wordtofind = ""
     val filename = "fileopen.scala"
     var listwords = Array[String]()
     for (line <- Source.fromFile(filename).getLines) {
-        listwords.apply(line)
+//        listwords.apply(line)
     }
     def chercherAdresse(str: String): String = {
         for (ligne <- listwords){
