@@ -8,8 +8,8 @@ object BDDImpl extends BaseDeDonnees{
     def chercherAdresse(str: String): String = {
     
     for (ligne <- lines){
-        if (ligne.contains(str)){
-            ligne.split(";")(1)
+        if ((ligne.toLowerCase).contains(str.toLowerCase())){
+            return ligne.split(";")(1)
         }
     }
         "Adresse non trouvée"
