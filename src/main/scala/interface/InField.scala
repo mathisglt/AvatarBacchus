@@ -1,7 +1,7 @@
 package interface
 
 import scala.swing._
-import java.awt.Color
+import java.awt.{Color, Font}
 
 class InField extends TextField {
 
@@ -9,5 +9,6 @@ class InField extends TextField {
   foreground = Color.WHITE
   text = ""
   border = Swing.LineBorder(Color.GRAY) 
+  font = new Font("Arial", Font.BOLD, 16)
   
 }
