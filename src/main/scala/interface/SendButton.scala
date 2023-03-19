@@ -3,6 +3,8 @@ package interface
 import scala.swing._
 import event._
 import java.awt.{Color, Font}
+import machine.MachineDialogue
+import machine.MachineImpl
 
 
 class SendButton(lab: String, to: ResultText, from: InField) extends Button{
@@ -18,7 +20,7 @@ class SendButton(lab: String, to: ResultText, from: InField) extends Button{
   preferredSize = new Dimension(120, 40)
   listenTo(from.keys)
   reactions += {
-    case ButtonClicked(_) | KeyPressed(_, Key.Enter, _, _) => { to.text = from.text; from.text = ""}
+    case ButtonClicked(_) | KeyPressed(_, Key.Enter, _, _) if(from.text != "")=> { to.text = from.text; from.text = ""; MachineImpl.ask(from.text)} // si on appuie sur le bouton envoyer ou sur la touche Entrée, le texte apparaît dans ResultText
   }
 }
 
