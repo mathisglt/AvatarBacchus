@@ -4,13 +4,9 @@ import bdd.BDDImpl
 
 object AnalyseImpl extends AnalyseTrait {
 
-  def analyser(phrase_decoup: List[String]): List[(String,String)] = {
-    phrase_decoup match {
-      case Nil => Nil
-      case head :: next => 
-        if (BDDImpl.chercherAdresse(head) != "Adresse non trouvée") (head,BDDImpl.chercherAdresse(head)) :: analyser(next)
-        else analyser(next)
-    }
+  def analyser(phrase: String): List[(String,String)] = {
+    val phrase_decoup = decouper(phrase)
+    Nil
   }
 
   /**
