@@ -1,0 +1,50 @@
+@startuml Avatar
+
+interface BDDTrait{
+	
+}
+
+interface MachineDialogue {
+	ask(s: String): List[String]
+	reinit(): Unit
+	test(l: List[String]): List[String]
+}
+
+interface ConstructionTrait{
+	construire(phrase: String): reponse :String
+}
+	
+interface InterfaceGraphique{
+	
+}
+
+interface FautesTrait{
+	correction(mots :List[String]): List[motscorriges: String]
+}
+
+interface AnalyseTrait{
+	decouper(phrase: String): List[mots: String]
+	analyser(phrase: String): List[(lieu: String, adresse: String)]
+}
+
+
+class MachineImpl <<(O,Orange)>>
+class InterfaceGraphique <<(O,Orange)>>
+class ConstructionImpl <<(O,Orange)>>
+class AnalyseImpl <<(O,Orange)>>
+class BDDImpl <<(O,Orange)>>
+class FautesImpl <<(O,Orange)>>
+
+MachineImpl -|> MachineDialogue
+MachineDialogue <|- InterfaceGraphique
+BDDTrait <|-  BDDImpl 
+ConstructionImpl -|>  ConstructionTrait
+AnalyseImpl -|>  AnalyseTrait 
+FautesTrait <|-  FautesImpl 
+
+MachineDialogue --> ConstructionTrait
+ConstructionTrait --> AnalyseTrait
+AnalyseTrait -> BDDTrait
+AnalyseTrait --> FautesTrait
+
+@enduml
