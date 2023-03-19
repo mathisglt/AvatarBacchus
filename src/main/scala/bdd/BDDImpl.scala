@@ -3,24 +3,16 @@ import scala.io.Source
 
 
 
-object  BDDImpl extends BaseDeDonnees{
-//    var wordtofind = ""
-    val filename = "fileopen.scala"
-    var listwords = Array[String]()
-    for (line <- Source.fromFile(filename).getLines) {
-//        listwords.apply(line)
-    }
+object BDDImpl extends BaseDeDonnees{
+    val lines = Source.fromFile("doc/DonneesInitiales.txt").getLines.toArray
     def chercherAdresse(str: String): String = {
-        for (ligne <- listwords){
-            if (ligne.contains(str)){
-                ligne.split(";")(1)
-            }
+    
+    for (ligne <- lines){
+        if (ligne.contains(str)){
+            ligne.split(";")(1)
         }
+    }
         "Adresse non trouvée"
     }
+
 }
-
-object testBDD extends App{//batterie de test de BDD 
-}
-
-

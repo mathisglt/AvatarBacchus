@@ -3,12 +3,14 @@ package bdd
 import org.junit.Test
 import org.junit.Assert._
 
-class TestUnitaire {
-    val bdd = BDDImpl
-
+class TestUnitaire{
+    
     @Test
-    def test1():Unit ={
-        println(bdd.chercherAdresse("Mairie"))
+    def testchercheradresseInconnuv1():Unit ={
+       assertEquals("Adresse non trouvée",BDDImpl.chercherAdresse("gdfcghdf"))
+    def testchercheradresseConnuv1():Unit ={
+       assertEquals("Place de la Mairie",BDDImpl.chercherAdresse("Mairie de Rennes"))
+    }
 }
 
 }
