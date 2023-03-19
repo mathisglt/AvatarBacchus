@@ -37,6 +37,18 @@ class TestBDD{
     def testchercheradresseConnuv3Majuscules{
        assertEquals("19, Place de la Gare",BDDImpl.chercherAdresse("GARE"))
     }
+        @Test
+    def testchercheradresseBanword1{
+       assertEquals("Adresse non trouvée",BDDImpl.chercherAdresse("de"))
+    }
+         @Test
+    def testchercheradresseBanword2{
+       assertEquals("Adresse non trouvée",BDDImpl.chercherAdresse("des"))
+    }
+        @Test
+    def testchercheradresseBanword3{
+       assertEquals("Adresse non trouvée",BDDImpl.chercherAdresse("LE"))
+    }
     
    
 }
