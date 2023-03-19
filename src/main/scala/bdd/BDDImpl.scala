@@ -3,7 +3,7 @@ import scala.io.Source
 
 
 
-class BDDImpl extends BaseDeDonnees{
+object  BDDImpl extends BaseDeDonnees{
 //    var wordtofind = ""
     val filename = "fileopen.scala"
     var listwords = Array[String]()

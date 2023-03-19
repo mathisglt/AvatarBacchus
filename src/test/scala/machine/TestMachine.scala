@@ -1,6 +1,7 @@
 package machine
 import org.junit.Test
 import org.junit.Assert._
+import bdd.BDDImpl
 
 class TestIntegration {
 
