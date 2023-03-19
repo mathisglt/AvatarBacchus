@@ -11,7 +11,7 @@ interface MachineDialogue {
 }
 
 interface ConstructionTrait{
-	construire(phrase: String): reponse :String
+	construire(phrase: String): reponses: List[String]
 }
 	
 interface InterfaceGraphique{
