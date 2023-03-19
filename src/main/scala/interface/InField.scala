@@ -5,10 +5,11 @@ import java.awt.{Color, Font}
 
 class InField extends TextField {
 
-  background = Color.BLACK
-  foreground = Color.WHITE
+  this.preferredSize = new Dimension (120, 90)
+
+  background = Color.WHITE
+  foreground = Color.BLACK
   text = ""
   border = Swing.LineBorder(Color.GRAY) 
   font = new Font("Arial", Font.BOLD, 16)
-  
 }
