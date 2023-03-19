@@ -23,7 +23,6 @@ interface FautesTrait{
 }
 
 interface AnalyseTrait{
-	decouper(phrase: String): List[mots: String]
 	analyser(phrase: String): List[(lieu: String, adresse: String)]
 }
 
