@@ -7,7 +7,7 @@ import machine.MachineDialogue
 import machine.MachineImpl
 
 
-class SendButton(lab: String, to: BubbleText, from: InField) extends Button{
+class SendButton(lab: String, conv: List[BoxPanel], from: InField) extends Button{
   text = lab
   foreground = Color.white
   background = new Color(0xff2c29)
@@ -18,7 +18,7 @@ class SendButton(lab: String, to: BubbleText, from: InField) extends Button{
   opaque = true
   listenTo(from.keys)
   reactions += {
-    case ButtonClicked(_) | KeyPressed(_, Key.Enter, _, _) if(from.text != "")=> { to.text = from.text; from.text = ""; MachineImpl.ask(from.text)} // si on appuie sur le bouton envoyer ou sur la touche Entrée, le texte apparaît dans ResultText
+  case ButtonClicked(_) | KeyPressed(_, Key.Enter, _, _) if(from.text != "")=> { conv.::(new userPanel(from.text)); from.text = ""; /*MachineImpl.ask(from.text)*/} // si on appuie sur le bouton envoyer ou sur la touche Entrée, le texte apparaît dans ResultText
   }
 }
 
