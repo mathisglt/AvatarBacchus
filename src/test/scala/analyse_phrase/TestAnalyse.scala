@@ -36,14 +36,14 @@ class TestAnalyse {
     def test_analyser_1 {
         assertEquals(
             List(),
-            AnalyseImpl.analyser("où est la mairie ?")
+            AnalyseImpl.analyser("où est ?")
         )
     }
 
     @Test
     def test_analyser_2 {
         assertEquals(
-            List(("Mairie de Rennes","Place de la Mairie")),
+            List(("mairie","Place de la Mairie")),
             AnalyseImpl.analyser("où est la mairie ?")
         )
     }
@@ -51,7 +51,15 @@ class TestAnalyse {
     @Test
     def test_analyser_3 {
         assertEquals(
-            List(("Mairie de Rennes","Place de la Mairie"), ("Gare SNCF", "Place de la Gare")),
+            List(("Mairie","Place de la Mairie")),
+            AnalyseImpl.analyser("où est la Mairie de Rennes ?")
+        )
+    }
+
+    @Test
+    def test_analyser_4 {
+        assertEquals(
+            List(("mairie","Place de la Mairie"), ("gare", "19, Place de la Gare")),
             AnalyseImpl.analyser("où est la mairie et la gare ?")
         )
     }
