@@ -30,20 +30,25 @@ class TestAnalyse {
         )
     }
 
+    @Test
+    def test_suppr_2 {
+        //
+    }
+
     // tests unitaires fonction "analyser"
 
     @Test
     def test_analyser_1 {
         assertEquals(
             List(),
-            AnalyseImpl.analyser("où est ?")
+            AnalyseImpl.analyser("où et ?")
         )
     }
 
     @Test
     def test_analyser_2 {
         assertEquals(
-            List(("mairie","Place de la Mairie")),
+            List(("Mairie de Rennes","Place de la Mairie")),
             AnalyseImpl.analyser("où est la mairie ?")
         )
     }
@@ -51,7 +56,7 @@ class TestAnalyse {
     @Test
     def test_analyser_3 {
         assertEquals(
-            List(("Mairie","Place de la Mairie")),
+            List(("Mairie de Rennes","Place de la Mairie")),
             AnalyseImpl.analyser("où est la Mairie de Rennes ?")
         )
     }
@@ -59,8 +64,40 @@ class TestAnalyse {
     @Test
     def test_analyser_4 {
         assertEquals(
-            List(("mairie","Place de la Mairie"), ("gare", "19, Place de la Gare")),
+            List(("Mairie de Rennes","Place de la Mairie"), ("Gare SNCF", "19, Place de la Gare")),
             AnalyseImpl.analyser("où est la mairie et la gare ?")
+        )
+    }
+
+    @Test
+    def test_analyser_5 {
+        assertEquals(
+            List(),
+            AnalyseImpl.analyser("où se trouve Rennes et la Bretagne ?")
+        )
+    }
+
+    @Test
+    def test_analyser_6 {
+        assertEquals(
+            List(("Théâtre National de Bretagne","1, Rue Saint-Hélier"),("Théâtre National de Bretagne","1, Rue Saint-Hélier")),
+            AnalyseImpl.analyser("où se trouve le tnb et le théâtre de Bretagne ?")
+        )
+    }
+
+    @Test
+    def test_analyser_7 {
+        assertEquals(
+            List(("Hôtel de Ville","Place de la Mairie")),
+            AnalyseImpl.analyser("où est hôtel de ville")
+        )
+    }
+
+    @Test // ne marche pas encore
+    def test_analyser_8 {
+        assertEquals(
+            List(("Hôtel de Ville","Place de la Mairie")),
+            AnalyseImpl.analyser("où est l'hôtel de ville")
         )
     }
 
