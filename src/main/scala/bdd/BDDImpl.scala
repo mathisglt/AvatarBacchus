@@ -5,7 +5,7 @@ import scala.io.Source
 
 object BDDImpl extends BaseDeDonnees{
     val lines = Source.fromFile("doc/DonneesInitiales.txt").getLines.toArray
-    val banwords = Array[String]("le","la","les","de","des","du")
+    val banwords = Array[String]("le","la","les","de","des","du","et","rennes","bretagne","ville")
     def chercherAdresse(str: String): String = {
     
     for (ligne <- lines){
