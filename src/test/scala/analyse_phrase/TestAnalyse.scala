@@ -65,7 +65,7 @@ class TestAnalyse {
     def test_analyser_4 {
         assertEquals(
             List(("Mairie de Rennes","Place de la Mairie"), ("Gare SNCF", "19, Place de la Gare")),
-            AnalyseImpl.analyser("où est la mairie et la gare ?")
+            AnalyseImpl.analyser("où sont la mairie et la gare ?")
         )
     }
 
@@ -73,15 +73,15 @@ class TestAnalyse {
     def test_analyser_5 {
         assertEquals(
             List(),
-            AnalyseImpl.analyser("où se trouve Rennes et la Bretagne ?")
+            AnalyseImpl.analyser("où se trouvent Rennes et la Bretagne ?")
         )
     }
 
     @Test
     def test_analyser_6 {
-        assertEquals(
+        assertEquals( // c'est la même adresse et c'est normal
             List(("Théâtre National de Bretagne","1, Rue Saint-Hélier"),("Théâtre National de Bretagne","1, Rue Saint-Hélier")),
-            AnalyseImpl.analyser("où se trouve le tnb et le théâtre de Bretagne ?")
+            AnalyseImpl.analyser("où se trouvent le tnb et le théâtre de Bretagne ?")
         )
     }
 
