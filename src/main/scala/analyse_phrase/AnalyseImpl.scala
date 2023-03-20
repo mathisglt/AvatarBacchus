@@ -5,7 +5,7 @@ import bdd.BDDImpl
 object AnalyseImpl extends AnalyseTrait {
 
   def analyser(phrase : String): List[(String,String)] = {
-    analyse_List(decouper(phrase))
+    analyseList(decouper(phrase))
   }
 
   /**
@@ -16,21 +16,21 @@ object AnalyseImpl extends AnalyseTrait {
     * @param phrase_decoup une liste de String
     * @return une liste de couples (String,String) "(lieu,adresse)"
     */
-  def analyse_List(phrase_decoup: List[String]): List[(String,String)] = {
+  def analyseList(phrase_decoup: List[String]): List[(String,String)] = {
     phrase_decoup match {
       case Nil => Nil
       case head :: next => 
         val adresse = BDDImpl.chercherAdresse(head)
         if (adresse != "Adresse non trouvée") {
           adresse match {
-            case _ if (adresse.contains("Place de la Mairie")) => ("Mairie de Rennes",adresse) :: analyse_List(next)
-            case _ if (adresse.contains("1, Rue Saint-Hélier")) => ("Théâtre National de Bretagne",adresse) :: analyse_List(next)
-            case _ if (adresse.contains("19, Place de la Gare")) => ("Gare SNCF",adresse) :: analyse_List(next)
-            case _ if (adresse.contains("Rue du Pré de Bris")) => ("Théâtre la Paillette",adresse) :: analyse_List(next)
-            case _ => (head,adresse) :: analyse_List(next)
+            case "Place de la Mairie" => ("Mairie de Rennes",adresse) :: analyseList(next)
+            case "1, Rue Saint-Hélier" => ("Théâtre National de Bretagne",adresse) :: analyseList(next)
+            case "19, Place de la Gare" => ("Gare SNCF",adresse) :: analyseList(next)
+            case "Rue du Pré de Bris" => ("Théâtre la Paillette",adresse) :: analyseList(next)
+            case _ => (head,adresse) :: analyseList(next) // il n'existe pas d'autres valeurs possibles mais au cas où
           }
         }
-        else analyse_List(next)
+        else analyseList(next)
     }
   }
 
