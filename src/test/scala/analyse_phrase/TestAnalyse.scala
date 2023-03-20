@@ -88,7 +88,7 @@ class TestAnalyse {
     @Test
     def test_analyser_7 {
         assertEquals(
-            List(("Hôtel de Ville","Place de la Mairie")),
+            List(("Mairie de Rennes","Place de la Mairie")),
             AnalyseImpl.analyser("où est hôtel de ville")
         )
     }
@@ -96,7 +96,7 @@ class TestAnalyse {
     @Test // ne marche pas encore
     def test_analyser_8 {
         assertEquals(
-            List(("Hôtel de Ville","Place de la Mairie")),
+            List(("Mairie de Rennes","Place de la Mairie")),
             AnalyseImpl.analyser("où est l'hôtel de ville")
         )
     }

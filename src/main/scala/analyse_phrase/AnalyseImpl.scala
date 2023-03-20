@@ -23,7 +23,6 @@ object AnalyseImpl extends AnalyseTrait {
         val adresse = BDDImpl.chercherAdresse(head)
         if (adresse != "Adresse non trouvée") {
           adresse match {
-            case _ if (head.toLowerCase().contains("hôtel")) => ("Hôtel de Ville",adresse) :: analyse_List(next)
             case _ if (adresse.contains("Place de la Mairie")) => ("Mairie de Rennes",adresse) :: analyse_List(next)
             case _ if (adresse.contains("1, Rue Saint-Hélier")) => ("Théâtre National de Bretagne",adresse) :: analyse_List(next)
             case _ if (adresse.contains("19, Place de la Gare")) => ("Gare SNCF",adresse) :: analyse_List(next)
