@@ -3,11 +3,11 @@ package analyse_phrase
 trait AnalyseTrait {
 
 /**
-  * analyse les mots de la requete du user pour renvoyer la liste des couples (lieu, adresse)
+  * analyse les mots de la requete du user pour renvoyer le couple (lieu, adresse)
   *
   * @param phrase une String correspondant à la requete du user 
-  * @return la liste de couples (lieu, adresses)
+  * @return le couple (lieu, adresses)
   */
-  def analyser(phrase: String): List[(String,String)]
+  def analyser(phrase: String): (String,String)
   
 }

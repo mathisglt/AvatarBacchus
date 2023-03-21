@@ -11,7 +11,7 @@ object BDDImpl extends BaseDeDonnees{
     // TEST
     
     val lines = Source.fromFile("doc/DonneesInitiales.txt").getLines.toArray
-    val banwords = Array[String]("le","la","les","de","des","du","et","rennes","bretagne","ville")
+    val banwords = Array[String]("le","la","les","de","des","du","et")
     def chercherAdresse(str: String): String = {
         for (ligne <- lines){
             if ((ligne.toLowerCase).contains(str.toLowerCase()) && !banwords.contains(str.toLowerCase())){
@@ -20,7 +20,7 @@ object BDDImpl extends BaseDeDonnees{
         }
         "Adresse non trouvée"
     }
-  def recupadresses(file:BufferedSource):List[String]={
+  def recupLieux(file:BufferedSource):List[String]={
     val fileEnString=file.mkString
     val listeDeMots=fileEnString.split("[;\r\n]+")
     var listeFinale:Array[String]=Array()
