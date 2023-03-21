@@ -8,6 +8,7 @@ import java.io.File
 import bdd.BaseDeDonnees
 
 object BDDImpl extends BaseDeDonnees{
+    // TEST2
     
     val lines = Source.fromFile("doc/DonneesInitiales.txt").getLines.toArray
     val banwords = Array[String]("le","la","les","de","des","du","et")
@@ -19,7 +20,7 @@ object BDDImpl extends BaseDeDonnees{
         }
         "Adresse non trouvée"
     }
-  def recupadresses(file:BufferedSource):List[String]={
+  def recupLieux(file:BufferedSource):List[String]={
     val fileEnString=file.mkString
     val listeDeMots=fileEnString.split("[;\r\n]+")
     var listeFinale:Array[String]=Array()
