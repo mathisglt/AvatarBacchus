@@ -21,10 +21,10 @@ class SendButton(lab: String, conv: BoxPanel,scrollBar: ScrollBar, from: InField
   reactions += {
   case ButtonClicked(_) | KeyPressed(_, Key.Enter, _, _) if(from.text != "")=> {conv.contents += new userPanel(from.text); 
                                                                                                  conv.revalidate;
-                                                                                                 conv.contents += new robotPanel(from.text);
+                                                                                                 conv.contents += new robotPanel(MachineImpl.ask(from.text).head);
                                                                                                  from.text = "";
                                                                                                  scrollToBottom();
-                                                                                                 conv.revalidate; /*MachineImpl.ask(from.text)*/} // si on appuie sur le bouton envoyer ou sur la touche Entrée, le texte apparaît dans ResultText
+                                                                                                 conv.revalidate;} // si on appuie sur le bouton envoyer ou sur la touche Entrée, le texte apparaît dans ResultText
   }
   
   def scrollToBottom() {
