@@ -17,7 +17,7 @@ object InterfaceGraphique extends SimpleSwingApplication{
 
 class UI extends MainFrame {
 
-    title = "Avatar"
+    title = "Chat CGT"
     preferredSize = new Dimension (1020,750)
 
     //Création des composants
