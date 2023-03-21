@@ -4,8 +4,6 @@ import scala.io.Source
 import scala.io.BufferedSource
 import bdd.BDDImpl
 
-case object ExceptionListeVide extends Exception
-
 object AnalyseImpl extends AnalyseTrait {
 
   val liste_lieux = BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt")).toList
@@ -18,10 +16,20 @@ object AnalyseImpl extends AnalyseTrait {
       case head :: next => 
         if (phrase.toLowerCase().contains(head.toLowerCase())) {
           val adresse = BDDImpl.chercherAdresse(head)
-          return (head, adresse)
+          if (adresse != "Adresse non trouvée") {
+            adresse match {
+              case "Place de la Mairie" => ("Mairie de Rennes",adresse)
+              case "1, Rue Saint-Hélier" => ("Théâtre National de Bretagne",adresse)
+              case "19, Place de la Gare" => ("Gare SNCF",adresse)
+              case "Rue du Pré de Bris" => ("Théâtre la Paillette",adresse)
+            }
+          }
+          else return (head, adresse)
         }
         else analyserListe(next, phrase)
     }
   }
+
+  def politeTest_Bonjour(phrase: String): Boolean = phrase.toLowerCase().contains("bonjour") | phrase.toLowerCase().contains("salut") | phrase.toLowerCase().contains("bonsoir")
   
 }
