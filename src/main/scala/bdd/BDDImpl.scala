@@ -19,7 +19,7 @@ object BDDImpl extends BaseDeDonnees{
         }
         "Adresse non trouvée"
     }
-  def recupadresses(file:BufferedSource):List[String]={
+  def recupLieux(file:BufferedSource):List[String]={
     val fileEnString=file.mkString
     val listeDeMots=fileEnString.split("[;\r\n]+")
     var listeFinale:Array[String]=Array()
