@@ -16,26 +16,28 @@ object InterfaceGraphique extends SimpleSwingApplication{
 
 class UI extends MainFrame {
 
-    private val conv:List[BoxPanel] = List(new robotPanel("Bonjour, comment puis-je vous aider ?"))
+    private val conv:Array[BoxPanel] = Array(new robotPanel("Bonjour, comment puis-je vous aider ?"),
+                                             new userPanel("Où ?"))
 
     title = "Avatar"
-    preferredSize = new Dimension (1020, 900)
+    preferredSize = new Dimension (1020,750)
     
 
     //Création des composants
     val input = new InField
     val send = new SendButton("Envoyer",conv,input)
     val reinit = new ReinitButton(conv)
+    val grisFonce = new Color (0x1d1e20)
 
     // Ajout des composants à la fenêtre
     contents = new BoxPanel(Orientation.Vertical) {
-      background = new Color (0x1d1e20)
+      background = grisFonce
       contents += new BoxPanel(Orientation.Horizontal) {
         contents += reinit
       }
-      contents += affichageDiscussion(conv)
+      contents += affichageDiscussion(conv.toList)
       contents += new BoxPanel(Orientation.Horizontal) {
-        background = new Color (0x1d1e20)
+        background = grisFonce
         contents += input
         contents += send
       }
@@ -43,8 +45,11 @@ class UI extends MainFrame {
 
     def affichageDiscussion(conv: List[BoxPanel]): BoxPanel= {
       new BoxPanel(Orientation.Vertical){
+        maximumSize = new Dimension(1020,650)
+        background = grisFonce
         conv match {
           case Nil => Nil
+          case head :: Nil => contents += head;
           case head :: next => contents += head; contents += affichageDiscussion(next)
         }
       }
