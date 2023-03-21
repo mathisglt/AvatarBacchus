@@ -2,6 +2,7 @@ package machine
 import org.junit.Test
 import org.junit.Assert._
 import bdd.BDDImpl
+import machine.MachineImpl
 
 class TestIntegration {
 
@@ -12,9 +13,33 @@ class TestIntegration {
   @Test
   def test1_bdd(): Unit= {
     assertEquals(
-      "Mairie",
-      BDDImpl.chercherAdresse("Place de la Mairie")
+      "Place de la Mairie",
+      BDDImpl.chercherAdresse("Mairie")
     )
   }
 
+
+  @Test
+  def test1_test(): Unit= {
+    assertEquals(
+      List(),
+      MachineImpl.test(List("Place de la Maie"))
+    )
+  }
+
+  @Test
+  def test2_test(): Unit= {
+    assertEquals(
+      List("L'adresse de Mairie est : Place de la Mairie"),
+      MachineImpl.test(List("Place de la Mairie"))
+    )
+  }
+
+  // @Test
+  // def test3_test(): Unit= {
+  //   assertEquals(
+  //     List("L'adresse de Mairie est : Place de la Mairie", "L'adresse de Gare est : 19, Place de la Gare"),
+  //     MachineImpl.test(List("Donne place de la Mairie et Gare"))
+  //   )
+  // }
 }

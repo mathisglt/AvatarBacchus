@@ -17,7 +17,7 @@ class TestAnalyse {
     @Test
     def test_analyser_02 {
         assertEquals(
-            ("Mairie","Place de la Mairie"),
+            ("Mairie de Rennes","Place de la Mairie"),
             AnalyseImpl.analyser("où est la mairie ?")
         )
     }
@@ -33,7 +33,7 @@ class TestAnalyse {
     @Test
     def test_analyser_04 {
         assertEquals( // XXX "mairie se trouve avant gare dans la bdd"
-            ("Mairie","Place de la Mairie"),
+            ("Mairie de Rennes","Place de la Mairie"),
             AnalyseImpl.analyser("où sont la gare sncf et la mairie ?")
         )
     }
@@ -49,7 +49,7 @@ class TestAnalyse {
     @Test
     def test_analyser_06 {
         assertEquals(
-            ("TNB","1, Rue Saint-Hélier"),
+            ("Théâtre National de Bretagne","1, Rue Saint-Hélier"),
             AnalyseImpl.analyser("où se trouvent le tnb et le théâtre de Bretagne ?")
         )
     }
@@ -57,7 +57,7 @@ class TestAnalyse {
     @Test
     def test_analyser_07 {
         assertEquals(
-            ("Hôtel de ville","Place de la Mairie"),
+            ("Mairie de Rennes","Place de la Mairie"),
             AnalyseImpl.analyser("où est hôtel de ville")
         )
     }
@@ -65,7 +65,7 @@ class TestAnalyse {
     @Test // ne marche pas encore
     def test_analyser_08 {
         assertEquals(
-            ("Hôtel de ville","Place de la Mairie"),
+            ("Mairie de Rennes","Place de la Mairie"),
             AnalyseImpl.analyser("où est l'hôtel de ville")
         )
     }
@@ -78,4 +78,11 @@ class TestAnalyse {
         )
     }
 
+    @Test
+    def test_analyser_10 {
+        assertEquals(
+            ("Mairie de Rennes","Place de la Mairie"),
+            AnalyseImpl.analyser("Place de la mairie")
+        )
+    }
 }

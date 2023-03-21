@@ -19,7 +19,7 @@ object ConstructionImpl extends ConstructionTrait{
         //    case Nil => ""
            // case (lieu, adresse) => phrase += "L'adresse de " ++ lieu ++ " est : " ++ adresse ++ ". " ++ construirev1(reste)
         //}
-        if (resultAnalyse != ("","")) phrase += "L'adresse de " ++ resultAnalyse._1 ++ " est : " ++ resultAnalyse._2 
+        if (resultAnalyse != ("","")) phrase = "L'adresse de " ++ resultAnalyse._1 ++ " est : " ++ resultAnalyse._2 
         else phrase = "Je ne comprends pas votre demande"
         phrase
         
