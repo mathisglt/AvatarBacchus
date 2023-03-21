@@ -3,7 +3,6 @@ package bdd
 import java.util.ArrayList
 import scala.io.BufferedSource
 trait BaseDeDonnees {
-  val banwords: Array[String]
   val lines: Array[String]
   /**
     * Recherche dans le fichier texte DonneesInitiales si l'adresse existe , élimine les cas ou un mot

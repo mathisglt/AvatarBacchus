@@ -11,11 +11,10 @@ object BDDImpl extends BaseDeDonnees{
     // TEST2
     
     val lines = Source.fromFile("doc/DonneesInitiales.txt").getLines.toArray
-    val banwords = Array[String]("le","la","les","de","des","du","et")
     def chercherAdresse(str: String): String = {
         for (ligne <- lines){
             val fields = ligne.split(";")
-            if ((fields(0).toLowerCase).contains(str.toLowerCase()) && !banwords.contains(str.toLowerCase())){
+            if ((fields(0).toLowerCase).equals(str.toLowerCase())){
                 return fields(1)
             }
         }
