@@ -5,9 +5,6 @@ import analyse_phrase.AnalyseImpl
 object MachineImpl extends MachineDialogue {
   def ask(s: String): List[String] = {
     var liste : List[String] = List()
-    if (AnalyseImpl.politeTest_Bonjour(s)) {
-      liste ++ "Bonjour"
-    }
     liste ++ ConstructionImpl.construire(s)
     liste
   }
