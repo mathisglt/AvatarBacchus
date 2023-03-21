@@ -16,15 +16,12 @@ object AnalyseImpl extends AnalyseTrait {
       case head :: next => 
         if (phrase.toLowerCase().contains(head.toLowerCase())) {
           val adresse = BDDImpl.chercherAdresse(head)
-          if (adresse != "Adresse non trouvée") {
-            adresse match {
-              case "Place de la Mairie" => ("Mairie de Rennes",adresse)
-              case "1, Rue Saint-Hélier" => ("Théâtre National de Bretagne",adresse)
-              case "19, Place de la Gare" => ("Gare SNCF",adresse)
-              case "Rue du Pré de Bris" => ("Théâtre la Paillette",adresse)
-            }
+          adresse match {
+            case "Place de la Mairie" => ("Mairie de Rennes",adresse)
+            case "1, Rue Saint-Hélier" => ("Théâtre National de Bretagne",adresse)
+            case "19, Place de la Gare" => ("Gare SNCF",adresse)
+            case "2, Rue du Pré de Bris" => ("Théâtre la Paillette",adresse)
           }
-          else return (head, adresse)
         }
         else analyserListe(next, phrase)
     }
