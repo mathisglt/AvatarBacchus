@@ -5,8 +5,10 @@ import java.awt.{Color, Font}
 import java.awt.geom.RoundRectangle2D
 
 
-class BubbleText(lab: String) extends Label {
-  foreground = Color.BLACK
-  text = lab
-  background = new Color(0xff2c29)
+class BubbleText(texte: String, align: Alignment.Value) extends Label {
+  foreground = Color.WHITE
+  text = texte
+  font = new Font("Arial", Font.BOLD, 15)
+  maximumSize = new Dimension(Short.MaxValue,45)
+  horizontalAlignment = align
 }

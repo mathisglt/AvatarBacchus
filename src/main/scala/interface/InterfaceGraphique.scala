@@ -7,7 +7,6 @@ import javax.swing.ImageIcon
 import java.io.File
 import scala.swing.event.ButtonClicked
 import java.awt.{Image, Toolkit}
-import interface.SendButton
 import scala.swing.event.KeyPressed
 import scala.swing.event.Key
 
@@ -16,23 +15,24 @@ object InterfaceGraphique extends SimpleSwingApplication{
     def top: MainFrame = new UI
 }
 
-
 class UI extends MainFrame {
 
     title = "Avatar"
     preferredSize = new Dimension (1020,750)
 
     //Création des composants
-    val input = new InField
-    val grisFonce = new Color (0x1d1e20)
-    val conversation = new BoxPanel(Orientation.Vertical){
+    val input = new InField               // zone de texte à taper
+    val grisFonce = new Color (0x1d1e20)  
+    val conversation = new BoxPanel(Orientation.Vertical){ // initialisation de la conversation
                           maximumSize = new Dimension(1020,650)
-                          contents += new robotPanel("Bonjour, comment puis-je vous aider ?")
+                          background = grisFonce
+                          border = null
+                          contents += new RobotPanel("Bonjour, comment puis-je vous aider ?")
                         }     
-    val scrollPanel = new ScrollPane(conversation)
-    var scrollBar = scrollPanel.verticalScrollBar
-    val reinit = new ReinitButton(conversation)
-    val send = new SendButton("Envoyer",conversation,scrollBar,input)
+    val scrollPanel = new ScrollPane(conversation) // ajout de la conversation dans une zone scrollable
+    var scrollBar = scrollPanel.verticalScrollBar  // création de la barre de scroll
+    val reinit = new ReinitButton(conversation)    // création du bouton de réinitialisation
+    val send = new SendButton("Envoyer",conversation,scrollBar,input) // création du bouton d'envoie
              
     // Ajout des composants à la fenêtre
     contents = new BoxPanel(Orientation.Vertical) {
@@ -40,10 +40,7 @@ class UI extends MainFrame {
       contents += new BoxPanel(Orientation.Horizontal) {
         contents += reinit
       }
-      contents += new BorderPanel {
-        background = grisFonce
-        add(scrollPanel,BorderPanel.Position.Center)
-      }
+      contents += scrollPanel 
       contents += new BoxPanel(Orientation.Horizontal) {
         background = grisFonce
         contents += input
