@@ -20,7 +20,7 @@ class TestConstruction {
         //test pour un seul couple
         assertEquals(
             "L'adresse de Mairie est : Place de la Mairie",
-            ConstructionImpl.construire("Mairie")   
+            ConstructionImpl.construire("Place de la Mairie")   
         )
     }
 

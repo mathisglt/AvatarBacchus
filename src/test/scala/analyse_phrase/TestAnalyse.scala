@@ -78,4 +78,11 @@ class TestAnalyse {
         )
     }
 
+    @Test
+    def test_analyser_10 {
+        assertEquals(
+            ("Mairie","Place de la Mairie"),
+            AnalyseImpl.analyser("Place de la mairie")
+        )
+    }
 }
