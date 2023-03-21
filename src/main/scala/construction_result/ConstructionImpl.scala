@@ -15,7 +15,7 @@ object ConstructionImpl extends ConstructionTrait{
         var phrase:String = ""
         resultAnalyse match {
             case Nil => ""
-            case (lieu, adresse)::reste => phrase ++ "L'adresse de " + lieu + " est : " + adresse +". " ++ construirev1(reste)
+            case (lieu, adresse)::reste => phrase += "L'adresse de " ++ lieu ++ " est : " ++ adresse ++ ". " ++ construirev1(reste)
         }
         phrase
     }
