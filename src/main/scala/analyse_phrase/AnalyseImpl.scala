@@ -21,6 +21,7 @@ object AnalyseImpl extends AnalyseTrait {
             case "1, Rue Saint-Hélier" => ("Théâtre National de Bretagne",adresse)
             case "19, Place de la Gare" => ("Gare SNCF",adresse)
             case "2, Rue du Pré de Bris" => ("Théâtre la Paillette",adresse)
+            case "feur" => ("quoi",adresse)
           }
         }
         else analyserListe(next, phrase)

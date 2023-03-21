@@ -1,3 +1,4 @@
+quoi;feur
 Hôtel de ville;Place de la Mairie
 Mairie de Rennes;Place de la Mairie
 Mairie;Place de la Mairie
