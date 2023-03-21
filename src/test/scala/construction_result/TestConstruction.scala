@@ -32,4 +32,5 @@ class TestConstruction {
    //         ConstructionImpl.construire(List(("Mairie","Place de la Mairie"), ("Gare", "19, Place de la Gare")))
    //     )
    // }
+   
 }

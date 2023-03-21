@@ -7,4 +7,5 @@ trait ConstructionTrait {
       * @return la phrases representant la reponse sous la forme d'une String
       */
     def construire(resultat: String):String 
+
 }
