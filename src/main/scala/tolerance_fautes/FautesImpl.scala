@@ -3,10 +3,37 @@ import scala.io.Source
 import bdd.BDDImpl
 
 class FautesImpl extends FautesTrait{
-val mots_verifiant = BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt"))
+
+val mots_a_verifier:List[String] = BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt"))
+
+  /**
+    * applique testChaque mot sur toute une liste de mot et en renvoie la string corrigée
+    *
+    * @param mots une liste de mots
+    * @return la meme liste corrigée
+    */
 
   def correction(mots:List[String]):List[String]={
-    mots
+    var result:List[String]=Nil
+    for (mot<-mots){
+        result=testChaqueMot(mot,mots_a_verifier)::result
+    }
+    result.reverse
+  }
+
+  /**
+   * prends un mot et une liste de modele et renvoie 
+   * le premier modele suffisamment proche du mot de base ou le mot si il n'y en a pas
+   * 
+   * @param motATester une String qu'on veut tester
+   * @param modeles une liste des modeles
+   * @return le mot venant des modeles le plus proche du mot a tester ou celui-ci si il n'y en a pas
+   */
+  def testChaqueMot(motATester:String,modeles:List[String]):String={
+    modeles match{
+        case modele :: next => if(distanceDeHammingInf1(motATester,modele)) modele else testChaqueMot(motATester,next)
+        case Nil => motATester
+    }
   }
   /** 
    * regarde si la distance de Hamming entre deux strings est supérieure ou égal à 1 
@@ -15,7 +42,7 @@ val mots_verifiant = BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.tx
    * @param strmodele le modele (plus grand que le test)
    * @return true si la string test est à 1 de distance maximum de la string modele 
    */
-  def distanceDeHammingSup1(strtest:String,strmodele:String):Boolean={
+  def distanceDeHammingInf1(strtest:String,strmodele:String):Boolean={
     (strmodele.length-strtest.length==0 && test1FauteMax(strtest,strmodele))||
     (strmodele.length-strtest.length==1 && testDecalage(strtest,strmodele))
   }
