@@ -8,7 +8,7 @@ case object ExceptionListeVide extends Exception
 
 object AnalyseImpl extends AnalyseTrait {
 
-  val liste_lieux = BDDImpl.recup(Source.fromFile("doc/DonneesInitiales.txt")).toList
+  val liste_lieux = BDDImpl.recupadresses(Source.fromFile("doc/DonneesInitiales.txt")).toList
 
   def analyser(phrase : String): (String,String) = analyserListe(liste_lieux, phrase)
 
