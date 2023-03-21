@@ -14,8 +14,9 @@ object BDDImpl extends BaseDeDonnees{
     val banwords = Array[String]("le","la","les","de","des","du","et")
     def chercherAdresse(str: String): String = {
         for (ligne <- lines){
-            if ((ligne.toLowerCase).contains(str.toLowerCase()) && !banwords.contains(str.toLowerCase())){
-                return ligne.split(";")(1)
+            val fields = ligne.split(";")
+            if ((fields(0).toLowerCase).contains(str.toLowerCase()) && !banwords.contains(str.toLowerCase())){
+                return fields(1)
             }
         }
         "Adresse non trouvée"
