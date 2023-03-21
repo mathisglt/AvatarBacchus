@@ -4,100 +4,77 @@ import org.junit.Assert._
 
 class TestAnalyse {
 
-    // tests unitaires fonction "decouper"
-
-    @Test
-    def test_decouper_1 {
-        assertEquals(
-            List(""),
-            AnalyseImpl.decouper("")
-        )
-    }
-
-    @Test
-    def test_decouper_2 {
-        assertEquals(
-            List("hello"),
-            AnalyseImpl.decouper("hello")
-        )
-    }
-
-    @Test
-    def test_decouper_3 {
-        assertEquals(
-            List("où","est","la","mairie","?"),
-            AnalyseImpl.decouper("où est la mairie ?")
-        )
-    }
-
-    @Test
-    def test_suppr_2 {
-        //
-    }
-
     // tests unitaires fonction "analyser"
 
     @Test
-    def test_analyser_1 {
+    def test_analyser_01 {
         assertEquals(
-            List(),
+            ("",""),
             AnalyseImpl.analyser("où et ?")
         )
     }
 
     @Test
-    def test_analyser_2 {
+    def test_analyser_02 {
         assertEquals(
-            List(("Mairie de Rennes","Place de la Mairie")),
+            ("Mairie","Place de la Mairie"),
             AnalyseImpl.analyser("où est la mairie ?")
         )
     }
 
     @Test
-    def test_analyser_3 {
+    def test_analyser_03 {
         assertEquals(
-            List(("Mairie de Rennes","Place de la Mairie")),
+            ("Mairie de Rennes","Place de la Mairie"),
             AnalyseImpl.analyser("où est la Mairie de Rennes ?")
         )
     }
 
     @Test
-    def test_analyser_4 {
-        assertEquals(
-            List(("Mairie de Rennes","Place de la Mairie"), ("Gare SNCF", "19, Place de la Gare")),
-            AnalyseImpl.analyser("où sont la mairie et la gare ?")
+    def test_analyser_04 {
+        assertEquals( // XXX "mairie se trouve avant gare dans la bdd"
+            ("Mairie","Place de la Mairie"),
+            AnalyseImpl.analyser("où sont la gare sncf et la mairie ?")
         )
     }
 
     @Test
-    def test_analyser_5 {
+    def test_analyser_05 {
         assertEquals(
-            List(),
+            ("",""),
             AnalyseImpl.analyser("où se trouvent Rennes et la Bretagne ?")
         )
     }
 
     @Test
-    def test_analyser_6 {
-        assertEquals( // c'est la même adresse et c'est normal
-            List(("Théâtre National de Bretagne","1, Rue Saint-Hélier"),("Théâtre National de Bretagne","1, Rue Saint-Hélier")),
+    def test_analyser_06 {
+        assertEquals(
+            ("TNB","1, Rue Saint-Hélier"),
             AnalyseImpl.analyser("où se trouvent le tnb et le théâtre de Bretagne ?")
         )
     }
 
     @Test
-    def test_analyser_7 {
+    def test_analyser_07 {
         assertEquals(
-            List(("Mairie de Rennes","Place de la Mairie")),
+            ("Hôtel de ville","Place de la Mairie"),
             AnalyseImpl.analyser("où est hôtel de ville")
         )
     }
 
     @Test // ne marche pas encore
-    def test_analyser_8 {
+    def test_analyser_08 {
         assertEquals(
-            List(("Mairie de Rennes","Place de la Mairie")),
+            ("Hôtel de ville","Place de la Mairie"),
             AnalyseImpl.analyser("où est l'hôtel de ville")
+        )
+    }
+
+    @Test
+    def test_analyser_09 {
+        assertEquals(
+            ("Gare SNCF","19, Place de la Gare"),
+            AnalyseImpl.analyser("où se trouve la gare sncf ?")
         )
     }
 
