@@ -6,6 +6,7 @@
 .log
 .db
 .metals
+.nfs*
 project/metals.sbt
 # sbt
 target/

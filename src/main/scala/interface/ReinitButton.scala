@@ -7,7 +7,7 @@ import machine.MachineDialogue
 import machine.MachineImpl
 
 
-class ReinitButton(conv: List[BoxPanel]) extends Button{
+class ReinitButton(conv: Array[BoxPanel]) extends Button{
   foreground = Color.white
   background = new Color(0xff2c29)
   font = new Font("Arial", Font.BOLD, 16)
@@ -17,7 +17,7 @@ class ReinitButton(conv: List[BoxPanel]) extends Button{
   opaque = true
   text = "Réinitialiser la conversation"
   reactions +={
-    case ButtonClicked(_) => conv.empty
+    case ButtonClicked(_) => conv.dropRight(conv.length-1)
   }
 }
 
