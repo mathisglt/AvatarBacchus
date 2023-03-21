@@ -8,6 +8,7 @@ import java.io.File
 import bdd.BaseDeDonnees
 
 object BDDImpl extends BaseDeDonnees{
+    // TEST
     
     val lines = Source.fromFile("doc/DonneesInitiales.txt").getLines.toArray
     val banwords = Array[String]("le","la","les","de","des","du","et","rennes","bretagne","ville")
