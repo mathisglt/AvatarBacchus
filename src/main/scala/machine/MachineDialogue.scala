@@ -17,5 +17,4 @@ trait MachineDialogue {
     *  @return la liste des réponses produites par l'avatar
     */
   def test(l: List[String]): List[String]
-
 }
