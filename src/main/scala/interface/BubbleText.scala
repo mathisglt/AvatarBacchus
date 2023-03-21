@@ -5,11 +5,9 @@ import java.awt.{Color, Font}
 import java.awt.geom.RoundRectangle2D
 
 
-class BubbleText(lab: String, color: Color) extends Label {
+class BubbleText(lab: String) extends Label {
 
-  background = color
   foreground = Color.BLACK
-
   text = lab
 
 }

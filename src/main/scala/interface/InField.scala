@@ -9,6 +9,6 @@ class InField extends TextField {
   foreground = Color.BLACK
   text = ""
   border = Swing.LineBorder(Color.WHITE) 
-  font = new Font("Arial", Font.BOLD, 16)
+  font = new Font("Arial", Font.BOLD, 18)
   maximumSize = new Dimension(900,40)
 }
