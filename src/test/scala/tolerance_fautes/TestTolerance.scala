@@ -3,7 +3,7 @@ import tolerance_fautes.FautesImpl
 import junit.framework.Test
 
 class TestTolerance {
-    val listeTest:List[String]=
+    val listeTest:List[String]=List("Ou","est","la","mairie")
     @Test
   def Test1_Tolerance(): Unit ={
     

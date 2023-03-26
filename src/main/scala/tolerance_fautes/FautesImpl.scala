@@ -1,9 +1,8 @@
 package tolerance_fautes
 import scala.io.Source
 import bdd.BDDImpl
-
 class FautesImpl extends FautesTrait{
-
+//ici la liste de mots 'modele' en quelque sorte
 val mots_a_verifier:List[String] = BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt"))
 
   /**
@@ -15,28 +14,35 @@ val mots_a_verifier:List[String] = BDDImpl.recupLieux(Source.fromFile("doc/Donne
 
   def correction(mots:List[String]):List[String]={
     var result:List[String]=Nil
-    for (mot<-mots){
-        result=testChaqueMot(mot,mots_a_verifier)::result
+    val modelesCleared = clearAccentToMaj(mots_a_verifier)
+    val motsTestsCleared = clearAccentToMaj(mots)
+    for (incr<-0 to modelesCleared.length-1){
+        testChaqueMot(motsTestsCleared(incr),modelesCleared) match {
+          case -1 => result = mots(incr)::result
+          case num  => result = mots_a_verifier(num)::result
+        }
     }
     result.reverse
   }
 
   /**
    * prends un mot et une liste de modele et renvoie 
-   * le premier modele suffisamment proche du mot de base ou le mot si il n'y en a pas
+   * son emplacement dans la liste modele ou -1 si il n'y figure pas
    * 
    * @param motATester une String qu'on veut tester
    * @param modeles une liste des modeles
-   * @return le mot venant des modeles le plus proche du mot a tester ou celui-ci si il n'y en a pas
+   * @return l'emplacement du mot le plus proche dans la liste ou -1 s'il n'y en a pas
    */
-  def testChaqueMot(motATester:String,modeles:List[String]):String={
-    modeles match{
-        case modele :: next => if(distanceDeHammingInf1(motATester,modele)) modele else testChaqueMot(motATester,next)
-        case Nil => motATester
+  def testChaqueMot(motATester:String,modeles:List[String]):Int={
+    for (incr<-0 to modeles.length-1){
+      if(distanceDeHammingInf1(motATester,modeles(incr))) incr
     }
+    -1
   }
   /** 
-   * regarde si la distance de Hamming entre deux strings est supérieure ou égal à 1 
+   * regarde si la distance de Hamming entre deux strings est supérieure ou égal à 1
+   * si on voit que la chaine a tester est plus petite que la chaine modele on regarde si c'est du a un decalage
+   * si on voit qu'elles sont de meme taille on regarde si il n'y a bien qu'une faute max
    * 
    * @param strtest une string a tester
    * @param strmodele le modele (plus grand que le test)
@@ -54,7 +60,6 @@ val mots_a_verifier:List[String] = BDDImpl.recupLieux(Source.fromFile("doc/Donne
     * @param strmodele le modele (> le test)
     * @return si il y a une faute max
     */
-
   def test1FauteMax(strtest:String,strmodele:String):Boolean={
     strtest.isEmpty() || 
     (strtest(0)==strmodele(0) && test1FauteMax(strtest.tail,strmodele.tail)) || 
@@ -68,10 +73,36 @@ val mots_a_verifier:List[String] = BDDImpl.recupLieux(Source.fromFile("doc/Donne
    * @param strmodele un modele (> le test)
    * @return si la string test a bien juste une lettre en moins par rapport au modele
    */
-
   def testDecalage(strtest:String,strmodele:String):Boolean={
     strtest.isEmpty() || 
     (strtest(0)==strmodele(0) && testDecalage(strtest.tail,strmodele.tail)) || 
     strtest==strmodele.tail
+  }
+
+  /**
+    * renvoie la liste en parametre sans accents et en majuscules
+    *
+    * @param mots une liste de mots (chaines de caracteres)
+    * @return la liste de ces memes mots sans accents et en majuscules
+    */
+  def clearAccentToMaj(mots:List[String]):List[String]={
+    mots match {
+      case head :: next => enleveAccent(head).toUpperCase:: clearAccentToMaj(next)
+      case Nil => Nil
+    }
+  }
+  /**
+    * enleve les accents d'un mot (seulement les simples)
+    *
+    * @param mot un mot
+    * @return le mot sans accents
+    */
+  def enleveAccent(mot:String):String={
+   var res:String = mot
+   val accents:List[(String,String)]=List(("é","e"),("è","e"),("ê","e"),("à","a"),("â","a"),("ù","u"),("ç","c"),("ë","e"))
+   for ((lEx,lCorr)<-accents){
+      res=res.replaceAll(lEx,lCorr)
+   }
+   res
   }
 }
