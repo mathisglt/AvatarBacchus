@@ -1,7 +1,7 @@
 package tolerance_fautes
 import scala.io.Source
 import bdd.BDDImpl
-class FautesImpl extends FautesTrait{
+object FautesImpl extends FautesTrait{
 //ici la liste de mots 'modele' en quelque sorte
 val mots_a_verifier:List[String] = BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt"))
 
@@ -16,7 +16,7 @@ val mots_a_verifier:List[String] = BDDImpl.recupLieux(Source.fromFile("doc/Donne
     var result:List[String]=Nil
     val modelesCleared = clearAccentToMaj(mots_a_verifier)
     val motsTestsCleared = clearAccentToMaj(mots)
-    for (incr<-0 to modelesCleared.length-1){
+    for (incr<-0 to motsTestsCleared.length-1){
         testChaqueMot(motsTestsCleared(incr),modelesCleared) match {
           case -1 => result = mots(incr)::result
           case num  => result = mots_a_verifier(num)::result
@@ -35,9 +35,9 @@ val mots_a_verifier:List[String] = BDDImpl.recupLieux(Source.fromFile("doc/Donne
    */
   def testChaqueMot(motATester:String,modeles:List[String]):Int={
     for (incr<-0 to modeles.length-1){
-      if(distanceDeHammingInf1(motATester,modeles(incr))) incr
+      if(distanceDeHammingInf1(motATester,modeles(incr))) {return(incr)}
     }
-    -1
+    return -1
   }
   /** 
    * regarde si la distance de Hamming entre deux strings est supérieure ou égal à 1
@@ -71,7 +71,7 @@ val mots_a_verifier:List[String] = BDDImpl.recupLieux(Source.fromFile("doc/Donne
    * 
    * @param strtest une string test
    * @param strmodele un modele (> le test)
-   * @return si la string test a bien juste une lettre en moins par rapport au modele
+   * @return si la string test a bien juste une lettre de decalage ou moins par rapport au modele
    */
   def testDecalage(strtest:String,strmodele:String):Boolean={
     strtest.isEmpty() || 
@@ -105,4 +105,13 @@ val mots_a_verifier:List[String] = BDDImpl.recupLieux(Source.fromFile("doc/Donne
    }
    res
   }
+}
+object test extends App {
+  val test="mAirie"
+  val modeles=List("Ou","est","la","mAirie")
+  for (incr<-0 to modeles.length-1){
+    if(FautesImpl.distanceDeHammingInf1(test,modeles(incr))){
+      println(incr.toString + " " +  FautesImpl.distanceDeHammingInf1(test,modeles(incr)))
+    }
+    }
 }
