@@ -27,8 +27,8 @@ class SendButton(conv: BoxPanel,scrollBar: ScrollBar, from: InField) extends But
   case ButtonClicked(_) | KeyPressed(_, Key.Enter, _, _) if(from.text != "")=> {conv.contents += new UserPanel(from.text); // ajout à la conversation d'un message de l'utilisateur avec le texte qu'il a tapé
                                                                                 conv.contents += new RobotPanel(MachineImpl.ask(from.text).head); // ajout à la conversation de la/les reponse(s) du robot
                                                                                 from.text = ""; // efface la zone de texte
+                                                                                conv.peer.updateUI; // actualise la fenêtre
                                                                                 scrollToBottom(); // actualise la scrollBar
-                                                                                conv.revalidate; // actualise la fenêtre
                                                                               }
   }
   

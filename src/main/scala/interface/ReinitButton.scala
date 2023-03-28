@@ -20,7 +20,7 @@ class ReinitButton(conv: BoxPanel) extends Button{
   reactions +={                             // actions effectuées par le bouton
     case ButtonClicked(_) => {conv.contents.clear(); // vide le contenu du panel de conversation
                               conv.contents += new RobotPanel("Bonjour, comment puis-je vous aider ?") // rajout du premier message du robot
-                              conv.revalidate;       // actualisation de l'affichage
+                              conv.peer.updateUI;       // actualisation de l'affichage
                             }
   }
 }
