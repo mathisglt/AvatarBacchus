@@ -9,7 +9,7 @@ case object ExceptionListeVide extends Exception
 
 object AnalyseImpl extends AnalyseTrait {
 
-  val liste_lieux = BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt")).toList
+  val liste_lieux = BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt"))
   
   val listeAvecLiason = liste_lieux.map(decouper(_))
 
@@ -25,7 +25,7 @@ object AnalyseImpl extends AnalyseTrait {
   }
 
   def analyser(phrase : String): (String,String) = {
-    val phrase_corrigee: String = assembler(FautesImpl.correction(decouper(phrase)))
+    val phrase_corrigee: String = assembler(FautesImpl.correction(decouper(phrase),liste_lieux))
     analyserListe(phrase_corrigee)
   }
 
