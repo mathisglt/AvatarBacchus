@@ -6,7 +6,8 @@ object MachineImpl extends MachineDialogue {
 
   
   def ask(s: String): List[String] = {
-   List(ConstructionImpl.construire(s))
+    println(s)
+    List(ConstructionImpl.construire(s))
   }
   
   // Pour la partie test par le client

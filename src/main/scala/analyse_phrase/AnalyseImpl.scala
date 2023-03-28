@@ -14,10 +14,18 @@ object AnalyseImpl extends AnalyseTrait {
 
   def analyser(phrase : String): (String,String) = {
     val phrase_corrigee: String = assembler(FautesImpl.correction(decouper(phrase)))
-    analyserListe(liste_lieux, phrase_corrigee)
+    analyserListe(liste_lieux,phrase_corrigee)
   }
 
-  def analyserListe(lieux: List[String], phrase : String): (String, String) = {
+  def analyserListe(lieux : List[String] ,phrase : String): (String, String) = {
+    var mots = decouper(phrase)
+    // mots match {
+    //   case Nil => ("","")
+    //   case head :: next if(BDDImpl.chercherAdresse(head) != "Adresse non trouvée")=>(BDDImpl.chercherLieu(head),BDDImpl.chercherAdresse(head))
+    //   case head :: next  => analyserListe(next.mkString(" "))
+        
+    // }
+    // ("","")
     lieux match {
       case Nil => ("","")
       case head :: next => 
@@ -28,7 +36,6 @@ object AnalyseImpl extends AnalyseTrait {
             case "1, Rue Saint-Hélier" => ("Théâtre National de Bretagne",adresse)
             case "19, Place de la Gare" => ("Gare SNCF",adresse)
             case "2, Rue du Pré de Bris" => ("Théâtre la Paillette",adresse)
-            case "feur" => ("quoi",adresse)
           }
         }
         else analyserListe(next, phrase)
