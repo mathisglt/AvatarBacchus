@@ -79,14 +79,14 @@ class TestTolerance {
   }
    @Test
   def Test3_testChaqueMot():Unit={
-    assertEquals(3,FautesImpl.testChaqueMot("mAirie",listeTest))//ne marche pas
+    assertEquals(3,FautesImpl.testChaqueMot("mAirie",listeTest))
   }
    @Test
   def Test4_testChaqueMot():Unit={
     assertEquals(-1,FautesImpl.testChaqueMot("non",List()))
   }
    @Test
-  def Test1_correction():Unit={//ne marche pas surement à cause de la partie boucle de correction lors de la reconstruction de la liste
+  def Test1_correction():Unit={
     assertEquals(List("Ou","est","la","Mairie"),FautesImpl.correction(listeTest))
   }
   def Test2_correction():Unit={
