@@ -1,11 +1,10 @@
 package tolerance_fautes
 import scala.io.Source
-import bdd.BDDImpl
 import org.apache.commons.lang3.StringUtils.{stripAccents}
 object FautesImpl extends FautesTrait {
 //ici la liste de mots 'modele' en quelque sorte
-  val mots_a_verifier: List[String] =
-    BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt"))
+  //val mots_a_verifier: List[String] =
+  //  BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt"))
 
   /** applique testChaque mot sur toute une liste de mot et en renvoie la string corrigée
     *
@@ -13,14 +12,14 @@ object FautesImpl extends FautesTrait {
     * @return la meme liste corrigée
     */
 
-  def correction(mots: List[String]): List[String] = {
+  def correction(mots: List[String],modeles:List[String]): List[String] = {
     var result: List[String] = Nil
-    val modelesCleared = clearAccentToMaj(mots_a_verifier)
+    val modelesCleared = clearAccentToMaj(modeles)
     val motsTestsCleared = clearAccentToMaj(mots)
     for (incr <- 0 to motsTestsCleared.length - 1) {
       testChaqueMot(motsTestsCleared(incr), modelesCleared) match {
         case -1  => result = mots(incr) :: result
-        case num => result = mots_a_verifier(num) :: result
+        case num => result = modeles(num) :: result
       }
     }
     result.reverse
@@ -97,18 +96,5 @@ object FautesImpl extends FautesTrait {
   }
 
 
-object test extends App {
-  val test = "mAirie"
-  val modeles = List("Ou", "est", "la", "mAirie")
-  for (incr <- 0 to modeles.length - 1) {
-    if (FautesImpl.distanceDeHammingInf1(test, modeles(incr))) {
-      println(
-        incr.toString + " " + FautesImpl.distanceDeHammingInf1(
-          test,
-          modeles(incr)
-        )
-      )
-    }
-  }
-}
+
 }
