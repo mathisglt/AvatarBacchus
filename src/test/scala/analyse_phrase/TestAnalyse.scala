@@ -85,4 +85,75 @@ class TestAnalyse {
             AnalyseImpl.analyser("Place de la mairie")
         )
     }
+
+    @Test
+    def test_analyser_11 {
+        assertEquals(
+            ("Gare SNCF","19, Place de la Gare"),
+            AnalyseImpl.analyser("où est la grre")
+        )
+    }
+
+    @Test
+    def test_analyser_12 {
+        assertEquals(
+            ("Gare SNCF","19, Place de la Gare"),
+            AnalyseImpl.analyser("où est la gre")
+        )
+    }
+
+    @Test
+    def test_analyser_13 {
+        assertEquals(
+            ("Gare SNCF","19, Place de la Gare"),
+            AnalyseImpl.analyser("où est la G#Ré")
+        )
+    }
+
+    // tests unitaires de decouper
+
+    
+    @Test
+    def test_decouper_1 {
+        assertEquals(
+            List(""),
+            AnalyseImpl.decouper("")
+        )
+    }
+
+    @Test
+    def test_decouper_2 {
+        assertEquals(
+            List("hello"),
+            AnalyseImpl.decouper("hello")
+        )
+    }
+
+    @Test
+    def test_decouper_3 {
+        assertEquals(
+            List("où","est","la","mairie","?"),
+            AnalyseImpl.decouper("où est la mairie ?")
+        )
+    }
+
+    // tests unitaires pour assembler
+
+    @Test
+    def test_assembler_1 {
+        assertEquals(
+            "",
+            AnalyseImpl.assembler(Nil)
+        )
+    }
+
+    @Test
+    def test_assembler_2 {
+        assertEquals(
+            "salut les amis",
+            AnalyseImpl.assembler(List("salut","les","amis"))
+        )
+    }
+
+
 }

@@ -3,12 +3,16 @@ package analyse_phrase
 import scala.io.Source
 import scala.io.BufferedSource
 import bdd.BDDImpl
+import tolerance_fautes.FautesImpl
 
 object AnalyseImpl extends AnalyseTrait {
 
   val liste_lieux = BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt")).toList
 
-  def analyser(phrase : String): (String,String) = analyserListe(liste_lieux, phrase)
+  def analyser(phrase : String): (String,String) = {
+    val phrase_corrigee: String = assembler(FautesImpl.correction(decouper(phrase)))
+    analyserListe(liste_lieux, phrase_corrigee)
+  }
 
   def analyserListe(lieux: List[String], phrase : String): (String, String) = {
     lieux match {
@@ -25,6 +29,16 @@ object AnalyseImpl extends AnalyseTrait {
           }
         }
         else analyserListe(next, phrase)
+    }
+  }
+
+  def decouper(phrase : String): List[String] = phrase.split(" ").toList
+
+  def assembler(list : List[String]): String = {
+    list match {
+      case Nil => ""
+      case head :: Nil => head
+      case head :: next => head + " " + assembler(next)
     }
   }
 

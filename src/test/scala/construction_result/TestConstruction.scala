@@ -19,7 +19,7 @@ class TestConstruction {
     def test_construction_2 {
         //test pour un seul couple
         assertEquals(
-            "L'adresse de Mairie est : Place de la Mairie",
+            "L'adresse de Mairie de Rennes est : Place de la Mairie",
             ConstructionImpl.construire("Place de la Mairie")   
         )
     }

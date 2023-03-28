@@ -3,6 +3,8 @@ import construction_result.ConstructionImpl
 import analyse_phrase.AnalyseImpl
 
 object MachineImpl extends MachineDialogue {
+
+  
   def ask(s: String): List[String] = {
    List(ConstructionImpl.construire(s))
   }

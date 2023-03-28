@@ -22,7 +22,7 @@ class TestIntegration {
   @Test
   def test1_test(): Unit= {
     assertEquals(
-      List(),
+      List("Je ne comprends pas votre demande"),
       MachineImpl.test(List("Place de la Maie"))
     )
   }
@@ -30,7 +30,7 @@ class TestIntegration {
   @Test
   def test2_test(): Unit= {
     assertEquals(
-      List("L'adresse de Mairie est : Place de la Mairie"),
+      List("L'adresse de Mairie de Rennes est : Place de la Mairie"),
       MachineImpl.test(List("Place de la Mairie"))
     )
   }
