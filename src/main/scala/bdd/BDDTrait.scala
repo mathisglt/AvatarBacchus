@@ -18,11 +18,5 @@ trait BaseDeDonnees {
     * @return une array[String] contenant les endroits où aller
     */
   def recupLieux(file:BufferedSource):List[String]
-   /**
-    * ajoute dans le fichier txt DonneesInitiales.txt le lieu et son adresse
-    * les deux séparés par un ;
-    * @param adresse
-    * @param lieu
-    */
-    def ajouterAdresse(adresse:String,lieu:String): Unit
+
 }

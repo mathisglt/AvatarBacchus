@@ -83,13 +83,20 @@ class TestTolerance {
   def Test1_correction():Unit={
     assertEquals(List("Ou","est","la","Mairie"),FautesImpl.correction(listeTest,motsBDD))
   }
+  @Test
   def Test2_correction():Unit={
     assertEquals(List(),FautesImpl.correction(List(),motsBDD))
   }
+  @Test
   def Test3_correction():Unit={
     assertEquals(List("oui"),FautesImpl.correction(List("oui"),motsBDD))
   }
+  @Test
   def Test4_correction():Unit={
     assertEquals(List("Mairie","Gare","Gare"),FautesImpl.correction(List("mairie","gare","gae"),motsBDD))
+  }
+  @Test
+  def Test5_correction():Unit={
+    assertEquals(List("TNB","TNB","Hôtel de Ville","Hôtel de Ville"),FautesImpl.correction(List("tnb","TNA","hotel de vill","hotel de valle"),List("TNB","Hôtel de Ville")))
   }
 }

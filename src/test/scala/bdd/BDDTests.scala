@@ -21,6 +21,10 @@ class TestBDD{
     def testchercheradresseConnuv4{
        assertEquals("19, Place de la Gare",BDDImpl.chercherAdresse("Gare"))
     }
+    @Test   
+    def testchercheradresseConnuv5{
+       assertEquals("1, Rue Saint-Hélier",BDDImpl.chercherAdresse("Ou est le TNB ?"))
+    }
     @Test
     def testchercheradresseConnuv2Minuscules{
        assertEquals("Place de la Mairie",BDDImpl.chercherAdresse("mairie"))
@@ -69,6 +73,6 @@ class TestBDD{
     }
     @Test
     def testchercheradressebug3{
-       assertEquals("Adresse non trouvée",BDDImpl.chercherAdresse("tnb"))
+       assertEquals("1, Rue Saint-Hélier",BDDImpl.chercherAdresse("tnb"))
     }
 }

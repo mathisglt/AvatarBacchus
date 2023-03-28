@@ -26,6 +26,7 @@ object AnalyseImpl extends AnalyseTrait {
 
   def analyser(phrase : String): (String,String) = {
     val phrase_corrigee: String = assembler(FautesImpl.correction(decouper(phrase),liste_lieux.concat(List("TNB","Hôtel de Ville"))))
+    println("corrigé : " + phrase_corrigee)
     analyserListe(phrase_corrigee)
   }
 
