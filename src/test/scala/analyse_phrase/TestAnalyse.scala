@@ -200,5 +200,35 @@ class TestAnalyse {
         )
     }
 
+        //Tests de filtreLiason
+    @Test
+    def test_filtreLiason_1 {
+        assertEquals(
+            List("Hôtel","Ville") ,
+            AnalyseImpl.filtreLiaison(List("Hôtel" ,"de", "Ville"))
+        )
+    }
+     @Test
+    def test_filtreLiason_2 {
+        assertEquals(
+            List("Hôtel","Ville"),
+            AnalyseImpl.filtreLiaison(List("Hôtel","Ville"))
+        )
+    }
+  @Test
+    def test_filtreLiason_3 {
+        assertEquals(
+            Nil,
+            AnalyseImpl.filtreLiaison(Nil)
+        )
+    }
+      @Test
+    def test_filtreLiason_4 {
+        assertEquals(
+            List("gare","Rennes"),
+            AnalyseImpl.filtreLiaison(List("de","gare","de","Rennes"))
+        )
+    }
+    
 
 }
