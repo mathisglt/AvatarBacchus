@@ -14,7 +14,7 @@ object BDDImpl extends BaseDeDonnees{
     def chercherAdresse(str: String): String = {
         for (ligne <- lines){
             val fields = ligne.split(";")
-            if ((fields(0).toLowerCase).equals(str.toLowerCase())){
+            if ((fields(0).toLowerCase).contains(str.toLowerCase())){
                 return fields(1)
             }
         }
@@ -30,7 +30,7 @@ object BDDImpl extends BaseDeDonnees{
             listeFinale=listeFinale:+(listeDeMots(i))
         }
         i=i+1
-    }
+    }    
     listeFinale.toList
   }
   /**
