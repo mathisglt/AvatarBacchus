@@ -11,11 +11,23 @@ object BDDImpl extends BaseDeDonnees{
     // TEST2
     
     val lines = Source.fromFile("doc/DonneesInitiales.txt").getLines.toArray
-    def chercherAdresse(str: String): String = {
+    var banwords = List("de","du","des","la","le","les"," ","théâtre","où")
+    def chercherAdresse(mot: String): String = {
+        if (mot.length == 0) return "Adresse non trouvée"
         for (ligne <- lines){
             val fields = ligne.split(";")
-            if ((fields(0).toLowerCase).contains(str.toLowerCase())){
+            if ((fields(0).toLowerCase).contains(mot.toLowerCase())&& !banwords.contains(mot.toLowerCase())){
                 return fields(1)
+            }
+        }
+        "Adresse non trouvée"
+    }
+    def chercherLieu(str: String): String = {
+        if (str == "") {"Adresse non trouvée"}
+        for (ligne <- lines){
+            val fields = ligne.split(";")
+            if ((fields(0).toLowerCase).contains(str.toLowerCase())&& !banwords.contains(str.toLowerCase())){
+                return fields(0)
             }
         }
         "Adresse non trouvée"
