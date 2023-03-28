@@ -5,9 +5,12 @@ import scala.io.BufferedSource
 import bdd.BDDImpl
 import tolerance_fautes.FautesImpl
 
+case object ExceptionListeVide extends Exception
+
 object AnalyseImpl extends AnalyseTrait {
 
   val liste_lieux = BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt")).toList
+  val liste_liste_lieux = liste_lieux.map(str => decouper(str))
 
   def analyser(phrase : String): (String,String) = {
     val phrase_corrigee: String = assembler(FautesImpl.correction(decouper(phrase)))
@@ -39,16 +42,10 @@ object AnalyseImpl extends AnalyseTrait {
     }
   }
 
-  def decouper(phrase : String): List[String] = phrase.split(" ").toList
+  def decouper(phrase : String): List[String] = phrase.split("[ .!?,;]+").toList
 
-  def assembler(list : List[String]): String = {
-    list match {
-      case Nil => ""
-      case head :: Nil => head
-      case head :: next => head + " " + assembler(next)
-    }
-  }
+  def assembler(list : List[String]): String = if (list.isEmpty) throw ExceptionListeVide else list.reduce(_ + " " + _)
 
-  def politeTest_Bonjour(phrase: String): Boolean = phrase.toLowerCase().contains("bonjour") | phrase.toLowerCase().contains("salut") | phrase.toLowerCase().contains("bonsoir")
+  def politeTest_Bonjour(phrase: String): Boolean = phrase.toLowerCase().contains("bonjour") || phrase.toLowerCase().contains("salut") || phrase.toLowerCase().contains("bonsoir")
   
 }
