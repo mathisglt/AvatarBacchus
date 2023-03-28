@@ -10,6 +10,6 @@ trait FautesTrait {
   // -une fonction qui prend une liste de chaines de caracteres et en enleve les accents puis les mets en majuscules(potentiellement par deux fonctions auxiliaires)
   // -une fonction qui compare deux mots avec levenstein
 
-  def correction(mots: List[String]):List[String]
+  def correction(mots: List[String],modeles:List[String]):List[String]
   def clearAccentToMaj(mots: List[String]):List[String]
 }
