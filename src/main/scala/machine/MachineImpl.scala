@@ -12,6 +12,8 @@ object MachineImpl extends MachineDialogue {
   // Pour la partie test par le client
   def reinit(): Unit = ()
   def test(l: List[String]): List[String] = {
+    println(l)
+    println(l.map(x => ConstructionImpl.construire(x)))
     l.map(x => ConstructionImpl.construire(x))
   }
 }
