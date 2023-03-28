@@ -200,5 +200,21 @@ class TestAnalyse {
         )
     }
 
+    @Test
+    def test_politeTest_6: Unit = {
+        assertEquals(
+            true,
+            AnalyseImpl.politeTest_Bonjour("bnjour")
+        )
+    }
+
+    @Test
+    def test_politeTest_7: Unit = {
+        assertEquals(
+            true,
+            AnalyseImpl.politeTest_Bonjour("banjour")
+        )
+    }
+
 
 }
