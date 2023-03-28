@@ -11,32 +11,32 @@ object AnalyseImpl extends AnalyseTrait {
 
   def analyser(phrase : String): (String,String) = {
     val phrase_corrigee: String = assembler(FautesImpl.correction(decouper(phrase)))
-    analyserListe(liste_lieux,phrase_corrigee)
+    analyserListe(phrase_corrigee)
   }
 
-  def analyserListe(lieux : List[String] ,phrase : String): (String, String) = {
+  def analyserListe(phrase : String): (String, String) = {
     var mots = decouper(phrase)
-    // mots match {
-    //   case Nil => ("","")
-    //   case head :: next if(BDDImpl.chercherAdresse(head) != "Adresse non trouvée")=>(BDDImpl.chercherLieu(head),BDDImpl.chercherAdresse(head))
-    //   case head :: next  => analyserListe(next.mkString(" "))
-        
-    // }
-    // ("","")
-    lieux match {
+    mots match {
       case Nil => ("","")
-      case head :: next => 
-        if (phrase.toLowerCase().contains(head.toLowerCase())) {
-          val adresse = BDDImpl.chercherAdresse(head)
-          adresse match {
-            case "Place de la Mairie" => ("Mairie de Rennes",adresse)
-            case "1, Rue Saint-Hélier" => ("Théâtre National de Bretagne",adresse)
-            case "19, Place de la Gare" => ("Gare SNCF",adresse)
-            case "2, Rue du Pré de Bris" => ("Théâtre la Paillette",adresse)
-          }
-        }
-        else analyserListe(next, phrase)
+      case head :: next => {
+      if(BDDImpl.chercherAdresse(head) != "Adresse non trouvée"){ (BDDImpl.chercherLieu(head),BDDImpl.chercherAdresse(head)) }
+      else return analyserListe(next.mkString(" "))
+      }
     }
+    // lieux match {
+    //   case Nil => ("","")
+    //   case head :: next => 
+    //     if (BDDImpl.chercherAdresse(head) != "Adresse non trouvée") {
+    //       val adresse = BDDImpl.chercherAdresse(head)
+    //       adresse match {
+    //         case "Place de la Mairie" => ("Mairie de Rennes",adresse)
+    //         case "1, Rue Saint-Hélier" => ("Théâtre National de Bretagne",adresse)
+    //         case "19, Place de la Gare" => ("Gare SNCF",adresse)
+    //         case "2, Rue du Pré de Bris" => ("Théâtre la Paillette",adresse)
+    //       }
+    //     }
+    //     else analyserListe(next, phrase)
+    // }
   }
 
   def decouper(phrase : String): List[String] = phrase.split(" ").toList
