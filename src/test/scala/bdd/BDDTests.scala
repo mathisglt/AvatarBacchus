@@ -50,6 +50,21 @@ class TestBDD{
     def testchercheradresseBanword3{
        assertEquals("Adresse non trouvée",BDDImpl.chercherAdresse("LE"))
     }
-    
-   
+      @Test
+    def testchercheradresseSpace{
+       assertEquals("Adresse non trouvée",BDDImpl.chercherAdresse(" "))
+    }
+     @Test
+    def testchercheradresseVoid{
+       assertEquals("Adresse non trouvée",BDDImpl.chercherAdresse(""))
+    }
+    //askdhlkajh
+    @Test
+    def testchercheradressebug1{
+       assertEquals("Adresse non trouvée",BDDImpl.chercherAdresse("askdhlkajh"))
+    }
+   @Test
+    def testchercheradressebug2{
+       assertEquals("Adresse non trouvée",BDDImpl.chercherLieu("askdhlkajh"))
+    }
 }
