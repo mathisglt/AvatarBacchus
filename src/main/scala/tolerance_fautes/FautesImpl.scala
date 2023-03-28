@@ -1,6 +1,7 @@
 package tolerance_fautes
 import scala.io.Source
 import bdd.BDDImpl
+import org.apache.commons.lang3.StringUtils.{stripAccents}
 object FautesImpl extends FautesTrait {
 //ici la liste de mots 'modele' en quelque sorte
   val mots_a_verifier: List[String] =
@@ -90,34 +91,12 @@ object FautesImpl extends FautesTrait {
   def clearAccentToMaj(mots: List[String]): List[String] = {
     mots match {
       case head :: next =>
-        enleveAccent(head).toUpperCase :: clearAccentToMaj(next)
+        stripAccents(head).toUpperCase :: clearAccentToMaj(next)
       case Nil => Nil
     }
   }
 
-  /** enleve les accents d'un mot (seulement les simples)
-    *
-    * @param mot un mot
-    * @return le mot sans accents
-    */
-  def enleveAccent(mot: String): String = {
-    var res: String = mot
-    val accents: List[(String, String)] = List(
-      ("é", "e"),
-      ("è", "e"),
-      ("ê", "e"),
-      ("à", "a"),
-      ("â", "a"),
-      ("ù", "u"),
-      ("ç", "c"),
-      ("ë", "e")
-    )
-    for ((lEx, lCorr) <- accents) {
-      res = res.replaceAll(lEx, lCorr)
-    }
-    res
-  }
-}
+
 object test extends App {
   val test = "mAirie"
   val modeles = List("Ou", "est", "la", "mAirie")
@@ -131,4 +110,5 @@ object test extends App {
       )
     }
   }
+}
 }

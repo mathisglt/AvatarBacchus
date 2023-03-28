@@ -8,7 +8,8 @@ libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-xml" % "2.0.0-M3",
   "org.scala-lang.modules" %% "scala-swing" % "2.1.1",
   "junit" % "junit" % "4.12" % Test,
-  "com.novocode" % "junit-interface" % "0.11" % Test exclude ("junit", "junit-dep")
+  "com.novocode" % "junit-interface" % "0.11" % Test exclude ("junit", "junit-dep"),
+  "org.apache.commons" % "commons-lang3" % "3.12.0"
   // "com.eed3si9n" % "sbt-assembly" % "2.1.1"
 )
 
