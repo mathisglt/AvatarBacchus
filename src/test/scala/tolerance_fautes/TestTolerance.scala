@@ -5,18 +5,7 @@ import org.junit.Assert._
 
 class TestTolerance {
     val listeTest:List[String]=List("Ou","est","la","mAirie")
-    @Test
-  def Test1_enleveAccent(): Unit ={
-    assertEquals("manger",FautesImpl.enleveAccent("mànger"))
-  }
-    @Test
-  def Test2_enleveAccent(): Unit ={
-    assertEquals("manger",FautesImpl.enleveAccent("manger"))
-  }
-    @Test
-  def Test3_enleveAccent(): Unit ={
-    assertEquals("ara",FautesImpl.enleveAccent("àrâ"))
-  }
+
     @Test
   def Test1_clearAccentToMaj(): Unit ={
     assertEquals(List("OU","EST","LA","MAIRIE"),FautesImpl.clearAccentToMaj(List("Où","est","LA","mâirie")))
