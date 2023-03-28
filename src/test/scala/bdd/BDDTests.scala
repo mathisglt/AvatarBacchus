@@ -67,4 +67,8 @@ class TestBDD{
     def testchercheradressebug2{
        assertEquals("Adresse non trouvée",BDDImpl.chercherLieu("askdhlkajh"))
     }
+    @Test
+    def testchercheradressebug3{
+       assertEquals("Adresse non trouvée",BDDImpl.chercherAdresse("tnb"))
+    }
 }

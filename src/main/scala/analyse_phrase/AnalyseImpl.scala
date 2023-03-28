@@ -33,6 +33,9 @@ object AnalyseImpl extends AnalyseTrait {
     var mots = decouper(phrase)
     mots match {
       case Nil => ("","")
+      case head :: Nil =>
+        if(BDDImpl.chercherAdresse(head) != "Adresse non trouvée"){ (BDDImpl.chercherLieu(head),BDDImpl.chercherAdresse(head)) } 
+        else ("","")
       case head :: next => {
       if(BDDImpl.chercherAdresse(head) != "Adresse non trouvée"){ (BDDImpl.chercherLieu(head),BDDImpl.chercherAdresse(head)) }
       else return analyserListe(next.mkString(" "))
