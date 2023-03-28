@@ -97,18 +97,5 @@ object FautesImpl extends FautesTrait {
   }
 
 
-object test extends App {
-  val test = "mAirie"
-  val modeles = List("Ou", "est", "la", "mAirie")
-  for (incr <- 0 to modeles.length - 1) {
-    if (FautesImpl.distanceDeHammingInf1(test, modeles(incr))) {
-      println(
-        incr.toString + " " + FautesImpl.distanceDeHammingInf1(
-          test,
-          modeles(incr)
-        )
-      )
-    }
-  }
-}
+
 }
