@@ -61,6 +61,9 @@ object AnalyseImpl extends AnalyseTrait {
 
   def assembler(list : List[String]): String = if (list.isEmpty) throw ExceptionListeVide else list.reduce(_ + " " + _)
 
-  def politeTest_Bonjour(phrase: String): Boolean = phrase.toLowerCase().contains("bonjour") || phrase.toLowerCase().contains("salut") || phrase.toLowerCase().contains("bonsoir")
+  def politeTest_Bonjour(phrase: String): Boolean = {
+    val phrase_corrigee: String = assembler(FautesImpl.correction(decouper(phrase), List("bonjour","bonsoir","salut")))
+    phrase_corrigee.toLowerCase().contains("bonjour") || phrase_corrigee.toLowerCase().contains("salut") || phrase_corrigee.toLowerCase().contains("bonsoir")
+  }
   
 }
