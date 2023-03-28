@@ -2,8 +2,13 @@ package tolerance_fautes
 import tolerance_fautes.FautesImpl
 import org.junit.Test
 import org.junit.Assert._
+import bdd.BDDImpl
+import scala.io.Source
 
 class TestTolerance {
+  val motsBDD: List[String] =
+    BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt"))
+
     val listeTest:List[String]=List("Ou","est","la","mAirie")
 
     @Test
@@ -74,17 +79,17 @@ class TestTolerance {
   def Test4_testChaqueMot():Unit={
     assertEquals(-1,FautesImpl.testChaqueMot("non",List()))
   }
-  //  @Test
-  // def Test1_correction():Unit={
-  //   assertEquals(List("Ou","est","la","Mairie"),FautesImpl.correction(listeTest))
-  // }
-  // def Test2_correction():Unit={
-  //   assertEquals(List(),FautesImpl.correction(List()))
-  // }
-  // def Test3_correction():Unit={
-  //   assertEquals(List("oui"),FautesImpl.correction(List("oui")))
-  // }
-  // def Test4_correction():Unit={
-  //   assertEquals(List("Mairie","Gare","Gare"),FautesImpl.correction(List("mairie","gare","gae")))
-  // }
+   @Test
+  def Test1_correction():Unit={
+    assertEquals(List("Ou","est","la","Mairie"),FautesImpl.correction(listeTest,motsBDD))
+  }
+  def Test2_correction():Unit={
+    assertEquals(List(),FautesImpl.correction(List(),motsBDD))
+  }
+  def Test3_correction():Unit={
+    assertEquals(List("oui"),FautesImpl.correction(List("oui"),motsBDD))
+  }
+  def Test4_correction():Unit={
+    assertEquals(List("Mairie","Gare","Gare"),FautesImpl.correction(List("mairie","gare","gae"),motsBDD))
+  }
 }

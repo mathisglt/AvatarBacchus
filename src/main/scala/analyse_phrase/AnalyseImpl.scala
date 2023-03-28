@@ -13,7 +13,7 @@ object AnalyseImpl extends AnalyseTrait {
   val liste_liste_lieux = liste_lieux.map(str => decouper(str))
 
   def analyser(phrase : String): (String,String) = {
-    val phrase_corrigee: String = assembler(FautesImpl.correction(decouper(phrase), liste_lieux))
+    val phrase_corrigee: String = assembler(FautesImpl.correction(decouper(phrase),liste_lieux))
     analyserListe(liste_lieux,phrase_corrigee)
   }
 

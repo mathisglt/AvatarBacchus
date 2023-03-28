@@ -3,9 +3,6 @@ import scala.io.Source
 import org.apache.commons.lang3.StringUtils.{stripAccents}
 object FautesImpl extends FautesTrait {
 //ici la liste de mots 'modele' en quelque sorte
-  //val mots_a_verifier: List[String] =
-  //  BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt"))
-
   /** applique testChaque mot sur toute une liste de mot et en renvoie la string corrigée
     *
     * @param mots une liste de mots
