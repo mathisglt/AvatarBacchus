@@ -13,7 +13,7 @@ object AnalyseImpl extends AnalyseTrait {
   val liste_liste_lieux = liste_lieux.map(str => decouper(str))
 
   def analyser(phrase : String): (String,String) = {
-    val phrase_corrigee: String = assembler(FautesImpl.correction(decouper(phrase)))
+    val phrase_corrigee: String = assembler(FautesImpl.correction(decouper(phrase), liste_lieux))
     analyserListe(liste_lieux,phrase_corrigee)
   }
 
@@ -47,8 +47,8 @@ object AnalyseImpl extends AnalyseTrait {
   def assembler(list : List[String]): String = if (list.isEmpty) throw ExceptionListeVide else list.reduce(_ + " " + _)
 
   def politeTest_Bonjour(phrase: String): Boolean = {
-    val phrase_corrigee = FautesImpl.correction(decouper(phrase), List("bonjour","bonsoir","salut"))
-    phrase.toLowerCase().contains("bonjour") || phrase.toLowerCase().contains("salut") || phrase.toLowerCase().contains("bonsoir")
+    val phrase_corrigee: String = assembler(FautesImpl.correction(decouper(phrase), List("bonjour","bonsoir","salut")))
+    phrase_corrigee.toLowerCase().contains("bonjour") || phrase_corrigee.toLowerCase().contains("salut") || phrase_corrigee.toLowerCase().contains("bonsoir")
   }
   
 }

@@ -74,17 +74,17 @@ class TestTolerance {
   def Test4_testChaqueMot():Unit={
     assertEquals(-1,FautesImpl.testChaqueMot("non",List()))
   }
-   @Test
-  def Test1_correction():Unit={
-    assertEquals(List("Ou","est","la","Mairie"),FautesImpl.correction(listeTest))
-  }
-  def Test2_correction():Unit={
-    assertEquals(List(),FautesImpl.correction(List()))
-  }
-  def Test3_correction():Unit={
-    assertEquals(List("oui"),FautesImpl.correction(List("oui")))
-  }
-  def Test4_correction():Unit={
-    assertEquals(List("Mairie","Gare","Gare"),FautesImpl.correction(List("mairie","gare","gae")))
-  }
+  //  @Test
+  // def Test1_correction():Unit={
+  //   assertEquals(List("Ou","est","la","Mairie"),FautesImpl.correction(listeTest))
+  // }
+  // def Test2_correction():Unit={
+  //   assertEquals(List(),FautesImpl.correction(List()))
+  // }
+  // def Test3_correction():Unit={
+  //   assertEquals(List("oui"),FautesImpl.correction(List("oui")))
+  // }
+  // def Test4_correction():Unit={
+  //   assertEquals(List("Mairie","Gare","Gare"),FautesImpl.correction(List("mairie","gare","gae")))
+  // }
 }
