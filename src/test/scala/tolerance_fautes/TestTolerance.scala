@@ -2,8 +2,12 @@ package tolerance_fautes
 import tolerance_fautes.FautesImpl
 import org.junit.Test
 import org.junit.Assert._
+import bdd.BDDImpl
 
 class TestTolerance {
+  val motsBDD: List[String] =
+    BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt"))
+
     val listeTest:List[String]=List("Ou","est","la","mAirie")
 
     @Test
@@ -76,15 +80,15 @@ class TestTolerance {
   }
    @Test
   def Test1_correction():Unit={
-    assertEquals(List("Ou","est","la","Mairie"),FautesImpl.correction(listeTest))
+    assertEquals(List("Ou","est","la","Mairie"),FautesImpl.correction(listeTest,motsBDD))
   }
   def Test2_correction():Unit={
-    assertEquals(List(),FautesImpl.correction(List()))
+    assertEquals(List(),FautesImpl.correction(List(),motsBDD))
   }
   def Test3_correction():Unit={
-    assertEquals(List("oui"),FautesImpl.correction(List("oui")))
+    assertEquals(List("oui"),FautesImpl.correction(List("oui"),motsBDD))
   }
   def Test4_correction():Unit={
-    assertEquals(List("Mairie","Gare","Gare"),FautesImpl.correction(List("mairie","gare","gae")))
+    assertEquals(List("Mairie","Gare","Gare"),FautesImpl.correction(List("mairie","gare","gae"),motsBDD))
   }
 }
