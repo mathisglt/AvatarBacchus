@@ -16,7 +16,8 @@ object BDDImpl extends BaseDeDonnees{
         if (mot.length == 0) return "Adresse non trouvée"
         for (ligne <- lines){
             val fields = ligne.split(";")
-            if ((fields(0).toLowerCase).contains(mot.toLowerCase())&& !banwords.contains(mot.toLowerCase())){
+            if ( ((fields(0).toLowerCase).contains(" "+ mot.toLowerCase())
+              || (fields(0).toLowerCase).contains(mot.toLowerCase()+ " ")) && !banwords.contains(mot.toLowerCase())){
                 return fields(1)
             }
         }
