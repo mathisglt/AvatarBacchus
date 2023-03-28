@@ -8,11 +8,25 @@ import tolerance_fautes.FautesImpl
 object AnalyseImpl extends AnalyseTrait {
 
   val liste_lieux = BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt")).toList
+  
+  val listeAvecLiason = liste_lieux.map(decouper(_))
+
+  def filtreLiaison(listeLieu : List[String]): List[String] = {
+  val liaisons = List("de", "la")
+  listeLieu.filter(listeLieu => !liaisons.contains(listeLieu))
+  //   listeLieu.map(decouper(_))
+     
+  //   for(x <- liaisons) {
+  //    listeLieu.map(_.filter( _ != x))
+  //   } 
+  //    listeLieu.map(assembler(_))
+  }
 
   def analyser(phrase : String): (String,String) = {
     val phrase_corrigee: String = assembler(FautesImpl.correction(decouper(phrase)))
     analyserListe(liste_lieux, phrase_corrigee)
   }
+ 
 
   def analyserListe(lieux: List[String], phrase : String): (String, String) = {
     lieux match {
