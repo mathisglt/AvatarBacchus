@@ -1,25 +1,22 @@
 package tolerance_fautes
 import scala.io.Source
-import bdd.BDDImpl
+import org.apache.commons.lang3.StringUtils.{stripAccents}
 object FautesImpl extends FautesTrait {
 //ici la liste de mots 'modele' en quelque sorte
-  val mots_a_verifier: List[String] =
-    BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt"))
-
   /** applique testChaque mot sur toute une liste de mot et en renvoie la string corrigée
     *
     * @param mots une liste de mots
     * @return la meme liste corrigée
     */
 
-  def correction(mots: List[String]): List[String] = {
+  def correction(mots: List[String],modeles:List[String]): List[String] = {
     var result: List[String] = Nil
-    val modelesCleared = clearAccentToMaj(mots_a_verifier)
+    val modelesCleared = clearAccentToMaj(modeles)
     val motsTestsCleared = clearAccentToMaj(mots)
     for (incr <- 0 to motsTestsCleared.length - 1) {
       testChaqueMot(motsTestsCleared(incr), modelesCleared) match {
         case -1  => result = mots(incr) :: result
-        case num => result = mots_a_verifier(num) :: result
+        case num => result = modeles(num) :: result
       }
     }
     result.reverse
@@ -90,45 +87,11 @@ object FautesImpl extends FautesTrait {
   def clearAccentToMaj(mots: List[String]): List[String] = {
     mots match {
       case head :: next =>
-        enleveAccent(head).toUpperCase :: clearAccentToMaj(next)
+        stripAccents(head).toUpperCase :: clearAccentToMaj(next)
       case Nil => Nil
     }
   }
 
-  /** enleve les accents d'un mot (seulement les simples)
-    *
-    * @param mot un mot
-    * @return le mot sans accents
-    */
-  def enleveAccent(mot: String): String = {
-    var res: String = mot
-    val accents: List[(String, String)] = List(
-      ("é", "e"),
-      ("è", "e"),
-      ("ê", "e"),
-      ("à", "a"),
-      ("â", "a"),
-      ("ù", "u"),
-      ("ç", "c"),
-      ("ë", "e")
-    )
-    for ((lEx, lCorr) <- accents) {
-      res = res.replaceAll(lEx, lCorr)
-    }
-    res
-  }
-}
-object test extends App {
-  val test = "mAirie"
-  val modeles = List("Ou", "est", "la", "mAirie")
-  for (incr <- 0 to modeles.length - 1) {
-    if (FautesImpl.distanceDeHammingInf1(test, modeles(incr))) {
-      println(
-        incr.toString + " " + FautesImpl.distanceDeHammingInf1(
-          test,
-          modeles(incr)
-        )
-      )
-    }
-  }
+
+
 }

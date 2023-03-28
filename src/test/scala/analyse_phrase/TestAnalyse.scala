@@ -7,7 +7,7 @@ class TestAnalyse {
     // tests unitaires fonction "analyser"
 
     @Test
-    def test_analyser_01 {
+    def test_analyser_01: Unit = {
         assertEquals(
             ("",""),
             AnalyseImpl.analyser("où et ?")
@@ -15,7 +15,7 @@ class TestAnalyse {
     }
 
     @Test
-    def test_analyser_02 {
+    def test_analyser_02: Unit = {
         assertEquals(
             ("Mairie de Rennes","Place de la Mairie"),
             AnalyseImpl.analyser("où est la mairie ?")
@@ -23,7 +23,7 @@ class TestAnalyse {
     }
 
     @Test
-    def test_analyser_03 {
+    def test_analyser_03: Unit = {
         assertEquals(
             ("Mairie de Rennes","Place de la Mairie"),
             AnalyseImpl.analyser("où est la Mairie de Rennes ?")
@@ -31,7 +31,7 @@ class TestAnalyse {
     }
 
     @Test
-    def test_analyser_04 {
+    def test_analyser_04: Unit = {
         assertEquals( // XXX "mairie se trouve avant gare dans la bdd"
             ("Mairie de Rennes","Place de la Mairie"),
             AnalyseImpl.analyser("où sont la gare sncf et la mairie ?")
@@ -39,7 +39,7 @@ class TestAnalyse {
     }
 
     @Test
-    def test_analyser_05 {
+    def test_analyser_05: Unit = {
         assertEquals(
             ("",""),
             AnalyseImpl.analyser("où se trouvent Rennes et la Bretagne ?")
@@ -47,7 +47,7 @@ class TestAnalyse {
     }
 
     @Test
-    def test_analyser_06 {
+    def test_analyser_06: Unit = {
         assertEquals(
             ("Théâtre National de Bretagne","1, Rue Saint-Hélier"),
             AnalyseImpl.analyser("où se trouvent le tnb et le théâtre de Bretagne ?")
@@ -55,7 +55,7 @@ class TestAnalyse {
     }
 
     @Test
-    def test_analyser_07 {
+    def test_analyser_07: Unit = {
         assertEquals(
             ("Mairie de Rennes","Place de la Mairie"),
             AnalyseImpl.analyser("où est hôtel de ville")
@@ -63,7 +63,7 @@ class TestAnalyse {
     }
 
     @Test // ne marche pas encore
-    def test_analyser_08 {
+    def test_analyser_08: Unit = {
         assertEquals(
             ("Mairie de Rennes","Place de la Mairie"),
             AnalyseImpl.analyser("où est l'hôtel de ville")
@@ -71,7 +71,7 @@ class TestAnalyse {
     }
 
     @Test
-    def test_analyser_09 {
+    def test_analyser_09: Unit = {
         assertEquals(
             ("Gare SNCF","19, Place de la Gare"),
             AnalyseImpl.analyser("où se trouve la gare sncf ?")
@@ -79,7 +79,7 @@ class TestAnalyse {
     }
 
     @Test
-    def test_analyser_10 {
+    def test_analyser_10: Unit = {
         assertEquals(
             ("Mairie de Rennes","Place de la Mairie"),
             AnalyseImpl.analyser("Place de la mairie")
@@ -87,7 +87,7 @@ class TestAnalyse {
     }
 
     @Test
-    def test_analyser_11 {
+    def test_analyser_11: Unit = {
         assertEquals(
             ("Gare SNCF","19, Place de la Gare"),
             AnalyseImpl.analyser("où est la grre")
@@ -95,7 +95,7 @@ class TestAnalyse {
     }
 
     @Test
-    def test_analyser_12 {
+    def test_analyser_12: Unit = {
         assertEquals(
             ("Gare SNCF","19, Place de la Gare"),
             AnalyseImpl.analyser("où est la gre")
@@ -103,7 +103,7 @@ class TestAnalyse {
     }
 
     @Test
-    def test_analyser_13 {
+    def test_analyser_13: Unit = {
         assertEquals(
             ("Gare SNCF","19, Place de la Gare"),
             AnalyseImpl.analyser("où est la G#Ré")
@@ -114,7 +114,7 @@ class TestAnalyse {
 
     
     @Test
-    def test_decouper_1 {
+    def test_decouper_1: Unit = {
         assertEquals(
             List(""),
             AnalyseImpl.decouper("")
@@ -122,7 +122,7 @@ class TestAnalyse {
     }
 
     @Test
-    def test_decouper_2 {
+    def test_decouper_2: Unit = {
         assertEquals(
             List("hello"),
             AnalyseImpl.decouper("hello")
@@ -130,9 +130,9 @@ class TestAnalyse {
     }
 
     @Test
-    def test_decouper_3 {
+    def test_decouper_3: Unit = {
         assertEquals(
-            List("où","est","la","mairie","?"),
+            List("où","est","la","mairie"),
             AnalyseImpl.decouper("où est la mairie ?")
         )
     }
@@ -140,18 +140,63 @@ class TestAnalyse {
     // tests unitaires pour assembler
 
     @Test
-    def test_assembler_1 {
-        assertEquals(
-            "",
+    def test_assembler_1: Unit = {
+        try {
             AnalyseImpl.assembler(Nil)
+            fail();
+        }
+        catch {
+            case ExceptionListeVide => ()
+        }
+    }
+
+    @Test
+    def test_assembler_2: Unit = {
+        assertEquals(
+            "salut les amis",
+            AnalyseImpl.assembler(List("salut","les","amis"))
+        )
+    }
+
+    // tests unitaires de politeTest_Bonjour
+
+    @Test
+    def test_politeTest_1: Unit = {
+        assertEquals(
+            false,
+            AnalyseImpl.politeTest_Bonjour("yo")
         )
     }
 
     @Test
-    def test_assembler_2 {
+    def test_politeTest_2: Unit = {
         assertEquals(
-            "salut les amis",
-            AnalyseImpl.assembler(List("salut","les","amis"))
+            true,
+            AnalyseImpl.politeTest_Bonjour("bonjour, bonsoir, saluuuuut")
+        )
+    }
+
+    @Test
+    def test_politeTest_3: Unit = {
+        assertEquals(
+            true,
+            AnalyseImpl.politeTest_Bonjour("BonJoUr")
+        )
+    }
+
+    @Test
+    def test_politeTest_4: Unit = {
+        assertEquals(
+            true,
+            AnalyseImpl.politeTest_Bonjour("bonsoir")
+        )
+    }
+
+    @Test
+    def test_politeTest_5: Unit = {
+        assertEquals(
+            true,
+            AnalyseImpl.politeTest_Bonjour("salut")
         )
     }
 
