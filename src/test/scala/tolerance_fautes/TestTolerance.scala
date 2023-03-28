@@ -3,6 +3,7 @@ import tolerance_fautes.FautesImpl
 import org.junit.Test
 import org.junit.Assert._
 import bdd.BDDImpl
+import scala.io.Source
 
 class TestTolerance {
   val motsBDD: List[String] =
