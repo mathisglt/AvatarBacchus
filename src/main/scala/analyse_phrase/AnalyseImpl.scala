@@ -6,7 +6,7 @@ import bdd.BDDImpl
 import tolerance_fautes.FautesImpl
 
 case object ExceptionListeVide extends Exception
-
+//TODO scalaDoc
 object AnalyseImpl extends AnalyseTrait {
 
   val liste_lieux = BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt"))

@@ -37,6 +37,7 @@ object BDDImpl extends BaseDeDonnees{
         }
         "Adresse non trouvée"
     }
+    //TODO scaladoc
     def chercherLieu(mot: String): String = {
         if (mot.isEmpty()) {"Adresse non trouvée"}
         for (ligne <- lignesBDD){
@@ -50,12 +51,20 @@ object BDDImpl extends BaseDeDonnees{
         }
         "Adresse non trouvée"
     }
-  def recupLieux(file: BufferedSource): List[String] = {
-  val listeFinale = ArrayBuffer[String]()
-  for (line <- file.getLines().grouped(2)) {
-    listeFinale += line(0).split(';')(0)
+    
+   
+  def recupLieux(file:BufferedSource):List[String]={
+    val fileEnString=file.mkString
+    val listeDeMots=fileEnString.split("[;\r\n]+")
+    var listeFinale:Array[String]=Array()
+    var i:Int =0
+    while (i<listeDeMots.length){
+        if (i%2==0){
+            listeFinale=listeFinale:+(listeDeMots(i))
+        }
+        i=i+1
+    }    
+    listeFinale.toList
   }
-  listeFinale.toList
-}
   
 }
