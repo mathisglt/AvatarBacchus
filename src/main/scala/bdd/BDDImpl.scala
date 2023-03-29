@@ -43,6 +43,14 @@ object BDDImpl extends BaseDeDonnees{
         }
         "Adresse non trouvée"
     }
+    
+    /**
+     * extrait les lieux d'un fichier
+     * 
+     * @param file un fichier 
+     * @return la liste des lieux dans ce fichier (ne marche correctement qu'avec un fichier ayant la même formulation que DonneesInitiales) 
+     */
+
   def recupLieux(file:BufferedSource):List[String]={
     val fileEnString=file.mkString
     val listeDeMots=fileEnString.split("[;\r\n]+")
