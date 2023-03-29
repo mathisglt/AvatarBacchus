@@ -3,7 +3,7 @@ package bdd
 import java.util.ArrayList
 import scala.io.BufferedSource
 trait BaseDeDonnees {
-  val lines: Array[String]
+  val lignesBDD: Array[String]
   /**
     * Recherche dans le fichier texte DonneesInitiales si l'adresse existe , élimine les cas ou un mot
     * de liaison est donnée puisqu'il correspond à plusieurs adresses
