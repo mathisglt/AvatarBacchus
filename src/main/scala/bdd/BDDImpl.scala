@@ -30,6 +30,7 @@ object BDDImpl extends BaseDeDonnees{
         }
         "Adresse non trouvée"
     }
+    //TODO scaladoc
     def chercherLieu(mot: String): String = {
         if (mot == "") {"Adresse non trouvée"}
         for (ligne <- lines){
