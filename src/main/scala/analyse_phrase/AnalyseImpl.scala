@@ -13,23 +13,29 @@ object AnalyseImpl extends AnalyseTrait {
   
   val listeAvecLiason = liste_lieux.map(decouper(_))
 
+  /** permet de retiré les mots de liaisons des phrases sous formes de liste de string
+    *  @param phrase sous forme de liste de string
+    *  @result la phrase sous forme de liste de string sans les mots de liaisons
+    */
   def filtreLiaison(listeLieu : List[String]): List[String] = {
-  val liaisons = List("de", "la")
-  listeLieu.filter(listeLieu => !liaisons.contains(listeLieu))
-  //   listeLieu.map(decouper(_))
-     
-  //   for(x <- liaisons) {
-  //    listeLieu.map(_.filter( _ != x))
-  //   } 
-  //    listeLieu.map(assembler(_))
+    val liaisons = List("de", "la")
+    listeLieu.filter(listeLieu => !liaisons.contains(listeLieu))
   }
 
+  /** analyse une phrase sous forme de string en entrée,la corrige et appel la fonction analyser_List qui nous renverra notre couple (lieu, adresse) 
+    *  @param phrase qui est le string à analyser
+    *  @result un couple de string représentant le lieu ainsi quue son adresse (lieu,adresse)
+    */
   def analyser(phrase : String): (String,String) = {
     val phrase_corrigee: String = assembler(FautesImpl.correction(decouper(phrase),liste_lieux.concat(List("TNB","Hôtel de Ville"))))
     println("corrigé : " + phrase_corrigee)
     analyserListe(phrase_corrigee)
   }
 
+  /** analyse une phrase sous forme de string en entrée afin d'y identifier un lieu que l'on connaît afin de nous fournir son adresse 
+    *  @param phrase qui est le string à analyser
+    *  @result un couple de string représentant le lieu ainsi quue son adresse (lieu,adresse)
+    */
   def analyserListe(phrase : String): (String, String) = {
     var mots = decouper(phrase)
     mots match {
@@ -42,26 +48,24 @@ object AnalyseImpl extends AnalyseTrait {
       else return analyserListe(next.mkString(" "))
       }
     }
-    // lieux match {
-    //   case Nil => ("","")
-    //   case head :: next => 
-    //     if (BDDImpl.chercherAdresse(head) != "Adresse non trouvée") {
-    //       val adresse = BDDImpl.chercherAdresse(head)
-    //       adresse match {
-    //         case "Place de la Mairie" => ("Mairie de Rennes",adresse)
-    //         case "1, Rue Saint-Hélier" => ("Théâtre National de Bretagne",adresse)
-    //         case "19, Place de la Gare" => ("Gare SNCF",adresse)
-    //         case "2, Rue du Pré de Bris" => ("Théâtre la Paillette",adresse)
-    //       }
-    //     }
-    //     else analyserListe(next, phrase)
-    // }
   }
 
+  /** decoupe un string en plusieurs string élémentts d'une liste de string 
+    *  @param phrase qui est le sstring à découper
+    *  @result une liste dont chaque élément est un mot de la phrase dans l'ordre dans lequel il apparaît dans le string de base 
+    */
   def decouper(phrase : String): List[String] = phrase.split("[ .!?,;]+").toList
 
+  /** assemble une liste de mot (string) pour former une phrase sous forme de string avec un espace entre chaque mot
+    *  @param list une list de mot
+    *  @result un string qui sera la phrase décrit par les éléments de départ
+    */
   def assembler(list : List[String]): String = if (list.isEmpty) throw ExceptionListeVide else list.reduce(_ + " " + _)
 
+  /** détecte une formule de politesse dans une phrase(string)  
+    *  @param phrase qui est le string à analyser
+    *  @result un couple de string représentant le lieu ainsi quue son adresse
+    */
   def politeTest_Bonjour(phrase: String): Boolean = {
     val phrase_corrigee: String = assembler(FautesImpl.correction(decouper(phrase), List("bonjour","bonsoir","salut")))
     phrase_corrigee.toLowerCase().contains("bonjour") || phrase_corrigee.toLowerCase().contains("salut") || phrase_corrigee.toLowerCase().contains("bonsoir")
