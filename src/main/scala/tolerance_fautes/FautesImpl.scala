@@ -11,8 +11,8 @@ object FautesImpl extends FautesTrait {
 
   def correction(mots: List[String], modeles: List[String]): List[String] = {
     var result: List[String] = Nil
-    val modelesCleared = removeApostrophe(clearAccentToMaj(modeles))
-    val motsTestsCleared = removeApostrophe(clearAccentToMaj(mots))
+    val modelesCleared = clearAccentToMaj(modeles)
+    val motsTestsCleared = clearAccentToMaj(mots)
     for (incr <- 0 to motsTestsCleared.length - 1) {
       testChaqueMot(motsTestsCleared(incr), modelesCleared) match {
         case -1  => result = mots(incr) :: result
@@ -88,19 +88,6 @@ object FautesImpl extends FautesTrait {
     mots match {
       case head :: next =>
         stripAccents(head).toUpperCase :: clearAccentToMaj(next)
-      case Nil => Nil
-    }
-  }
-
-  /** retire les l' de la liste de mots
-    *
-    * @param mots une liste de mots
-    * @return cette liste sans les l'
-    */
-  def removeApostrophe(mots: List[String]): List[String] = {
-    mots match {
-      case head :: next =>
-        head.replaceAll("L'", "").replaceAll("l'", "") :: removeApostrophe(next)
       case Nil => Nil
     }
   }
