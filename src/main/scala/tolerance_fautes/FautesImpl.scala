@@ -9,7 +9,7 @@ object FautesImpl extends FautesTrait {
     * @return la meme liste corrigée
     */
 
-  def correction(mots: List[String],modeles:List[String]): List[String] = {
+  def correction(mots: List[String], modeles: List[String]): List[String] = {
     var result: List[String] = Nil
     val modelesCleared = removeApostrophe(clearAccentToMaj(modeles))
     val motsTestsCleared = removeApostrophe(clearAccentToMaj(mots))
@@ -30,7 +30,7 @@ object FautesImpl extends FautesTrait {
     * @return l'emplacement du mot le plus proche dans la liste ou -1 s'il n'y en a pas
     */
   def testChaqueMot(motATester: String, modeles: List[String]): Int = {
-    modeles.indexWhere((modele)=>distanceDeHammingInf1(motATester, modele))
+    modeles.indexWhere((modele) => distanceDeHammingInf1(motATester, modele))
   }
 
   /** regarde si la distance de Hamming entre deux strings est supérieure ou égal à 1
@@ -87,23 +87,21 @@ object FautesImpl extends FautesTrait {
   def clearAccentToMaj(mots: List[String]): List[String] = {
     mots match {
       case head :: next =>
-       stripAccents(head).toUpperCase :: clearAccentToMaj(next)
+        stripAccents(head).toUpperCase :: clearAccentToMaj(next)
       case Nil => Nil
     }
   }
-  /**
-    * retire les l' de la liste de mots
+
+  /** retire les l' de la liste de mots
     *
-    * @param mots
-    * @return
+    * @param mots une liste de mots
+    * @return cette liste sans les l'
     */
   def removeApostrophe(mots: List[String]): List[String] = {
-    mots match { 
-      case head :: next => 
-      head.replaceAll("L'", "").replaceAll("l'","") :: removeApostrophe(next)
+    mots match {
+      case head :: next =>
+        head.replaceAll("L'", "").replaceAll("l'", "") :: removeApostrophe(next)
       case Nil => Nil
     }
   }
-
-
 }
