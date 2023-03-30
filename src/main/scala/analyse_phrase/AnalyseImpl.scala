@@ -9,24 +9,22 @@ case object ExceptionListeVide extends Exception
 //TODO scalaDoc
 object AnalyseImpl extends AnalyseTrait {
 
-  val liste_lieux = BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt"))
-  
+  val liste_lieux = BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt")).concat(List("TNB","hotel"))
   val listeAvecLiason = liste_lieux.map(decouper(_))
 
   def filtreLiaison(listeLieu : List[String]): List[String] = {
-  val liaisons = List("de", "la")
-  listeLieu.filter(listeLieu => !liaisons.contains(listeLieu))
-  //   listeLieu.map(decouper(_))
-     
-  //   for(x <- liaisons) {
-  //    listeLieu.map(_.filter( _ != x))
-  //   } 
-  //    listeLieu.map(assembler(_))
+    val liaisons = List("de", "La")
+    listeLieu.filter(listeLieu => !liaisons.contains(listeLieu))
+    //   listeLieu.map(decouper(_))
+      
+    //   for(x <- liaisons) {
+    //    listeLieu.map(_.filter( _ != x))
+    //   } 
+    //    listeLieu.map(assembler(_))
   }
 
   def analyser(phrase : String): (String,String) = {
-    val phrase_corrigee: String = assembler(FautesImpl.correction(decouper(phrase),liste_lieux.concat(List("TNB","Hôtel de Ville"))))
-    println("corrigé : " + phrase_corrigee)
+    val phrase_corrigee: String = assembler(FautesImpl.removeApostrophe(FautesImpl.correction(decouper(phrase),filtreLiaison(separatewords(liste_lieux)))))
     analyserListe(phrase_corrigee)
   }
 
@@ -59,12 +57,24 @@ object AnalyseImpl extends AnalyseTrait {
   }
 
   def decouper(phrase : String): List[String] = phrase.split("[ .!?,;]+").toList
-
-  def assembler(list : List[String]): String = if (list.isEmpty) throw ExceptionListeVide else list.reduce(_ + " " + _)
+  def separatewords(mots : List[String]): List[String] = {
+    mots match {
+        case head::next => head.split(" ").toList ::: separatewords(next)
+        case Nil => Nil
+    }
+  }
+  def assembler(list : List[String]): String = {
+    if (list.isEmpty) throw ExceptionListeVide 
+    else list.reduce(_ + " " + _)
+  }
 
   def politeTest_Bonjour(phrase: String): Boolean = {
     val phrase_corrigee: String = assembler(FautesImpl.correction(decouper(phrase), List("bonjour","bonsoir","salut")))
     phrase_corrigee.toLowerCase().contains("bonjour") || phrase_corrigee.toLowerCase().contains("salut") || phrase_corrigee.toLowerCase().contains("bonsoir")
+  }
+  def politeTest_OnlyBonjour(phrase: String): Boolean = {
+    val phrase_corrigee: String = assembler(FautesImpl.correction(decouper(phrase), List("bonjour","bonsoir","salut")))
+    phrase_corrigee.toLowerCase().equals("bonjour") || phrase_corrigee.toLowerCase().equals("salut") || phrase_corrigee.toLowerCase().equals("bonsoir")
   }
   
 }

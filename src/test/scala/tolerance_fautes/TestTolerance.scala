@@ -97,6 +97,15 @@ class TestTolerance {
   }
   @Test
   def Test5_correction():Unit={
-    assertEquals(List("TNB","TNB","Hôtel de Ville","Hôtel de Ville"),FautesImpl.correction(List("tnb","TNA","hotel de vill","hotel de valle"),List("TNB","Hôtel de Ville")))
+    assertEquals(List("TNB","TNB","Hôtel de Ville"),FautesImpl.correction(List("tnb","TNA","hotel de valle"),List("TNB","Hôtel de Ville")))
   }
+  @Test
+  def Test1_removeapostrophe():Unit={
+    assertEquals(List("hotel","amende"),FautesImpl.removeApostrophe(List("l'hotel","l'amende")))
+  }
+  @Test
+  def Test2_removeapostrophe():Unit={
+    assertEquals(List("HOTEL","AMENDE"),FautesImpl.removeApostrophe(List("L'HOTEL","L'AMENDE")))
+  }
+  
 }

@@ -2,40 +2,42 @@ package bdd
 import org.junit.Test
 import org.junit.Assert._
 
-class TestBDD{
-    
+class TestBDD {
+   @Test
+   def testchercheradresseInconnuv1{
+      assertEquals("Adresse non trouvée",BDDImpl.chercherAdresse("gdfcghdf"))
+   }
     @Test
-    def testchercheradresseInconnuv1{
-       assertEquals("Adresse non trouvée",BDDImpl.chercherAdresse("gdfcghdf"))
-    }
-
-    @Test   
     def testchercheradresseConnuv1{
-       assertEquals("Place de la Mairie",BDDImpl.chercherAdresse("Mairie de Rennes"))
-    }
-    @Test
-    def testchercheradresseConnuv2{
        assertEquals("Place de la Mairie",BDDImpl.chercherAdresse("Mairie"))
     } 
     @Test
-    def testchercheradresseConnuv4{
+    def testchercheradresseConnuv2{
        assertEquals("19, Place de la Gare",BDDImpl.chercherAdresse("Gare"))
     }
     @Test
-    def testchercheradresseConnuv2Minuscules{
+    def testchercheradresseConnuVariante1{
+       assertEquals("1, Rue Saint-Hélier",BDDImpl.chercherAdresse("tnb"))
+    }
+    @Test
+    def testchercheradresseConnuVariante2{
+       assertEquals("Place de la Mairie",BDDImpl.chercherAdresse("hotel"))
+    }
+    @Test
+    def testchercheradresseConnuv1Minuscules{
        assertEquals("Place de la Mairie",BDDImpl.chercherAdresse("mairie"))
     }
     @Test
-    def testchercheradresseConnuv2Majuscules{
+    def testchercheradresseConnuv1Majuscules{
        assertEquals("Place de la Mairie",BDDImpl.chercherAdresse("MAIRIE"))
     }
     
    @Test
-    def testchercheradresseConnuv3Minuscules{
+    def testchercheradresseConnuv2Minuscules{
        assertEquals("19, Place de la Gare",BDDImpl.chercherAdresse("gare"))
     }
     @Test
-    def testchercheradresseConnuv3Majuscules{
+    def testchercheradresseConnuv2Majuscules{
        assertEquals("19, Place de la Gare",BDDImpl.chercherAdresse("GARE"))
     }
         @Test

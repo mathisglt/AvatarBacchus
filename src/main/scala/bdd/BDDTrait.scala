@@ -18,5 +18,11 @@ trait BaseDeDonnees {
     * @return une array[String] contenant les endroits où aller
     */
   def recupLieux(file:BufferedSource):List[String]
-
+  /**
+    * Renvoie le lieu à partir d'un mot si il lui correspond dans la base de données
+    *
+    * @param mot
+    * @return String le lieu si il existe , Adresse non trouvée sinon 
+    */
+  def chercherLieu(mot: String): String
 }

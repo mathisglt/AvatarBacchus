@@ -13,8 +13,8 @@ object BDDImpl extends BaseDeDonnees{
     
     val lignesBDD = Source.fromFile("doc/DonneesInitiales.txt").getLines.toArray
     var banwords = Set("")
-    var variancesaddr = Map(("tnb","1, Rue Saint-Hélier"),("hotel de ville","Place de la Mairie"))
-    var varianceslieux = Map(("tnb","Théâtre National de Bretagne"),("hôtel de ville","Mairie de Rennes"))
+    var variancesaddr = Map(("tnb","1, Rue Saint-Hélier"),("hotel","Place de la Mairie"))
+    var varianceslieux = Map(("tnb","Théâtre National de Bretagne"),("hotel","Mairie de Rennes"))
     def chercherAdresse(mot: String): String = {
         if (mot.isEmpty()) return "Adresse non trouvée"
         for (ligne <- lignesBDD){
@@ -37,7 +37,6 @@ object BDDImpl extends BaseDeDonnees{
         }
         "Adresse non trouvée"
     }
-    //TODO scaladoc
     def chercherLieu(mot: String): String = {
         if (mot.isEmpty()) {"Adresse non trouvée"}
         for (ligne <- lignesBDD){
@@ -53,18 +52,11 @@ object BDDImpl extends BaseDeDonnees{
     }
     
    
-  def recupLieux(file:BufferedSource):List[String]={
-    val fileEnString=file.mkString
-    val listeDeMots=fileEnString.split("[;\r\n]+")
-    var listeFinale:Array[String]=Array()
-    var i:Int =0
-    while (i<listeDeMots.length){
-        if (i%2==0){
-            listeFinale=listeFinale:+(listeDeMots(i))
-        }
-        i=i+1
-    }    
+  def recupLieux(file: BufferedSource): List[String] = {
+    val listeFinale = ArrayBuffer[String]()
+    for (line <- file.getLines()) {
+        listeFinale += line.split(';')(0)
+    }
     listeFinale.toList
-  }
-  
+    }
 }

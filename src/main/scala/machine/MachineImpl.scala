@@ -1,13 +1,15 @@
 package machine
 import construction_result.ConstructionImpl
 import analyse_phrase.AnalyseImpl
+import tolerance_fautes.FautesImpl
 
 object MachineImpl extends MachineDialogue {
 
   
   def ask(s: String): List[String] = {
-    println(s)
-    if (AnalyseImpl.politeTest_Bonjour(s)) "Bonjour" :: List(ConstructionImpl.construire(s))
+    println("\nrquete : " + s)
+    if (AnalyseImpl.politeTest_OnlyBonjour(s)) "Bonjour"::Nil
+    else if (AnalyseImpl.politeTest_Bonjour(s)) "Bonjour" :: List(ConstructionImpl.construire(s))
     else List(ConstructionImpl.construire(s))
   }
   
