@@ -3,7 +3,7 @@ package bdd
 import java.util.ArrayList
 import scala.io.BufferedSource
 trait BaseDeDonnees {
-  val lines: Array[String]
+  val lignesBDD: Array[String]
   /**
     * Recherche dans le fichier texte DonneesInitiales si l'adresse existe , élimine les cas ou un mot
     * de liaison est donnée puisqu'il correspond à plusieurs adresses
@@ -18,5 +18,11 @@ trait BaseDeDonnees {
     * @return une array[String] contenant les endroits où aller
     */
   def recupLieux(file:BufferedSource):List[String]
-
+  /**
+    * Renvoie le lieu à partir d'un mot si il lui correspond dans la base de données
+    *
+    * @param mot
+    * @return String le lieu si il existe , Adresse non trouvée sinon 
+    */
+  def chercherLieu(mot: String): String
 }

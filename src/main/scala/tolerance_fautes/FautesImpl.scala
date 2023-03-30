@@ -9,7 +9,7 @@ object FautesImpl extends FautesTrait {
     * @return la meme liste corrigée
     */
 
-  def correction(mots: List[String],modeles:List[String]): List[String] = {
+  def correction(mots: List[String], modeles: List[String]): List[String] = {
     var result: List[String] = Nil
     val modelesCleared = clearAccentToMaj(modeles)
     val motsTestsCleared = clearAccentToMaj(mots)
@@ -30,7 +30,7 @@ object FautesImpl extends FautesTrait {
     * @return l'emplacement du mot le plus proche dans la liste ou -1 s'il n'y en a pas
     */
   def testChaqueMot(motATester: String, modeles: List[String]): Int = {
-    modeles.indexWhere((modele)=>distanceDeHammingInf1(motATester, modele))
+    modeles.indexWhere((modele) => distanceDeHammingInf1(motATester, modele))
   }
 
   /** regarde si la distance de Hamming entre deux strings est supérieure ou égal à 1
@@ -91,7 +91,4 @@ object FautesImpl extends FautesTrait {
       case Nil => Nil
     }
   }
-
-
-
 }
