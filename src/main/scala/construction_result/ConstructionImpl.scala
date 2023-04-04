@@ -21,6 +21,7 @@ object ConstructionImpl extends ConstructionTrait{
         //}
         if (resultAnalyse != ("","")) phrase = "L'adresse de " ++ resultAnalyse._1 ++ " est : " ++ resultAnalyse._2 
         else phrase = "Je ne comprends pas votre demande"
+        println("reponse : " + phrase)
         phrase
         
     }
