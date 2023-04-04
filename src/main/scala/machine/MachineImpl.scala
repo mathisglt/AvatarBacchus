@@ -2,7 +2,6 @@ package machine
 import construction_result.ConstructionImpl
 import analyse_phrase.AnalyseImpl
 import tolerance_fautes.FautesImpl
-import langue.LangueImpl
 
 object MachineImpl extends MachineDialogue {
 
@@ -10,8 +9,8 @@ object MachineImpl extends MachineDialogue {
   def ask(s: String): List[String] = {
     println("\nrequete : " + s)
     if (AnalyseImpl.politeTest_OnlyBonjour(s)) "Bonjour"::Nil
-    else if (AnalyseImpl.politeTest_Bonjour(s)) "Bonjour" :: List(ConstructionImpl.construire(s,LangueImpl.getLangueActuelle()))
-    else List(ConstructionImpl.construire(s,LangueImpl.getLangueActuelle()))
+    else if (AnalyseImpl.politeTest_Bonjour(s)) "Bonjour" :: List(ConstructionImpl.construire(s))
+    else List(ConstructionImpl.construire(s))
   }
   
   // Pour la partie test par le client
