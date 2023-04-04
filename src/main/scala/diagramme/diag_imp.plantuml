@@ -46,6 +46,5 @@ MachineDialogue <- InterfaceGraphique
 ConstructionTrait --> AnalyseTrait
 AnalyseTrait -> BDDTrait
 AnalyseTrait --> FautesTrait
-BDDTrait <-  FautesTrait
 
 @enduml
