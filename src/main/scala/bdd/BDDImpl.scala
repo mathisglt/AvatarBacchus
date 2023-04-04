@@ -7,6 +7,7 @@ import java.io.PrintWriter
 import java.io.File
 import bdd.BaseDeDonnees
 import scala.collection.mutable.ArrayBuffer
+import java.util.ArrayList
 
 object BDDImpl extends BaseDeDonnees{
     // TEST2
@@ -15,8 +16,8 @@ object BDDImpl extends BaseDeDonnees{
     var banwords = Set("")
     var variancesaddr = Map(("tnb","1, Rue Saint-Hélier"),("hotel","Place de la Mairie"))
     var varianceslieux = Map(("tnb","Théâtre National de Bretagne"),("hotel","Mairie de Rennes"))
-    var dictionnaireExpressionsInternationale : Array[Array[String]] = Array[Array[String]]()
-     var dictionnairePRNInternationale : Array[Array[String]] = Array[Array[String]]()
+    var dictionnaireExpressionsInternationale : List[List[String]] = List(List(),List(),List(),List(),List())
+    var dictionnairePRNInternationale : List[List[String]] = List(List(),List(),List(),List(),List())
     def chercherAdresse(mot: String): String = {
         if (mot.isEmpty()) return "Adresse non trouvée"
         for (ligne <- lignesBDD){
@@ -62,19 +63,56 @@ object BDDImpl extends BaseDeDonnees{
     listeFinale.toList
     }
     
-    def createDicoExpr()={
-        val lignesInter = Source.fromFile("partie2/international.txt").getLines.toArray
+    def createDicoExpr(): Unit={
+        val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
+        var listefr = List[String]()
+        var listeen = List[String]()
+        var listees = List[String]()
+        var listede = List[String]()
+        var listeit = List[String]()
         for (lignes <- lignesInter){
-            if (lignes.equals("Francais:")){
+            if (lignes.equals("Français:")){
                 val index = lignesInter.indexOf(lignes)
-                //for (i <- index to index+8){
-                //    dictionnaireExpressionsInternationale.addString(lignesInter.)
-                //}
+                for (i <- index+1 to index+8){
+                    listefr = listefr:::lignesInter(i)::Nil
+                }
+            }   
+            if (lignes.equals("Anglais:")){
+                val index = lignesInter.indexOf(lignes)
+                for (i <- index+1 to index+8){
+                    listeen = listeen:::lignesInter(i)::Nil
+                }
+            }
+            if (lignes.equals("Espagnol:")){
+                val index = lignesInter.indexOf(lignes)
+                for (i <- index+1 to index+8){
+                    listees = listees:::lignesInter(i)::Nil
+                }
                 
-            }            
+            }
+            if (lignes.equals("Allemand:")){
+               val index = lignesInter.indexOf(lignes)
+                for (i <- index+1 to index+8){
+                    listede = listede:::lignesInter(i)::Nil
+                }
+                
+            }
+            if (lignes.equals("Italien:")){
+                val index = lignesInter.indexOf(lignes)
+                for (i <- index+1 to index+8){
+                    listeit = listeit:::lignesInter(i)::Nil
+                }
+                
+            }         
+            dictionnaireExpressionsInternationale = listefr::listeen::listees::listede::listeit::Nil
         }
+        
+        
     }
   def createDicoPRN(): Unit= ???
-  def getDicoExpr(): Array[Array[String]] = ???
-  def getDicoPRN(): Array[Array[String]]= ???
+  def getDicoExpr(): List[List[String]] =  {dictionnaireExpressionsInternationale}
+  def gettostrDicoExpr(): Unit = {
+    println(dictionnaireExpressionsInternationale)
+    }
+  def getDicoPRN(): List[List[String]]= { dictionnairePRNInternationale}
 }

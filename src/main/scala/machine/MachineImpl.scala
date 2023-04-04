@@ -16,7 +16,7 @@ object MachineImpl extends MachineDialogue {
 
   // Pour la partie test par le client
   def reinit(): Unit = {
-    LangueImpl.setLangueActuelle("Français") //réinitialise la langue
+    LangueImpl.reinitLangue //réinitialise la langue
   }
   def test(l: List[String]): List[String] = {
     println("Requetes de base : " + l)
