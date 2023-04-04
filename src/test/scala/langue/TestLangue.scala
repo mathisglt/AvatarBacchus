@@ -9,6 +9,11 @@ class TestLangue {
     assertEquals(0, LangueImpl.getLangueActuelle())
   }
   @Test
+  def langueSuivante_3(): Unit = {
+    LangueImpl.langueSuivante()
+    assertEquals(1, LangueImpl.getLangueActuelle())
+  }
+  @Test
   def langueSuivante_1(): Unit = {
     LangueImpl.langueSuivante()
     LangueImpl.langueSuivante()
@@ -33,11 +38,6 @@ class TestLangue {
     LangueImpl.langueSuivante()
     LangueImpl.langueSuivante()
     assertEquals(2, LangueImpl.getLangueActuelle())
-  }
-  @Test
-  def langueSuivante_3(): Unit = {
-    LangueImpl.langueSuivante()
-    assertEquals(1, LangueImpl.getLangueActuelle())
   }
 
   @Test
