@@ -6,7 +6,6 @@ import bdd.BDDImpl
 import tolerance_fautes.FautesImpl
 
 case object ExceptionListeVide extends Exception
-//TODO scalaDoc
 object AnalyseImpl extends AnalyseTrait {
 
   val liste_lieux = BDDImpl
@@ -14,18 +13,18 @@ object AnalyseImpl extends AnalyseTrait {
     .concat(List("TNB", "hotel"))
   val listeAvecLiason = liste_lieux.map(decouper(_))
 
-    /** permet de retirer les mots de liaisons de phrase sous formes de liste de string
+  /** permet de retirer les mots de liaisons de phrase sous formes de liste de string
     *  @param phrase sous forme de liste de string
-    *  @result la phrase sous forme de liste de string sans les mots de liaisons
+    *  @return la phrase sous forme de liste de string sans les mots de liaisons
     */
   def filtreLiaison(listeLieu: List[String]): List[String] = {
     val liaisons = List("de", "La", "l")
     listeLieu.filter(listeLieu => !liaisons.contains(listeLieu))
   }
 
-  /** analyse une phrase sous forme de string en entrée, la corrige et appel la fonction analyser_List qui nous renverra notre couple (lieu, adresse) 
+  /** analyse une phrase sous forme de string en entrée, la corrige et y identifie un lieu que l'on connaît afin de nous renvoyer notre couple (lieu, adresse)
     *  @param phrase qui est le string à analyser
-    *  @result un couple de string représentant le lieu ainsi quue son adresse (lieu,adresse)
+    *  @return un couple de string représentant le lieu ainsi quue son adresse (lieu,adresse)
     */
   def analyser(phrase: String): (String, String) = {
     val phrase_corrigee: String = assembler(
@@ -34,16 +33,7 @@ object AnalyseImpl extends AnalyseTrait {
         filtreLiaison(separatewords(liste_lieux))
       )
     )
-
-    analyserListe(phrase_corrigee)
-  }
-
-  /** analyse une phrase sous forme de string en entrée afin d'y identifier un lieu que l'on connaît afin de nous fournir son adresse 
-    *  @param phrase qui est le string à analyser
-    *  @result un couple de string représentant le lieu ainsi quue son adresse (lieu,adresse)
-    */
-  def analyserListe(phrase: String): (String, String) = {
-    var mots = decouper(phrase)
+    val mots = decouper(phrase_corrigee)
     mots match {
       case Nil => ("", "")
       case head :: Nil =>
@@ -53,7 +43,7 @@ object AnalyseImpl extends AnalyseTrait {
       case head :: next => {
         if (BDDImpl.chercherAdresse(head) != "Adresse non trouvée") {
           (BDDImpl.chercherLieu(head), BDDImpl.chercherAdresse(head))
-        } else return analyserListe(next.mkString(" "))
+        } else return analyser(next.mkString(" "))
       }
     }
   }
@@ -66,10 +56,9 @@ object AnalyseImpl extends AnalyseTrait {
 
   /** permet de séparer les mots 
     *  @param phrase en liste de string
-    *  @result une liste dont chaque élément est un mot de la phrase dans l'ordre dans lequel il apparaît dans le string de base 
+    *  @return une liste dont chaque élément est un mot de la phrase dans l'ordre dans lequel il apparaît dans le string de base 
     */
   def separatewords(mots: List[String]): List[String] = {
-  
     mots match {
       case head :: next => head.split(" ").toList ::: separatewords(next)
       case Nil          => Nil
@@ -78,16 +67,16 @@ object AnalyseImpl extends AnalyseTrait {
 
   /** assemble une liste de mot (string) pour former une phrase sous forme de string avec un espace entre chaque mot
     *  @param list une list de mot
-    *  @result un string qui sera la phrase décrit par les éléments de départ
+    *  @return un string qui sera la phrase décrit par les éléments de départ
     */
   def assembler(list: List[String]): String = {
     if (list.isEmpty) throw ExceptionListeVide
     else list.reduce(_ + " " + _)
   }
 
-  /** détecte une formule de politesse dans une phrase(string)  
+  /** détecte une formule de politesse dans une phrase(string)
     *  @param phrase qui est le string à analyser
-    *  @result un booléen true si la phrase contient les mots bonjour bonsoir ou salut
+    *  @return un booléen true si la phrase contient les mots bonjour bonsoir ou salut
     */
   def politeTest_Bonjour(phrase: String): Boolean = {
     val phrase_corrigee: String = assembler(
@@ -100,6 +89,7 @@ object AnalyseImpl extends AnalyseTrait {
       .toLowerCase()
       .contains("salut") || phrase_corrigee.toLowerCase().contains("bonsoir")
   }
+
   def politeTest_OnlyBonjour(phrase: String): Boolean = {
     val phrase_corrigee: String = assembler(
       FautesImpl.correction(

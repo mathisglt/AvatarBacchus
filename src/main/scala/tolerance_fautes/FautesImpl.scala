@@ -2,12 +2,6 @@ package tolerance_fautes
 import scala.io.Source
 import org.apache.commons.lang3.StringUtils.{stripAccents}
 object FautesImpl extends FautesTrait {
-//ici la liste de mots 'modele' en quelque sorte
-  /** applique testChaque mot sur toute une liste de mot et en renvoie la string corrigée
-    *
-    * @param mots une liste de mots
-    * @return la meme liste corrigée
-    */
 
   def correction(mots: List[String], modeles: List[String]): List[String] = {
     var result: List[String] = Nil

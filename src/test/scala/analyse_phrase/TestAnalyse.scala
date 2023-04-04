@@ -42,7 +42,15 @@ class TestAnalyse {
     def test_analyser_05: Unit = {
         assertEquals(
             ("",""),
-            AnalyseImpl.analyser("où se trouvent Rennes et la Bretagne ?")
+            AnalyseImpl.analyser("où se trouve Rennes ?")
+        )
+    }
+
+    @Test
+    def test_analyser_055: Unit = {
+        assertEquals(
+            ("",""),
+            AnalyseImpl.analyser("où se trouve Bretagne ?")
         )
     }
 
@@ -199,8 +207,25 @@ class TestAnalyse {
             AnalyseImpl.politeTest_Bonjour("salut")
         )
     }
+        
+    @Test
+    def test_politeTest_6: Unit = {
+        assertEquals(
+            true,
+            AnalyseImpl.politeTest_Bonjour("bnjour")
+        )
+    }
 
-        //Tests de filtreLiason
+    @Test
+    def test_politeTest_7: Unit = {
+        assertEquals(
+            true,
+            AnalyseImpl.politeTest_Bonjour("banjour")
+        )
+    }
+
+    // Tests de filtreLiason
+
     @Test
     def test_filtreLiason_1 {
         assertEquals(
@@ -227,22 +252,6 @@ class TestAnalyse {
         assertEquals(
             List("gare","Rennes"),
             AnalyseImpl.filtreLiaison(List("de","gare","de","Rennes"))
-        )
-    }
-    
-    @Test
-    def test_politeTest_6: Unit = {
-        assertEquals(
-            true,
-            AnalyseImpl.politeTest_Bonjour("bnjour")
-        )
-    }
-
-    @Test
-    def test_politeTest_7: Unit = {
-        assertEquals(
-            true,
-            AnalyseImpl.politeTest_Bonjour("banjour")
         )
     }
 

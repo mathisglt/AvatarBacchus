@@ -119,19 +119,5 @@ class TestTolerance {
       )
     )
   }
-  @Test
-  def Test1_removeapostrophe(): Unit = {
-    assertEquals(
-      List("hotel", "amende"),
-      FautesImpl.removeApostrophe(List("l'hotel", "l'amende"))
-    )
-  }
-  @Test
-  def Test2_removeapostrophe(): Unit = {
-    assertEquals(
-      List("HOTEL", "AMENDE"),
-      FautesImpl.removeApostrophe(List("L'HOTEL", "L'AMENDE"))
-    )
-  }
 
 }

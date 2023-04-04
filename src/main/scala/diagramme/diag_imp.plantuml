@@ -1,7 +1,7 @@
 @startuml Avatar
 
 interface BDDTrait{
-	var wordToFind: String = "" 
+	val lignesBDD: Array[String]
 	chercherAdresse(str:String): String
 }
 
@@ -27,6 +27,10 @@ interface AnalyseTrait{
 	analyser(phrase: String): List[(String,String)]
 }
 
+interface LangueTrait{
+	
+}
+
 
 class MachineImpl <<(O,Orange)>>
 class InterfaceGraphique <<(O,Orange)>>
@@ -34,18 +38,21 @@ class ConstructionImpl <<(O,Orange)>>
 class AnalyseImpl <<(O,Orange)>>
 class BDDImpl <<(O,Orange)>>
 class FautesImpl <<(O,Orange)>>
+class LangueImpl <<(O,Orange)>>
 
 MachineImpl -|> MachineDialogue
 BDDTrait <|-  BDDImpl 
 ConstructionImpl -|>  ConstructionTrait
 AnalyseImpl -|>  AnalyseTrait 
-FautesTrait <|-  FautesImpl 
+FautesImpl -|>  FautesTrait
+LangueTrait <|-  LangueImpl 
 
 MachineDialogue --> ConstructionTrait
 MachineDialogue <- InterfaceGraphique
 ConstructionTrait --> AnalyseTrait
 AnalyseTrait -> BDDTrait
 AnalyseTrait --> FautesTrait
-BDDTrait <-  FautesTrait
+AnalyseTrait --> LangueTrait
+BDDTrait -> LangueTrait
 
 @enduml
