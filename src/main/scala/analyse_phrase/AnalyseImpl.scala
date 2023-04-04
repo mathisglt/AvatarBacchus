@@ -14,7 +14,7 @@ object AnalyseImpl extends AnalyseTrait {
     .concat(List("TNB", "hotel"))
   val listeAvecLiason = liste_lieux.map(decouper(_))
 
-    /** permet de retiré les mots de liaisons de phrase sous formes de liste de string
+    /** permet de retirer les mots de liaisons de phrase sous formes de liste de string
     *  @param phrase sous forme de liste de string
     *  @result la phrase sous forme de liste de string sans les mots de liaisons
     */
@@ -23,7 +23,7 @@ object AnalyseImpl extends AnalyseTrait {
     listeLieu.filter(listeLieu => !liaisons.contains(listeLieu))
   }
 
-  /** analyse une phrase sous forme de string en entrée,la corrige et appel la fonction analyser_List qui nous renverra notre couple (lieu, adresse) 
+  /** analyse une phrase sous forme de string en entrée, la corrige et appel la fonction analyser_List qui nous renverra notre couple (lieu, adresse) 
     *  @param phrase qui est le string à analyser
     *  @result un couple de string représentant le lieu ainsi quue son adresse (lieu,adresse)
     */
@@ -58,11 +58,16 @@ object AnalyseImpl extends AnalyseTrait {
     }
   }
 
-  /** decoupe un string en plusieurs string élémentts d'une liste de string 
-    *  @param phrase qui est le sstring à découper
-    *  @result une liste dont chaque élément est un mot de la phrase dans l'ordre dans lequel il apparaît dans le string de base 
+  /** découpe un string en plusieurs string éléments d'une liste de string 
+    *  @param phrase qui est le string à découper
+    *  @result une liste de string représentant la phrase
     */
   def decouper(phrase: String): List[String] = phrase.split("[ .!?,;']+").toList
+
+  /** permet de séparer les mots 
+    *  @param phrase en liste de string
+    *  @result une liste dont chaque élément est un mot de la phrase dans l'ordre dans lequel il apparaît dans le string de base 
+    */
   def separatewords(mots: List[String]): List[String] = {
   
     mots match {
