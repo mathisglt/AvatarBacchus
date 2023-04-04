@@ -16,6 +16,7 @@ object BDDImpl extends BaseDeDonnees{
     var variancesaddr = Map(("tnb","1, Rue Saint-Hélier"),("hotel","Place de la Mairie"))
     var varianceslieux = Map(("tnb","Théâtre National de Bretagne"),("hotel","Mairie de Rennes"))
     var dictionnaireExpressionsInternationale : Array[Array[String]] = Array[Array[String]]()
+     var dictionnairePRNInternationale : Array[Array[String]] = Array[Array[String]]()
     def chercherAdresse(mot: String): String = {
         if (mot.isEmpty()) return "Adresse non trouvée"
         for (ligne <- lignesBDD){
