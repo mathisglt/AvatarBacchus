@@ -13,7 +13,7 @@ object AnalyseImpl extends AnalyseTrait {
 
   val liste_lieux = BDDImpl
     .recupLieux(Source.fromFile("doc/DonneesInitiales.txt"))
-    .concat(List("TNB", "hotel"))
+    .concat(List("TNB", "Hotel de Ville"))
   val listeAvecLiason = liste_lieux.map(decouper(_))
 
   /** permet de retirer les mots de liaisons de phrase sous formes de liste de string
