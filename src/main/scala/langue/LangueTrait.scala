@@ -1,0 +1,5 @@
+package langue
+
+trait LangueTrait {
+  
+}
