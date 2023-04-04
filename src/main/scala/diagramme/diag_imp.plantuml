@@ -1,16 +1,11 @@
 @startuml Avatar
 
 interface BDDTrait{
-	var dictionnaireExpressionsInternationale : Array[Array[String]]
- 	var dictionnairePRNInternationale : Array[Array[String]]
-  	val lignesBDD: Array[String]
 	chercherAdresse(str:String): String
 	recupLieux(file:BufferedSource):List[String]
 	chercherLieu(mot: String): String
-	createDicoExpr(): Unit
-	createDicoPRN(): Unit
 	getDicoExpr(): Array[Array[String]]
-	etDicoPRN(): Array[Array[String]]
+	getDicoPRN(): Array[Array[String]]
 }
 
 interface MachineDialogue {
