@@ -12,7 +12,7 @@ object LangueImpl extends LangueTrait {
   }
 
   def reinitLangue(): Unit = {
-    langueActuelle=0
+    setLangueActuelle("Français")
   }
 
   def setLangueActuelle(langue: String): Unit = {
