@@ -1,6 +1,7 @@
 package analyse_phrase
 import org.junit.Test
 import org.junit.Assert._
+import langue.LangueImpl
 
 class TestAnalyse {
 
@@ -322,6 +323,20 @@ class TestAnalyse {
     }
 
     // tests unitaire de getDicoLangue
+     @Test
+    def test_getDicoLangue {
+        LangueImpl.setLangueActuelle("Anglais")
+        assertEquals(
+            List("yes","no","The address of XXX is",
+"I do not understand",
+"Do you speak english?",
+"OK, what is your query?",
+"I found XXX answers",
+"What is your choice?",
+"restaurant, creperie, pizzeria"),
+            AnalyseImpl.getDicoLangue()
+        )
+    }
 
 
 }
