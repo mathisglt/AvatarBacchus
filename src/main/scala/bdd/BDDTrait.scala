@@ -47,9 +47,9 @@ trait BaseDeDonnees {
   /**
     * Recupère la variable dictionnaireExpressionsInternationale
     */
-  def getDicoExpr(): Unit
+  def getDicoExpr(): Array[Array[String]]
   /**
     *  Recupère la variable dictionnairePRNInternationale
     */
-  def getDicoPRN(): Unit
+  def getDicoPRN(): Array[Array[String]]
 }
