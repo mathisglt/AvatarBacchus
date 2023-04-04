@@ -3,10 +3,6 @@ package langue
 object LangueImpl extends LangueTrait {
   private var langueActuelle = 0
 
-  def changementLangue(langue: String): String = {
-    
-  }
-
   def langueSuivante(): Unit = {
     langueActuelle = (langueActuelle + 1) % 5
   }
