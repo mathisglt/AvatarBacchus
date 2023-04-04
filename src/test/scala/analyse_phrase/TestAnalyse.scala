@@ -255,5 +255,73 @@ class TestAnalyse {
         )
     }
 
+    // tests unitaire de politeTest_OnlyBonjour
+
+    @Test
+    def test_onlyBonjour_1 {
+        assertEquals(
+            true,
+            AnalyseImpl.politeTest_OnlyBonjour("bonjour")
+        )
+    }
+
+    @Test
+    def test_onlyBonjour_2 {
+        assertEquals(
+            true,
+            AnalyseImpl.politeTest_OnlyBonjour("bnjour")
+        )
+    }
+
+    @Test
+    def test_onlyBonjour_3 {
+        assertEquals(
+            true,
+            AnalyseImpl.politeTest_OnlyBonjour("boujour")
+        )
+    }
+
+    @Test
+    def test_onlyBonjour_4 {
+        assertEquals(
+            true,
+            AnalyseImpl.politeTest_OnlyBonjour("salut")
+        )
+    }
+
+    @Test
+    def test_onlyBonjour_5 {
+        assertEquals(
+            true,
+            AnalyseImpl.politeTest_OnlyBonjour("bonsoir")
+        )
+    }
+
+    @Test
+    def test_onlyBonjour_6 {
+        assertEquals(
+            false,
+            AnalyseImpl.politeTest_OnlyBonjour("bonjour salut")
+        )
+    }
+
+    @Test
+    def test_onlyBonjour_7 {
+        assertEquals(
+            false,
+            AnalyseImpl.politeTest_OnlyBonjour("")
+        )
+    }
+
+    @Test
+    def test_onlyBonjour_8 {
+        assertEquals(
+            false,
+            AnalyseImpl.politeTest_OnlyBonjour("bonjourlesamis")
+        )
+    }
+
+    // tests unitaire de getDicoLangue
+
 
 }
