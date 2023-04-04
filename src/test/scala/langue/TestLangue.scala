@@ -5,16 +5,29 @@ import org.junit.Assert._
 
 class TestLangue {
   @Test
-  def getLangueActuelle(): Unit = {
+  def getLangueActuelle_1(): Unit = {
+    LangueImpl.reinitLangue()
+    assertEquals(0, LangueImpl.getLangueActuelle())
+  }
+  @Test
+  def getLangueActuelle_2(): Unit = {
+    LangueImpl.reinitLangue()
+    assertEquals(0, LangueImpl.getLangueActuelle())
+  }
+  @Test
+  def getLangueActuelle_3(): Unit = {
+    LangueImpl.reinitLangue()
     assertEquals(0, LangueImpl.getLangueActuelle())
   }
   @Test
   def langueSuivante_3(): Unit = {
+    LangueImpl.reinitLangue()
     LangueImpl.langueSuivante()
     assertEquals(1, LangueImpl.getLangueActuelle())
   }
   @Test
   def langueSuivante_1(): Unit = {
+    LangueImpl.reinitLangue()
     LangueImpl.langueSuivante()
     LangueImpl.langueSuivante()
     LangueImpl.langueSuivante()
@@ -25,6 +38,7 @@ class TestLangue {
   }
   @Test
   def langueSuivante_2(): Unit = {
+    LangueImpl.reinitLangue()
     LangueImpl.langueSuivante()
     LangueImpl.langueSuivante()
     LangueImpl.langueSuivante()

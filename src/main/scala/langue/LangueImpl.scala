@@ -11,6 +11,10 @@ object LangueImpl extends LangueTrait {
     langueActuelle
   }
 
+  def reinitLangue(): Unit = {
+    langueActuelle=0
+  }
+
   def setLangueActuelle(langue: String): Unit = {
     langue match {
       case "Anglais"  => langueActuelle = 1
