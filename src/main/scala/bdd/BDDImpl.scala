@@ -17,7 +17,7 @@ object BDDImpl extends BaseDeDonnees{
     var variancesaddr = Map(("tnb","1, Rue Saint-Hélier"),("hotel","Place de la Mairie"))
     var varianceslieux = Map(("tnb","Théâtre National de Bretagne"),("hotel","Mairie de Rennes"))
     var dictionnaireExpressionsInternationale : List[List[String]] = List(List(),List(),List(),List(),List())
-    var dictionnairePRNInternationale : List[List[String]] = List(List(),List(),List(),List(),List())
+    var dictionnairePRNInternationale         : List[List[String]] = List(List(),List(),List(),List(),List())
     def chercherAdresse(mot: String): String = {
         if (mot.isEmpty()) return "Adresse non trouvée"
         for (ligne <- lignesBDD){
@@ -109,10 +109,48 @@ object BDDImpl extends BaseDeDonnees{
         
         
     }
-  def createDicoPRN(): Unit= ???
-  def getDicoExpr(): List[List[String]] =  {dictionnaireExpressionsInternationale}
+  def createDicoPRN(): Unit= {
+    val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
+    var listefr = List[String]()
+    var listeen = List[String]()
+    var listees = List[String]()
+    var listede = List[String]()
+    var listeit = List[String]()
+    for (lignes <- lignesInter){
+        if (lignes.contains("Français:") && !lignes.equals("Français:")){
+            listefr = listefr:::lignes.split(":")(1).split(",").toList
+            listefr = listefr.map(_.replaceAll(" ", "")) }   
+        if (lignes.contains("Anglais:") && !lignes.equals("Anglais:")){
+            listeen = listeen:::lignes.split(":")(1).split(",").toList
+            listeen = listeen.map(_.replaceAll(" ", ""))        }
+        if (lignes.contains("Espagnol:") && !lignes.equals("Espagnol:")){
+            listees = listees:::lignes.split(":")(1).split(",").toList
+            listees = listees.map(_.replaceAll(" ", ""))}
+        if (lignes.contains("Allemand:") && !lignes.equals("Allemand:")){
+            listede = listede:::lignes.split(":")(1).split(",").toList
+            listede = listede.map(_.replaceAll(" ", ""))   }
+        if (lignes.contains("Italien:") && !lignes.equals("Italien:")){
+            listeit = listeit:::lignes.split(":")(1).split(",").toList
+            listeit = listeit.map(_.replaceAll(" ", ""))
+        }         
+        dictionnairePRNInternationale = listefr::listeen::listees::listede::listeit::Nil
+        dictionnairePRNInternationale
+    }
+  }
+  def langueDuMot(mot : String) : String = {
+    createDicoPRN()
+    if (dictionnairePRNInternationale(1).contains(mot)) {return "english"}
+    else if (dictionnairePRNInternationale(2).contains(mot)) {return "español"}
+    else if (dictionnairePRNInternationale(3).contains(mot)) {return "deutsch"}
+    else if (dictionnairePRNInternationale(4).contains(mot)) {return "italiano"}
+    "français"
+  }
+  def getDicoExpr(): List[List[String]] =  {createDicoExpr;dictionnaireExpressionsInternationale}
   def gettostrDicoExpr(): Unit = {
     println(dictionnaireExpressionsInternationale)
-    }
-  def getDicoPRN(): List[List[String]]= { dictionnairePRNInternationale}
+  }
+  def gettostrDicoPRN(): Unit = {
+    println(dictionnairePRNInternationale)
+  }
+  def getDicoPRN(): List[List[String]]= {createDicoPRN; dictionnairePRNInternationale}
 }
