@@ -8,6 +8,8 @@ import tolerance_fautes.FautesImpl
 case object ExceptionListeVide extends Exception
 object AnalyseImpl extends AnalyseTrait {
 
+  //Recherche Adresse
+
   val liste_lieux = BDDImpl
     .recupLieux(Source.fromFile("doc/DonneesInitiales.txt"))
     .concat(List("TNB", "hotel"))
@@ -22,10 +24,6 @@ object AnalyseImpl extends AnalyseTrait {
     listeLieu.filter(listeLieu => !liaisons.contains(listeLieu))
   }
 
-  /** analyse une phrase sous forme de string en entrée, la corrige et y identifie un lieu que l'on connaît afin de nous renvoyer notre couple (lieu, adresse)
-    *  @param phrase qui est le string à analyser
-    *  @return un couple de string représentant le lieu ainsi quue son adresse (lieu,adresse)
-    */
   def analyser(phrase: String): (String, String) = {
     val phrase_corrigee: String = assembler(
       FautesImpl.correction(
@@ -54,6 +52,12 @@ object AnalyseImpl extends AnalyseTrait {
     */
   def decouper(phrase: String): List[String] = phrase.split("[ .!?,;']+").toList
 
+  /**
+    * 
+    *
+    * @param mots
+    * @return
+    */
   def separatewords(mots: List[String]): List[String] = {
     mots match {
       case head :: next => head.split(" ").toList ::: separatewords(next)
@@ -70,10 +74,8 @@ object AnalyseImpl extends AnalyseTrait {
     else list.reduce(_ + " " + _)
   }
 
-  /** détecte une formule de politesse dans une phrase(string)
-    *  @param phrase qui est le string à analyser
-    *  @return un booléen true si la phrase contient les mots bonjour bonsoir ou salut
-    */
+  //Analyse politesse 
+
   def politeTest_Bonjour(phrase: String): Boolean = {
     val phrase_corrigee: String = assembler(
       FautesImpl.correction(
@@ -97,5 +99,7 @@ object AnalyseImpl extends AnalyseTrait {
       .toLowerCase()
       .equals("salut") || phrase_corrigee.toLowerCase().equals("bonsoir")
   }
+
+  // 
 
 }
