@@ -46,13 +46,15 @@ BDDTrait <|-  BDDImpl
 ConstructionImpl -|>  ConstructionTrait
 AnalyseImpl -|>  AnalyseTrait
 FautesImpl -|> FautesTrait
-LangueImpl -|> LangueTrait
+LangueTrait <|-  LangueImpl
 
 MachineDialogue --> ConstructionTrait
 MachineDialogue <- InterfaceGraphique
 ConstructionTrait --> AnalyseTrait
-AnalyseTrait -> BDDTrait
-AnalyseTrait --> LangueTrait
+
+AnalyseTrait -> LangueTrait
 AnalyseTrait --> FautesTrait
+AnalyseTrait --> BDDTrait
+MachineDialogue --> LangueTrait
 
 @enduml
