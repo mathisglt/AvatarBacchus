@@ -24,4 +24,11 @@ trait AnalyseTrait {
     */
   def politeTest_OnlyBonjour(phrase: String): Boolean
   
+  /**
+    * Recupere le dictionnaire de la langue choisie par le user
+    *
+    * @return le dictionnaire correspondant a la langue actuelle
+    */
+  def getDicoLangue(): List[String]
+  
 }

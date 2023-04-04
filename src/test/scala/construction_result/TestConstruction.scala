@@ -11,7 +11,7 @@ class TestConstruction {
         //resultat a modifier pour que construction renvoie quelque chose ?
         assertEquals(
             "Je ne comprends pas votre demande",
-            ConstructionImpl.construire("",0)
+            ConstructionImpl.construire("")
         )
     }
 
@@ -20,7 +20,7 @@ class TestConstruction {
         //test pour un seul couple
         assertEquals(
             "L'adresse de Mairie de Rennes est : Place de la Mairie",
-            ConstructionImpl.construire("Place de la Mairie",0)   
+            ConstructionImpl.construire("Place de la Mairie")   
         )
     }
 

@@ -3,6 +3,7 @@ package interface
 import scala.swing._
 import event._
 import java.awt.{Color, Font}
+import machine.MachineImpl
 
 /**
   * Création du bouton pour reinitiliser la conversation 
@@ -19,6 +20,7 @@ class ReinitButton(conv: BoxPanel) extends Button{
   text = "Réinitialiser la conversation"    // texte du bouton
   reactions +={                             // actions effectuées par le bouton
     case ButtonClicked(_) => {conv.contents.clear(); // vide le contenu du panel de conversation
+                              MachineImpl.reinit()
                               conv.contents += new RobotPanel("Bonjour, comment puis-je vous aider ?") // rajout du premier message du robot
                               conv.peer.updateUI;       // actualisation de l'affichage
                             }

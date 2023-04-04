@@ -14,9 +14,9 @@ interface MachineDialogue {
 interface ConstructionTrait{
 	construire(phrase: String): List[String]
 }
-	
+
 interface InterfaceGraphique{
-	
+
 }
 
 interface FautesTrait{
@@ -25,10 +25,14 @@ interface FautesTrait{
 
 interface AnalyseTrait{
 	analyser(phrase: String): List[(String,String)]
+	politeTest_Bonjour(phrase: String): Boolean
+	politeTest_OnlyBonjour(phrase: String): Boolean
+	getDicoLangue(): List[String]
 }
 
 interface LangueTrait{
-	
+	def changementLangue(langue : String) : Unit
+	def getLangueActuelle() : Int
 }
 
 
@@ -41,18 +45,19 @@ class FautesImpl <<(O,Orange)>>
 class LangueImpl <<(O,Orange)>>
 
 MachineImpl -|> MachineDialogue
-BDDTrait <|-  BDDImpl 
+BDDTrait <|-  BDDImpl
 ConstructionImpl -|>  ConstructionTrait
-AnalyseImpl -|>  AnalyseTrait 
-FautesImpl -|>  FautesTrait
-LangueTrait <|-  LangueImpl 
+AnalyseImpl -|>  AnalyseTrait
+FautesImpl -|> FautesTrait
+LangueTrait <|-  LangueImpl
 
 MachineDialogue --> ConstructionTrait
 MachineDialogue <- InterfaceGraphique
 ConstructionTrait --> AnalyseTrait
-AnalyseTrait -> BDDTrait
+
+AnalyseTrait -> LangueTrait
 AnalyseTrait --> FautesTrait
-AnalyseTrait --> LangueTrait
-BDDTrait -> LangueTrait
+AnalyseTrait --> BDDTrait
+MachineDialogue --> LangueTrait
 
 @enduml
