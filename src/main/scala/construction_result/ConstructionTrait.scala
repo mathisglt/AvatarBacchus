@@ -2,10 +2,11 @@ package construction_result
 
 trait ConstructionTrait {
   /**
-      * Amélioration de la v0 qui prend plusieurs couples (lieu, adresse) et rend les phrases résultats
-      * @param resultAnalyse le resultat de l'analyse d'un couple (lieu, adresse)
-      * @return la phrases representant la reponse sous la forme d'une String
-      */
-    def construire(resultat: String):String 
+    * construit la phrase de reponse pour l'utilisateur
+    * 
+    * @param requete la requete de l'utilisateur
+    * @return la phrase representant la reponse dans la langue voulu sous la forme d'une String
+    */
+    def construire(requete: String):String 
 
 }
