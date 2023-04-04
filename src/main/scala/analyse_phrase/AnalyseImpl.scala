@@ -4,6 +4,7 @@ import scala.io.Source
 import scala.io.BufferedSource
 import bdd.BDDImpl
 import tolerance_fautes.FautesImpl
+import langue.LangueImpl
 
 case object ExceptionListeVide extends Exception
 object AnalyseImpl extends AnalyseTrait {
@@ -87,6 +88,12 @@ object AnalyseImpl extends AnalyseTrait {
       .equals("salut") || phrase_corrigee.toLowerCase().equals("bonsoir")
   }
 
-  // 
+  // Analyse Langue
+
+  def getDicoLangue(): List[String] = {
+    val dicoExpr = BDDImpl.getDicoExpr
+    val langue_actuelle = LangueImpl.getLangueActuelle
+    dicoExpr(langue_actuelle).toList
+  }
 
 }
