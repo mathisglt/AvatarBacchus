@@ -12,8 +12,8 @@ trait BaseDeDonnees {
     * 4: Italien
     * @return dictionnaireInternationale qui est le international.txt rangé en dico
     */
-  var dictionnaireExpressionsInternationale : Array[Array[String]]
-  var dictionnairePRNInternationale : Array[Array[String]]
+  var dictionnaireExpressionsInternationale :List[List[String]]
+  var dictionnairePRNInternationale : List[List[String]]
   val lignesBDD: Array[String]
   /**
     * Recherche dans le fichier texte DonneesInitiales si l'adresse existe , élimine les cas ou un mot
@@ -47,9 +47,9 @@ trait BaseDeDonnees {
   /**
     * Recupère la variable dictionnaireExpressionsInternationale
     */
-  def getDicoExpr(): Array[Array[String]]
+  def getDicoExpr(): List[List[String]]
   /**
     *  Recupère la variable dictionnairePRNInternationale
     */
-  def getDicoPRN(): Array[Array[String]]
+  def getDicoPRN(): List[List[String]]
 }

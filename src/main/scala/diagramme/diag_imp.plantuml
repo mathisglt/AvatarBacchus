@@ -1,8 +1,16 @@
 @startuml Avatar
 
 interface BDDTrait{
-	val lignesBDD: Array[String]
+	var dictionnaireExpressionsInternationale : Array[Array[String]]
+ 	var dictionnairePRNInternationale : Array[Array[String]]
+  	val lignesBDD: Array[String]
 	chercherAdresse(str:String): String
+	recupLieux(file:BufferedSource):List[String]
+	chercherLieu(mot: String): String
+	createDicoExpr(): Unit
+	createDicoPRN(): Unit
+	getDicoExpr(): Array[Array[String]]
+	etDicoPRN(): Array[Array[String]]
 }
 
 interface MachineDialogue {
@@ -25,11 +33,15 @@ interface FautesTrait{
 
 interface AnalyseTrait{
 	analyser(phrase: String): List[(String,String)]
+	politeTest_Bonjour(phrase: String): Boolean
+	politeTest_OnlyBonjour(phrase: String): Boolean
+	getDicoLangue(): List[String]
 }
 
 interface LangueTrait{
-	def changementLangue(langue : String) : Unit
-	def getLangueActuelle() : Int
+	def langueSuivante(): Unit
+  	def getLangueActuelle(): Int
+  	def setLangueActuelle(langue: String): Unit
 }
 
 
