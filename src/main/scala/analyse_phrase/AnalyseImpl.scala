@@ -28,7 +28,7 @@ object AnalyseImpl extends AnalyseTrait {
     val phrase_corrigee: String = assembler(
       FautesImpl.correction(
         decouper(phrase),
-        filtreLiaison(separatewords(liste_lieux))
+        filtreLiaison(liste_lieux.flatMap(decouper(_)))
       )
     )
     val mots = decouper(phrase_corrigee)
@@ -51,19 +51,6 @@ object AnalyseImpl extends AnalyseTrait {
     *  @return une liste dont chaque élément est un mot de la phrase dans l'ordre dans lequel il apparaît dans le string de base
     */
   def decouper(phrase: String): List[String] = phrase.split("[ .!?,;']+").toList
-
-  /**
-    * 
-    *
-    * @param mots
-    * @return
-    */
-  def separatewords(mots: List[String]): List[String] = {
-    mots match {
-      case head :: next => head.split(" ").toList ::: separatewords(next)
-      case Nil          => Nil
-    }
-  }
 
   /** assemble une liste de mot (string) pour former une phrase sous forme de string avec un espace entre chaque mot
     *  @param list une list de mot
