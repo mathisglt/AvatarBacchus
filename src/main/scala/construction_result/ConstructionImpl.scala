@@ -16,7 +16,7 @@ object ConstructionImpl extends ConstructionTrait{
         //    case Nil => ""
            // case (lieu, adresse) => phrase += "L'adresse de " ++ lieu ++ " est : " ++ adresse ++ ". " ++ construirev1(reste)
         //}
-        if (resultAnalyse != ("","")) phrase = dicoExpr(2).replace("XXX", resultAnalyse._1) + " :" +resultAnalyse._2
+        if (resultAnalyse != ("","")) phrase = dicoExpr(2).replace("XXX", resultAnalyse._1) + " : " +resultAnalyse._2
         else phrase = dicoExpr(3)
         println("Requete corrigé  : " + phrase)
         phrase
