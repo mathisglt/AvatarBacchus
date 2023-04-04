@@ -110,7 +110,7 @@ object BDDImpl extends BaseDeDonnees{
         
     }
   def createDicoPRN(): Unit= ???
-  def getDicoExpr(): List[List[String]] =  {dictionnaireExpressionsInternationale}
+  def getDicoExpr(): List[List[String]] =  {createDicoExpr;dictionnaireExpressionsInternationale}
   def gettostrDicoExpr(): Unit = {
     println(dictionnaireExpressionsInternationale)
     }
