@@ -25,4 +25,14 @@ object LangueImpl extends LangueTrait {
     }
   }
 
+  def langueActuelleToString(langue_actuelle: Int): String= {
+    langue_actuelle match {
+      case 0 => "Français"
+      case 1 => "Anglais"
+      case 2 => "Espagnol"
+      case 3 => "Allemand"
+      case 4 => "Italien"
+    }
+
+  }
 }

@@ -6,4 +6,5 @@ trait LangueTrait {
   def getLangueActuelle(): Int
   def setLangueActuelle(langue: String): Unit
   def reinitLangue():Unit
+  def langueActuelleToString(langue_actuelle: Int): String
 }

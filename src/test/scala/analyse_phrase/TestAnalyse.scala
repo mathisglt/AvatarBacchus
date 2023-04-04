@@ -326,6 +326,7 @@ class TestAnalyse {
      @Test
     def test_getDicoLangue {
         LangueImpl.setLangueActuelle("Anglais")
+        print (AnalyseImpl.getDicoLangue())
         assertEquals(
             List("yes","no","The address of XXX is",
 "I do not understand",
