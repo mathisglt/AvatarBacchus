@@ -15,6 +15,7 @@ object BDDImpl extends BaseDeDonnees{
     var banwords = Set("")
     var variancesaddr = Map(("tnb","1, Rue Saint-Hélier"),("hotel","Place de la Mairie"))
     var varianceslieux = Map(("tnb","Théâtre National de Bretagne"),("hotel","Mairie de Rennes"))
+    var dictionnaireExpressionsInternationale : Array[Array[String]] = Array[Array[String]]()
     def chercherAdresse(mot: String): String = {
         if (mot.isEmpty()) return "Adresse non trouvée"
         for (ligne <- lignesBDD){
@@ -59,4 +60,20 @@ object BDDImpl extends BaseDeDonnees{
     }
     listeFinale.toList
     }
+    
+    def createDicoExpr()={
+        val lignesInter = Source.fromFile("partie2/international.txt").getLines.toArray
+        for (lignes <- lignesInter){
+            if (lignes.equals("Francais:")){
+                val index = lignesInter.indexOf(lignes)
+                //for (i <- index to index+8){
+                //    dictionnaireExpressionsInternationale.addString(lignesInter.)
+                //}
+                
+            }            
+        }
+    }
+  def createDicoPRN(): Unit= ???
+  def getDicoExpr(): Array[Array[String]] = ???
+  def getDicoPRN(): Array[Array[String]]= ???
 }
