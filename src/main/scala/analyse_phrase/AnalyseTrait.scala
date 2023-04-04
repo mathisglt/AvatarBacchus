@@ -2,11 +2,9 @@ package analyse_phrase
 
 trait AnalyseTrait {
 
-  /**
-    * analyse les mots de la requete du user pour renvoyer le couple (lieu, adresse)
-    *
-    * @param phrase une String correspondant à la requete du user 
-    * @return le couple (lieu, adresses)
+  /** analyse une phrase sous forme de string en entrée, la corrige et y identifie un lieu que l'on connaît afin de nous renvoyer notre couple (lieu, adresse)
+    *  @param phrase qui est le string à analyser
+    *  @return un couple de string représentant le lieu ainsi que son adresse (lieu,adresse)
     */
   def analyser(phrase: String): (String,String)
 
@@ -17,5 +15,13 @@ trait AnalyseTrait {
     * @return true si contient un des mots, false sinon
     */
   def politeTest_Bonjour(phrase: String): Boolean
+
+  /**
+    * analyse la phrase du user et renvoie true s'il contient uniquement "bonjour", "bonsoir" ou "salut"
+    *
+    * @param phrase la requete du user
+    * @return vrai si la phrase ne contient que "bonjour", "bonsoir" ou "salut" modulo erreurs et majuscules
+    */
+  def politeTest_OnlyBonjour(phrase: String): Boolean
   
 }
