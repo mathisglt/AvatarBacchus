@@ -42,7 +42,15 @@ class TestAnalyse {
     def test_analyser_05: Unit = {
         assertEquals(
             ("",""),
-            AnalyseImpl.analyser("où se trouvent Rennes et la Bretagne ?")
+            AnalyseImpl.analyser("où se trouve Rennes ?")
+        )
+    }
+
+    @Test
+    def test_analyser_055: Unit = {
+        assertEquals(
+            ("",""),
+            AnalyseImpl.analyser("où se trouve Bretagne ?")
         )
     }
 
