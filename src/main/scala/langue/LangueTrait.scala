@@ -2,7 +2,7 @@ package langue
 
 trait LangueTrait {
 
-  def changementLangue(langue : String) : Unit
-  def getLangueActuelle() : Int 
-
+  def langueSuivante(): Unit
+  def getLangueActuelle(): Int
+  def setLangueActuelle(langue: String): Unit
 }
