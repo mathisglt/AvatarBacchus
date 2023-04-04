@@ -109,10 +109,38 @@ object BDDImpl extends BaseDeDonnees{
         
         
     }
-  def createDicoPRN(): Unit= ???
+  def createDicoPRN(): Unit= {
+    val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
+        var listefr = List[String]()
+        var listeen = List[String]()
+        var listees = List[String]()
+        var listede = List[String]()
+        var listeit = List[String]()
+        for (lignes <- lignesInter){
+            if (lignes.contains("Français:") && !lignes.equals("Français:")){
+                listefr = listefr:::lignes.split(":")(1).split(",").toList
+            }   
+            if (lignes.equals("Anglais:")){
+                listeen = listeen:::lignes.split(":")(1).split(",").toList
+            }
+            if (lignes.equals("Espagnol:")){
+                listees = listees:::lignes.split(":")(1).split(",").toList
+            }
+            if (lignes.equals("Allemand:")){
+                listede = listede:::lignes.split(":")(1).split(",").toList   
+            }
+            if (lignes.equals("Italien:")){
+                listeit = listeit:::lignes.split(":")(1).split(",").toList
+            }         
+            dictionnairePRNInternationale = listefr::listeen::listees::listede::listeit::Nil
+        }
+  }
   def getDicoExpr(): List[List[String]] =  {createDicoExpr;dictionnaireExpressionsInternationale}
   def gettostrDicoExpr(): Unit = {
     println(dictionnaireExpressionsInternationale)
-    }
-  def getDicoPRN(): List[List[String]]= { dictionnairePRNInternationale}
+  }
+  def gettostrDicoPRN(): Unit = {
+    println(dictionnairePRNInternationale)
+  }
+  def getDicoPRN(): List[List[String]]= {createDicoPRN; dictionnairePRNInternationale}
 }
