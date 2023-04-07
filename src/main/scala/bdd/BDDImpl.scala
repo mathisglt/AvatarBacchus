@@ -139,10 +139,10 @@ object BDDImpl extends BaseDeDonnees{
   }
   def langueDuMot(mot : String) : String = {
     createDicoPRN()
-    if (dictionnairePRNInternationale(1).contains(mot)) {return "english"}
-    else if (dictionnairePRNInternationale(2).contains(mot)) {return "español"}
-    else if (dictionnairePRNInternationale(3).contains(mot)) {return "deutsch"}
-    else if (dictionnairePRNInternationale(4).contains(mot)) {return "italiano"}
+    if (dictionnairePRNInternationale(1).contains(mot.toLowerCase())) {return "english"}
+    else if (dictionnairePRNInternationale(2).contains(mot.toLowerCase())) {return "español"}
+    else if (dictionnairePRNInternationale(3).contains(mot.toLowerCase())) {return "deutsch"}
+    else if (dictionnairePRNInternationale(4).contains(mot.toLowerCase())) {return "italiano"}
     "français"
   }
   def getDicoExpr(): List[List[String]] =  {createDicoExpr;dictionnaireExpressionsInternationale}
