@@ -38,11 +38,11 @@ object LangueImpl extends LangueTrait {
     */
   def langueActuelleToString(langue_actuelle: Int): String= {
     langue_actuelle match {
-      case 0 => "Français"
-      case 1 => "Anglais"
-      case 2 => "Espagnol"
-      case 3 => "Allemand"
-      case 4 => "Italien"
+      case 0 => "français"
+      case 1 => "english"
+      case 2 => "español"
+      case 3 => "deutsch"
+      case 4 => "italiano"
     }
   }
 
