@@ -323,21 +323,104 @@ class TestAnalyse {
     }
 
     // tests unitaire de getDicoLangue
-     @Test
-    def test_getDicoLangue {
-        LangueImpl.setLangueActuelle("Anglais")
+
+    @Test
+    def test_getDicoLangue_01 {
+        LangueImpl.setLangueActuelle("Français")
         print (AnalyseImpl.getDicoLangue())
         assertEquals(
-            List("yes","no","The address of XXX is",
-"I do not understand",
-"Do you speak english?",
-"OK, what is your query?",
-"I found XXX answers",
-"What is your choice?",
-"restaurant, creperie, pizzeria"),
+            List("oui","non","L'adresse de XXX est",
+                "Je ne comprends pas votre demande",
+                "Parlez-vous français?",
+                "D'accord, quelle est votre demande?",
+                "J'ai XXX réponses possibles",
+                "Quel est votre choix?",
+                "restaurant, creperie, pizzeria"),
             AnalyseImpl.getDicoLangue()
         )
     }
 
+    @Test
+    def test_getDicoLangue_02 {
+        LangueImpl.setLangueActuelle("Anglais")
+        print (AnalyseImpl.getDicoLangue())
+        assertEquals(
+            List("yes","no","The address of XXX is",
+                "I do not understand",
+                "Do you speak english?",
+                "OK, what is your query?",
+                "I found XXX answers",
+                "What is your choice?",
+                "restaurant, creperie, pizzeria"),
+            AnalyseImpl.getDicoLangue()
+        )
+    }
 
+    @Test
+    def test_getDicoLangue_03 {
+        LangueImpl.setLangueActuelle("Espagnol")
+        print (AnalyseImpl.getDicoLangue())
+        assertEquals(
+            List("si","no","La dirección de XXX es",
+                "No comprendo",
+                "Hablas español?",
+                "Está bien, cuál es tu petición?",
+                "Tengo XXX opciones",
+                "Cuál es su elección?",
+                "restaurante, creperie, pizzeria"),
+            AnalyseImpl.getDicoLangue()
+        )
+    }
+
+    @Test
+    def test_getDicoLangue_04 {
+        LangueImpl.setLangueActuelle("Allemand")
+        print (AnalyseImpl.getDicoLangue())
+        assertEquals(
+            List("ja","nein","Die adresse von XXX ist",
+                "Ich verstehe nicht",
+                "Sprechen Sie Deutsch?",
+                "Okay, was ist Ihr Wunsch?",
+                "Ich habe XXX Antworten",
+                "Was ist Ihre Wahl?",
+                "restaurant, creperie, pizzeria"),
+            AnalyseImpl.getDicoLangue()
+        )
+    }
+
+    @Test
+    def test_getDicoLangue_05 {
+        LangueImpl.setLangueActuelle("Italien")
+        print (AnalyseImpl.getDicoLangue())
+        assertEquals(
+            List("si","no","Indirizzo di XXX è",
+                "No capisco",
+                "Parli italiano?",
+                "Va bene, qual è la tua richiesta?",
+                "Ho XXX risposte",
+                "Qual è la vostra scelta?",
+                "ristorante, creperie, pizzeria"),
+            AnalyseImpl.getDicoLangue()
+        )
+    }
+
+        //Test detecLangue
+
+        @Test
+        def test_detecLangue_01 {
+            LangueImpl.setLangueActuelle("Français")
+            assertEquals(
+                (false, 0),
+                AnalyseImpl.detecLangue("je cherche la mairie")
+            )
+        }
+
+        @Test
+        def test_detecLangue_02 {
+            LangueImpl.setLangueActuelle("Français")
+            assertEquals(
+                (true, 1),
+                AnalyseImpl.detecLangue("I am seeking la mairie de Rennes")
+            )
+        } 
 }
