@@ -73,33 +73,33 @@ object BDDImpl extends BaseDeDonnees{
         for (lignes <- lignesInter){
             if (lignes.equals("Français:")){
                 val index = lignesInter.indexOf(lignes)
-                for (i <- index+1 to index+8){
+                for (i <- index+1 to index+9){
                     listefr = listefr:::lignesInter(i)::Nil
                 }
             }   
             if (lignes.equals("Anglais:")){
                 val index = lignesInter.indexOf(lignes)
-                for (i <- index+1 to index+8){
+                for (i <- index+1 to index+9){
                     listeen = listeen:::lignesInter(i)::Nil
                 }
             }
             if (lignes.equals("Espagnol:")){
                 val index = lignesInter.indexOf(lignes)
-                for (i <- index+1 to index+8){
+                for (i <- index+1 to index+9){
                     listees = listees:::lignesInter(i)::Nil
                 }
                 
             }
             if (lignes.equals("Allemand:")){
                val index = lignesInter.indexOf(lignes)
-                for (i <- index+1 to index+8){
+                for (i <- index+1 to index+9){
                     listede = listede:::lignesInter(i)::Nil
                 }
                 
             }
             if (lignes.equals("Italien:")){
                 val index = lignesInter.indexOf(lignes)
-                for (i <- index+1 to index+8){
+                for (i <- index+1 to index+9){
                     listeit = listeit:::lignesInter(i)::Nil
                 }
                 

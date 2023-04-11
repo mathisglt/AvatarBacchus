@@ -119,5 +119,37 @@ class TestBDD {
     def testlanguedumotRecherche5{
        assertEquals("italiano",BDDImpl.langueDuMot("cercando"))
     }
+    @Test
+    def createDicoExpr1{
+       assertEquals(List(List("oui", "non", "L'adresse de XXX est", "Je ne comprends pas votre demande", "Parlez-vous français?", "D'accord, quelle est votre demande?", "J'ai XXX réponses possibles", "Quel est votre choix?", "restaurant, creperie, pizzeria"), List("yes", "no", "The address of XXX is", "I do not understand", "Do you speak english?", "OK, what is your query?", "I found XXX answers", "What is your choice?", "restaurant, creperie, pizzeria"), List("si", "no", "La dirección de XXX es", "No comprendo", "Hablas español?", "Está bien, cuál es tu petición?", "Tengo XXX opciones", "Cuál es su elección?", "restaurante, creperie, pizzeria"), List("ja", "nein", "Die adresse von XXX ist", "Ich verstehe nicht", "Sprechen Sie Deutsch?", "Okay, was ist Ihr Wunsch?", "Ich habe XXX Antworten", "Was ist Ihre Wahl?", "restaurant, creperie, pizzeria"), List("si", "no", "Indirizzo di XXX è", "No capisco", "Parli italiano?", "Va bene, qual è la tua richiesta?", "Ho XXX risposte", "Qual è la vostra scelta?", "ristorante, creperie, pizzeria")),BDDImpl.getDicoExpr())
+    }
+    @Test
+    def createDicoExprfr{
+       assertEquals(List("oui", "non", "L'adresse de XXX est", "Je ne comprends pas votre demande", "Parlez-vous français?", "D'accord, quelle est votre demande?", "J'ai XXX réponses possibles", "Quel est votre choix?", "restaurant, creperie, pizzeria"),BDDImpl.getDicoExpr()(0))
+    }
+    @Test
+    def createDicoExpren{
+       assertEquals(List("yes", "no", "The address of XXX is", "I do not understand", "Do you speak english?", "OK, what is your query?", "I found XXX answers", "What is your choice?", "restaurant, creperie, pizzeria"),BDDImpl.getDicoExpr()(1))
+    }
+    @Test
+    def createDicoExpres{
+       assertEquals(List("si", "no", "La dirección de XXX es", "No comprendo", "Hablas español?", "Está bien, cuál es tu petición?", "Tengo XXX opciones", "Cuál es su elección?", "restaurante, creperie, pizzeria"),BDDImpl.getDicoExpr()(2))
+    }
+    @Test
+    def createDicoExprde{
+       assertEquals(List("ja", "nein", "Die adresse von XXX ist", "Ich verstehe nicht", "Sprechen Sie Deutsch?", "Okay, was ist Ihr Wunsch?", "Ich habe XXX Antworten", "Was ist Ihre Wahl?", "restaurant, creperie, pizzeria"),BDDImpl.getDicoExpr()(3))
+    }
+    @Test
+    def createDicoExprit{
+       assertEquals(List("si", "no", "Indirizzo di XXX è", "No capisco", "Parli italiano?", "Va bene, qual è la tua richiesta?", "Ho XXX risposte", "Qual è la vostra scelta?", "ristorante, creperie, pizzeria"),BDDImpl.getDicoExpr()(4))
+    }
+
+
+    @Test
+    def createDicoPRN1{
+       assertEquals(List(List("bonjour", "salut", "bonsoir", "recherche", "cherche", "ou", "est", "donc", "trouve", "trouver", "français"), List("hi", "hello", "morning", "evening", "afternoon", "hey", "seek", "seeking", "search", "searching", "look", "looking", "where", "find", "english"), List("hola", "buenos", "dias", "donde", "esta", "busco", "buscando", "español"), List("hallo", "guten", "morgen", "tag", "abend", "wo", "ist", "suche", "suchen", "deutsch"), List("buongiorno", "ciao", "salve", "buon", "pomeriggio", "buonasera", "incantato", "dove", "trova", "cerco", "cercando", "italiano")),BDDImpl.getDicoPRN())
+    }
+
+
 
 }
