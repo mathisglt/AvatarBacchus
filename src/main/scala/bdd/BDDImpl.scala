@@ -157,18 +157,33 @@ object BDDImpl extends BaseDeDonnees{
     println(dictionnairePRNInternationale)
   }
   def getDicoPRN(): List[List[String]]= {createDicoPRN; dictionnairePRNInternationale}
-  def createListFromXML(): List[(String,String)] = {
-    println("a")
-    var names = (xml \\ "organization" \\ "name")
-    var lieux = (xml \\ "adresses" \\ "address" \\ "street" \\ "name")
-    creerxml(names,lieux)
-    }
-    def creerxml(names:NodeSeq,lieux:NodeSeq):List[(String,String)] = {
-        (names,lieux) match {
-        case (Nil,Nil) => Nil
-        case (Nil,_) | (_,Nil) => Nil
-        case (x,y)=>  (names(0).toString(),lieux(0).toString())::creerxml(names.drop(names(0).indexOf()),lieux.drop(lieux(0).indexOf()))
-    }
+  /**
+    * Récupère le fichier xml et récupère les noms trouvés dans la balise name , et les lieux associés dans la balise name de street
+    *
+    * @return
+    */
+  def createListFromXML(): List[(String, String)] = {
+  val organizations = xml \\ "organization"
+  organizations.flatMap { organization =>
+    val name = (organization \\ "name").text.trim
+    val streetName = (organization \\ "street" \\ "name").text.trim
+    val streetNumber = (organization \\ "street" \\ "number").text.trim
+    val fullStreet = if (streetNumber.nonEmpty) s"$streetNumber $streetName" else streetName
+    if (name.nonEmpty && streetName.nonEmpty) Some(name -> fullStreet) else None
+  }.toList
+}
+    /**
+      * Récupère le nom des lieux , et l'ajoute dans un couple avec son adresse
+      *
+      * @param names
+      * @param lieux
+      * @return
+      */
+    def creerxml(names: Seq[String], lieux: Seq[String]): List[(String, String)] = {
+        (names, lieux) match {
+            case (Nil, _) | (_, Nil) => Nil
+            case (x :: xs, y :: ys)  => (x, y) :: creerxml(xs, ys)
+  }
 
     }
 }
