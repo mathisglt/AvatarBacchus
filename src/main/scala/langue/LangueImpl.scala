@@ -44,6 +44,15 @@ object LangueImpl extends LangueTrait {
       case 3 => "Allemand"
       case 4 => "Italien"
     }
-
   }
+
+  def langueStringToInt(langue : String): Int = {
+      langue match {
+        case "français" => 0
+        case "english" => 1
+        case "español" => 2
+        case "deutsch" => 3
+        case "italiano" => 4
+      }
+    }
 }
