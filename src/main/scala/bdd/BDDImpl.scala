@@ -8,6 +8,8 @@ import java.io.File
 import bdd.BaseDeDonnees
 import scala.collection.mutable.ArrayBuffer
 import java.util.ArrayList
+import scala.xml.XML
+import scala.xml.NodeSeq
 
 object BDDImpl extends BaseDeDonnees{
     // TEST2
@@ -18,6 +20,8 @@ object BDDImpl extends BaseDeDonnees{
     var varianceslieux = Map(("tnb","Théâtre National de Bretagne"),("hotel","Mairie de Rennes"))
     var dictionnaireExpressionsInternationale : List[List[String]] = List(List(),List(),List(),List(),List())
     var dictionnairePRNInternationale         : List[List[String]] = List(List(),List(),List(),List(),List())
+    val xml = XML.loadFile("partie2/vAr.xml")
+
     def chercherAdresse(mot: String): String = {
         if (mot.isEmpty()) return "Adresse non trouvée"
         for (ligne <- lignesBDD){
@@ -153,4 +157,18 @@ object BDDImpl extends BaseDeDonnees{
     println(dictionnairePRNInternationale)
   }
   def getDicoPRN(): List[List[String]]= {createDicoPRN; dictionnairePRNInternationale}
+  def createListFromXML(): List[(String,String)] = {
+    println("a")
+    var names = (xml \\ "organization" \\ "name")
+    var lieux = (xml \\ "adresses" \\ "address" \\ "street" \\ "name")
+    creerxml(names,lieux)
+    }
+    def creerxml(names:NodeSeq,lieux:NodeSeq):List[(String,String)] = {
+        (names,lieux) match {
+        case (Nil,Nil) => Nil
+        case (Nil,_) | (_,Nil) => Nil
+        case (x,y)=>  (names(0).toString(),lieux(0).toString())::creerxml(names.drop(names(0).indexOf()),lieux.drop(lieux(0).indexOf()))
+    }
+
+    }
 }

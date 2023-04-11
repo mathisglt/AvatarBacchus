@@ -4,6 +4,20 @@ import analyse_phrase.AnalyseImpl
 
 object ConstructionImpl extends ConstructionTrait{
 
+
+
+    def construireLangue(requete: String): List[String] = {
+      val change = AnalyseImpl.detecLangue(requete)
+      val dicoExpr = AnalyseImpl.getDicoLangue(change._2)
+      if(change._1){//true = changer langue 
+        dicoExpr(4) :: Nil
+      }
+      else{
+        construirePolitesse(requete)
+      }
+    }
+
+
     /**
       * @param requete la requete de l'utilisateur
       * @return un bonjour si bonjour + construire
@@ -13,8 +27,6 @@ object ConstructionImpl extends ConstructionTrait{
         else if (AnalyseImpl.politeTest_Bonjour(requete)) "Bonjour" :: List(construire(requete))
         else List(construire(requete))
     }
-
-
 
 
     /**

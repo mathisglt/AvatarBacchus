@@ -3,7 +3,6 @@ import org.junit.Test
 import org.junit.Assert._
 
 class TestBDD {
-   BDDImpl.createDicoPRN()
 
    @Test
    def testchercheradresseInconnuv1{
@@ -148,6 +147,11 @@ class TestBDD {
     @Test
     def createDicoPRN1{
        assertEquals(List(List("bonjour", "salut", "bonsoir", "recherche", "cherche", "ou", "est", "donc", "trouve", "trouver", "français"), List("hi", "hello", "morning", "evening", "afternoon", "hey", "seek", "seeking", "search", "searching", "look", "looking", "where", "find", "english"), List("hola", "buenos", "dias", "donde", "esta", "busco", "buscando", "español"), List("hallo", "guten", "morgen", "tag", "abend", "wo", "ist", "suche", "suchen", "deutsch"), List("buongiorno", "ciao", "salve", "buon", "pomeriggio", "buonasera", "incantato", "dove", "trova", "cerco", "cercando", "italiano")),BDDImpl.getDicoPRN())
+    }
+
+    @Test
+    def xml1{
+       assertEquals("ddd",BDDImpl.createListFromXML())
     }
 
 
