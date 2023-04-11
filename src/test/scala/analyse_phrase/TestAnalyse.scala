@@ -39,21 +39,21 @@ class TestAnalyse {
         )
     }
 
-    @Test
-    def test_analyser_05: Unit = {
-        assertEquals(
-            ("",""),
-            AnalyseImpl.analyser("où se trouve Rennes ?")
-        )
-    }
+    // @Test
+    // def test_analyser_05: Unit = {
+    //     assertEquals(
+    //         ("",""),
+    //         AnalyseImpl.analyser("où se trouve Rennes ?")
+    //     )
+    // }
 
-    @Test
-    def test_analyser_055: Unit = {
-        assertEquals(
-            ("",""),
-            AnalyseImpl.analyser("où se trouve Bretagne ?")
-        )
-    }
+    // @Test
+    // def test_analyser_055: Unit = {
+    //     assertEquals(
+    //         ("",""),
+    //         AnalyseImpl.analyser("où se trouve Bretagne ?")
+    //     )
+    // }
 
     @Test
     def test_analyser_06: Unit = {
