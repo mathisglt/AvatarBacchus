@@ -34,9 +34,11 @@ interface AnalyseTrait{
 }
 
 interface LangueTrait{
-	def langueSuivante(): Unit
-  	def getLangueActuelle(): Int
-  	def setLangueActuelle(langue: String): Unit
+	langueSuivante(): Unit
+ 	getLangueActuelle(): Int
+  	setLangueActuelle(langue: String): Unit
+  	reinitLangue():Unit
+  	langueActuelleToString(langue_actuelle: Int): String
 }
 
 
