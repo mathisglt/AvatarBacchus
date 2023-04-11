@@ -101,5 +101,17 @@ object AnalyseImpl extends AnalyseTrait {
   def getDicoLangue(lang: Int): List[String] = {
     val dicoExpr = BDDImpl.getDicoExpr
     dicoExpr(lang).filter(_ != LangueImpl.langueActuelleToString(lang))
+
   }
+
+  def detecLangue(phrase : List[String]): (Boolean, Int) = {
+    filtreLiaison(phrase) match {
+      case Nil => (false, LangueImpl.getLangueActuelle())
+      case head :: next => 
+        val langue = BDDImpl.langueDuMot(head)
+        if (langue.equals(LangueImpl.langueActuelleToString(LangueImpl.getLangueActuelle()))) detecLangue(next)
+        else (true, LangueImpl.langueStringToInt(langue))
+    }
+  }
+
 }
