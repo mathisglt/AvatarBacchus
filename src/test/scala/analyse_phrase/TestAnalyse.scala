@@ -404,4 +404,23 @@ class TestAnalyse {
         )
     }
 
+        //Test detecLangue
+
+        @Test
+        def test_detecLangue_01 {
+            LangueImpl.setLangueActuelle("Français")
+            assertEquals(
+                (false, 0),
+                AnalyseImpl.detecLangue("je cherche la mairie")
+            )
+        }
+
+        @Test
+        def test_detecLangue_02 {
+            LangueImpl.setLangueActuelle("Français")
+            assertEquals(
+                (true, 1),
+                AnalyseImpl.detecLangue("I am seeking la mairie de Rennes")
+            )
+        } 
 }
