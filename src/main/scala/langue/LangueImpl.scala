@@ -30,6 +30,19 @@ object LangueImpl extends LangueTrait {
     }
   }
 
+  def getLangueConfirmation():String={
+    langueActuelle match {
+      case 0 => "Parlez-vous français?"
+      case 1 => "Do you speak english?"
+      case 2 => "Hablas español?"
+      case 3 => "Sprechen Sie Deutsch?"
+      case 4 => "Parli italiano?"
+      case _ => "Je n'ai pas compris"
+    }
+  }
+
+   
+
   /**
     * renvoie la langue actuelle sous forme de string
     *

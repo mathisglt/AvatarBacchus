@@ -4,10 +4,25 @@ import tolerance_fautes.FautesImpl
 import langue.LangueImpl
 
 object MachineImpl extends MachineDialogue {
-
-  def ask(s: String): List[String] = {
-    println("\nrequete : " + s)
-    ConstructionImpl.construirePolitesse(s)
+  var changementEnCours = false //changement de langue en cours 
+  def ask(requete: String): List[String] = {
+    println("\nrequete : " + requete)
+    val msgRobot = ConstructionImpl.construireLangue(requete) //renvoie le message du robot
+    
+    //if(!changementEnCours) { //s'il n'y a pas de changement en cours et que le message du robot est une des phrases suivantes, on change la langue jusqu'à confirmation
+      msgRobot.head match {
+        case "Parlez-vous français?" => LangueImpl.setLangueActuelle("Français"); changementEnCours = true
+        case "Do you speak english?" => LangueImpl.setLangueActuelle("Anglais"); changementEnCours = true
+        case "Hablas español?" => LangueImpl.setLangueActuelle("Espagnol"); changementEnCours = true
+        case "Sprechen Sie Deutsch?" => LangueImpl.setLangueActuelle("Allemand"); changementEnCours = true
+        case "Parli italiano?" => LangueImpl.setLangueActuelle("Italien"); changementEnCours = true
+      }
+      msgRobot //on renvoie le message du robot pour avoir la confirmation de l'utilisateur
+    //}
+    /*else{
+      changementEnCours = false
+      ConstructionImpl.construireConfirmation(requete,LangueImpl.getLangueActuelle()) :: Nil
+    }*/
   }
 
   // Pour la partie test par le client

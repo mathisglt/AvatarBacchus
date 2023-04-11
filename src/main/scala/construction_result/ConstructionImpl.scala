@@ -9,7 +9,7 @@ object ConstructionImpl extends ConstructionTrait{
     def construireLangue(requete: String): List[String] = {
       val change = AnalyseImpl.detecLangue(requete)
       val dicoExpr = AnalyseImpl.getDicoLangue(change._2)
-      if(change._1){//true = changer langue 
+      if(!change._1){//true = changer langue 
         dicoExpr(4) :: Nil
       }
       else{
@@ -17,7 +17,16 @@ object ConstructionImpl extends ConstructionTrait{
       }
     }
 
-
+    def construireConfirmation(requete: String, langueActuelle: Int):String={
+      requete match {
+        case "oui" if(langueActuelle == 0) => "D'accord, quelle est votre demande?"
+        case "yes" if(langueActuelle == 1) => "OK, what is your query?"
+        case "si" if(langueActuelle == 2) => "Está bien, cuál es tu petición?"
+        case "ja" if(langueActuelle == 3) => "Okay, was ist Ihr Wunsch?"
+        case "si" if(langueActuelle == 4) => "Va bene, qual è la tua richiesta?"
+      }
+    }
+    
     /**
       * @param requete la requete de l'utilisateur
       * @return un bonjour si bonjour + construire
