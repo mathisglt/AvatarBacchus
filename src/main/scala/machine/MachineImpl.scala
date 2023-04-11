@@ -7,7 +7,7 @@ object MachineImpl extends MachineDialogue {
   var changementEnCours = false //changement de langue en cours
 
   def ask(requete: String): List[String] = {
-    println("\nrequete : " + requete)
+    println("requete : " + requete)
     val msgRobot =
       ConstructionImpl.construireLangue(requete) //renvoie le message du robot
 
@@ -46,7 +46,6 @@ object MachineImpl extends MachineDialogue {
     LangueImpl.reinitLangue //réinitialise la langue
   }
   def test(l: List[String]): List[String] = {
-    println("Requetes de base : " + l)
     l match {
       case Nil          => Nil
       case head :: next => ask(head) ++ test(next)
