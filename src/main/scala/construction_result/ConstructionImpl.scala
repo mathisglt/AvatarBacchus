@@ -6,6 +6,19 @@ object ConstructionImpl extends ConstructionTrait{
 
     /**
       * @param requete la requete de l'utilisateur
+      * @return un bonjour si bonjour + construire
+      */
+    def construirePolitesse(requete: String):List[String] = {
+        if (AnalyseImpl.politeTest_OnlyBonjour(requete)) "Bonjour" :: Nil
+        else if (AnalyseImpl.politeTest_Bonjour(requete)) "Bonjour" :: List(construire(requete))
+        else List(construire(requete))
+    }
+
+
+
+
+    /**
+      * @param requete la requete de l'utilisateur
       * @return la phrase representant la reponse dans la langue voulu sous la forme d'une String
       */
     def construire(requete: String):String = {
@@ -14,7 +27,7 @@ object ConstructionImpl extends ConstructionTrait{
         val dicoExpr = AnalyseImpl.getDicoLangue
         //resultAnalyse match {
         //    case Nil => ""
-           // case (lieu, adresse) => phrase += "L'adresse de " ++ lieu ++ " est : " ++ adresse ++ ". " ++ construirev1(reste)
+        // case (lieu, adresse) => phrase += "L'adresse de " ++ lieu ++ " est : " ++ adresse ++ ". " ++ construirev1(reste)
         //}
         if (resultAnalyse != ("","")) phrase = dicoExpr(2).replace("XXX", resultAnalyse._1) + " : " +resultAnalyse._2
         else phrase = dicoExpr(3)
