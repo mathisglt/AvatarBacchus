@@ -62,7 +62,7 @@ object AnalyseImpl extends AnalyseTrait {
     else list.reduce(_ + " " + _)
   }
 
-  //Analyse politesse 
+  //Analyse politesse
 
   def politeTest_Bonjour(phrase: String): Boolean = {
     val phrase_corrigee: String = assembler(
@@ -90,10 +90,12 @@ object AnalyseImpl extends AnalyseTrait {
 
   // Analyse Langue
 
-   def getDicoLangue(): List[String] = {
+  def getDicoLangue(): List[String] = {
     val dicoExpr = BDDImpl.getDicoExpr
     val langue_actuelle = LangueImpl.getLangueActuelle
-    dicoExpr(langue_actuelle).filter(_ != LangueImpl.langueActuelleToString(langue_actuelle))
+    dicoExpr(langue_actuelle).filter(
+      _ != LangueImpl.langueActuelleToString(langue_actuelle)
+    )
   }
 
   def getDicoLangue(lang: Int): List[String] = {
