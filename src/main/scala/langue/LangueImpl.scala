@@ -30,7 +30,7 @@ object LangueImpl extends LangueTrait {
     }
   }
 
-  def getLangueConfirmation():String={
+  def getLangueQuestion():String={
     langueActuelle match {
       case 0 => "Parlez-vous français?"
       case 1 => "Do you speak english?"

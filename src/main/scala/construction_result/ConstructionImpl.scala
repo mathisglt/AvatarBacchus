@@ -24,6 +24,7 @@ object ConstructionImpl extends ConstructionTrait{
         case "si" if(langueActuelle == 2) => "Está bien, cuál es tu petición?"
         case "ja" if(langueActuelle == 3) => "Okay, was ist Ihr Wunsch?"
         case "si" if(langueActuelle == 4) => "Va bene, qual è la tua richiesta?"
+        case _ => "Pas de confirmation"
       }
     }
     
