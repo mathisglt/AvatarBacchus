@@ -90,11 +90,14 @@ object AnalyseImpl extends AnalyseTrait {
 
   // Analyse Langue
 
-  def getDicoLangue(): List[String] = {
+   def getDicoLangue(): List[String] = {
     val dicoExpr = BDDImpl.getDicoExpr
     val langue_actuelle = LangueImpl.getLangueActuelle
-    print( dicoExpr(langue_actuelle).filter(_ != LangueImpl.langueActuelleToString(langue_actuelle)))
     dicoExpr(langue_actuelle).filter(_ != LangueImpl.langueActuelleToString(langue_actuelle))
-    
+  }
+
+  def getDicoLangue(lang: Int): List[String] = {
+    val dicoExpr = BDDImpl.getDicoExpr
+    dicoExpr(lang).filter(_ != LangueImpl.langueActuelleToString(lang))
   }
 }
