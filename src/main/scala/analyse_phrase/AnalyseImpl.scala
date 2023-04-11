@@ -104,7 +104,9 @@ object AnalyseImpl extends AnalyseTrait {
 
   }
 
-  def detecLangue(phrase : List[String]): (Boolean, Int) = {
+  def detecLangue(phrase : String): (Boolean, Int) = detecLangue(decouper(phrase))
+
+  private def detecLangue(phrase : List[String]): (Boolean, Int) = {
     filtreLiaison(phrase) match {
       case Nil => (false, LangueImpl.getLangueActuelle())
       case head :: next => 
