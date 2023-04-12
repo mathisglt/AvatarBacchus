@@ -65,10 +65,14 @@ object AnalyseImpl extends AnalyseTrait {
   //Analyse politesse
 
   def politeTest_Bonjour(phrase: String): Boolean = {
+    val salutationsLangueActuelle =
+      BDDImpl
+        .getDicoPRN()(LangueImpl.getLangueActuelle())
+        .dropRight(8) //A verifier
     val phrase_corrigee: String = assembler(
       FautesImpl.correction(
         decouper(phrase),
-        List("bonjour", "bonsoir", "salut")
+        salutationsLangueActuelle
       )
     )
     phrase_corrigee.toLowerCase().contains("bonjour") || phrase_corrigee
@@ -77,10 +81,14 @@ object AnalyseImpl extends AnalyseTrait {
   }
 
   def politeTest_OnlyBonjour(phrase: String): Boolean = {
+    val salutationsLangueActuelle =
+      BDDImpl
+        .getDicoPRN()(LangueImpl.getLangueActuelle())
+        .dropRight(8) //A verifier
     val phrase_corrigee: String = assembler(
       FautesImpl.correction(
         decouper(phrase),
-        List("bonjour", "bonsoir", "salut")
+        salutationsLangueActuelle
       )
     )
     phrase_corrigee.toLowerCase().equals("bonjour") || phrase_corrigee
