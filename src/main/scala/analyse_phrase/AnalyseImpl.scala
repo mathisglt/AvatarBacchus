@@ -14,7 +14,7 @@ object AnalyseImpl extends AnalyseTrait {
   val liste_lieux = BDDImpl
     .recupLieux(Source.fromFile("doc/DonneesInitiales.txt"))
     .concat(List("TNB", "Hotel de Ville"))
-  val listeAvecLiason = liste_lieux.map(decouper(_))
+  val listeAvecLiaison = liste_lieux.map(decouper(_))
 
   /** permet de retirer les mots de liaisons de phrase sous formes de liste de string
     *  @param phrase sous forme de liste de string
@@ -104,14 +104,20 @@ object AnalyseImpl extends AnalyseTrait {
 
   }
 
-  def detecLangue(phrase : String): (Boolean, Int) = detecLangue(decouper(phrase))
+  def detecLangue(phrase: String): (Boolean, Int) = detecLangue(
+    decouper(phrase)
+  )
 
-  private def detecLangue(phrase : List[String]): (Boolean, Int) = {
+  private def detecLangue(phrase: List[String]): (Boolean, Int) = {
     filtreLiaison(phrase) match {
       case Nil => (false, LangueImpl.getLangueActuelle())
-      case head :: next => 
+      case head :: next =>
         val langue = BDDImpl.langueDuMot(head)
-        if (langue.equals(LangueImpl.langueActuelleToString(LangueImpl.getLangueActuelle())) || langue == "langue non détéctée") detecLangue(next)
+        if (
+          langue.equals(
+            LangueImpl.langueActuelleToString(LangueImpl.getLangueActuelle())
+          ) || langue == "langue non détéctée"
+        ) detecLangue(next)
         else (true, LangueImpl.langueStringToInt(langue))
 
     }
