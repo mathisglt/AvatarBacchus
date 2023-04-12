@@ -14,18 +14,23 @@ object MachineImpl extends MachineDialogue {
     if (!changementEnCours) { //s'il n'y a pas de changement en cours et que le message du robot est une des phrases suivantes, on change la langue
       msgRobot.head match {
         case "Parlez-vous français?" =>
-          LangueImpl.setLangueActuelle("Français"); changementEnCours = true; msgRobot
+          LangueImpl.setLangueActuelle("Français"); changementEnCours = true;
+          msgRobot
         case "Do you speak english?" =>
-          LangueImpl.setLangueActuelle("Anglais"); changementEnCours = true; msgRobot
+          LangueImpl.setLangueActuelle("Anglais"); changementEnCours = true;
+          msgRobot
         case "Hablas español?" =>
-          LangueImpl.setLangueActuelle("Espagnol"); changementEnCours = true; msgRobot
+          LangueImpl.setLangueActuelle("Espagnol"); changementEnCours = true;
+          msgRobot
         case "Sprechen Sie Deutsch?" =>
-          LangueImpl.setLangueActuelle("Allemand"); changementEnCours = true; msgRobot
+          LangueImpl.setLangueActuelle("Allemand"); changementEnCours = true;
+          msgRobot
         case "Parli italiano?" =>
-          LangueImpl.setLangueActuelle("Italien"); changementEnCours = true; msgRobot
+          LangueImpl.setLangueActuelle("Italien"); changementEnCours = true;
+          msgRobot
         case _ => msgRobot
       }
-     
+
     } else { //si un changement est en cours on regarde si l'utilisateur à confirmer la langue
       val confirmation = ConstructionImpl.construireConfirmation(
         requete,
