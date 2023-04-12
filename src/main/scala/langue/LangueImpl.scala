@@ -30,6 +30,19 @@ object LangueImpl extends LangueTrait {
     }
   }
 
+  def getLangueQuestion():String={
+    langueActuelle match {
+      case 0 => "Parlez-vous français?"
+      case 1 => "Do you speak english?"
+      case 2 => "Hablas español?"
+      case 3 => "Sprechen Sie Deutsch?"
+      case 4 => "Parli italiano?"
+      case _ => "Je n'ai pas compris"
+    }
+  }
+
+   
+
   /**
     * renvoie la langue actuelle sous forme de string
     *
@@ -38,11 +51,11 @@ object LangueImpl extends LangueTrait {
     */
   def langueActuelleToString(langue_actuelle: Int): String= {
     langue_actuelle match {
-      case 0 => "Français"
-      case 1 => "Anglais"
-      case 2 => "Espagnol"
-      case 3 => "Allemand"
-      case 4 => "Italien"
+      case 0 => "français"
+      case 1 => "english"
+      case 2 => "español"
+      case 3 => "deutsch"
+      case 4 => "italiano"
     }
   }
 
