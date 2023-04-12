@@ -49,6 +49,7 @@ object MachineImpl extends MachineDialogue {
   // Pour la partie test par le client
   def reinit(): Unit = {
     LangueImpl.reinitLangue //réinitialise la langue
+    changementEnCours = false
   }
   def test(l: List[String]): List[String] = {
     l match {

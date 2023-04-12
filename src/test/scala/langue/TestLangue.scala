@@ -53,7 +53,24 @@ class TestLangue {
     LangueImpl.langueSuivante()
     assertEquals(2, LangueImpl.getLangueActuelle())
   }
-
+  @Test
+  def langueSuivante_4(): Unit = {
+    LangueImpl.reinitLangue()
+    LangueImpl.langueSuivante()
+    LangueImpl.langueSuivante()
+    LangueImpl.langueSuivante()
+    LangueImpl.langueSuivante()
+    LangueImpl.langueSuivante()
+    LangueImpl.langueSuivante()
+    LangueImpl.reinitLangue()
+    LangueImpl.langueSuivante()
+    LangueImpl.langueSuivante()
+    LangueImpl.langueSuivante()
+    LangueImpl.langueSuivante()
+    LangueImpl.langueSuivante()
+    LangueImpl.langueSuivante()
+    assertEquals(0, LangueImpl.getLangueActuelle())
+  }
   @Test
   def setLangueActuelle_1(): Unit = {
     LangueImpl.setLangueActuelle("Espagnol")
@@ -73,5 +90,10 @@ class TestLangue {
   def setLangueActuelle_4(): Unit = {
     LangueImpl.setLangueActuelle("Allemand")
     assertEquals(3, LangueImpl.getLangueActuelle())
+  }
+  @Test
+  def setLangueActuelle_5(): Unit = {
+    LangueImpl.setLangueActuelle("Français")
+    assertEquals(0, LangueImpl.getLangueActuelle())
   }
 }
