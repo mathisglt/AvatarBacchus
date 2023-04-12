@@ -15,3 +15,4 @@ libraryDependencies ++= Seq(
 
 // assembly / mainClass := Some("gui.Main") // le nom de la classe main
 // assembly / assemblyJarName := "avatar.jar"
+fork := true
