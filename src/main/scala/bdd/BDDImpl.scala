@@ -147,7 +147,8 @@ object BDDImpl extends BaseDeDonnees{
     else if (dictionnairePRNInternationale(2).contains(mot.toLowerCase())) {return "español"}
     else if (dictionnairePRNInternationale(3).contains(mot.toLowerCase())) {return "deutsch"}
     else if (dictionnairePRNInternationale(4).contains(mot.toLowerCase())) {return "italiano"}
-    "français"
+    else if (dictionnairePRNInternationale(0).contains(mot.toLowerCase())) {return "français"}
+    else "langue non détéctée"
   }
   def getDicoExpr(): List[List[String]] =  {createDicoExpr;dictionnaireExpressionsInternationale}
   def gettostrDicoExpr(): Unit = {

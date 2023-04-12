@@ -111,7 +111,7 @@ object AnalyseImpl extends AnalyseTrait {
       case Nil => (false, LangueImpl.getLangueActuelle())
       case head :: next => 
         val langue = BDDImpl.langueDuMot(head)
-        if (langue.equals(LangueImpl.langueActuelleToString(LangueImpl.getLangueActuelle()))) detecLangue(next)
+        if (langue.equals(LangueImpl.langueActuelleToString(LangueImpl.getLangueActuelle())) || langue == "langue non détéctée") detecLangue(next)
         else (true, LangueImpl.langueStringToInt(langue))
 
     }
