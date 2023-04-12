@@ -16,7 +16,8 @@ object ConstructionImpl extends ConstructionTrait {
 
   def construireConfirmation(requete: String, langueActuelle: Int): String = {
     requete match {
-      case "oui" if (langueActuelle == 0) =>"D'accord, quelle est votre demande?"
+      case "oui" if (langueActuelle == 0) =>
+        "D'accord, quelle est votre demande?"
       case "yes" if (langueActuelle == 1) => "OK, what is your query?"
       case "si" if (langueActuelle == 2)  => "Está bien, cuál es tu petición?"
       case "ja" if (langueActuelle == 3)  => "Okay, was ist Ihr Wunsch?"
