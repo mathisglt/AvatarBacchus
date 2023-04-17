@@ -14,6 +14,7 @@ libraryDependencies ++= Seq(
   "org.apache.commons" % "commons-lang3" % "3.12.0"
   // "com.eed3si9n" % "sbt-assembly" % "2.1.1"
 )
+libraryDependencies += "marytts" % "marytts" % "5.2"
 
 // assembly / mainClass := Some("gui.Main") // le nom de la classe main
 // assembly / assemblyJarName := "avatar.jar"
