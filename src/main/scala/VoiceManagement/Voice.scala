@@ -32,4 +32,12 @@ object Voice {
       System.err.println("Error saying phrase.");
     }
   }
+  def voices(): Unit = {
+    for (voix <- marytts.getAlvailableVoices()) {
+      println(voix)
+    }
+  }
+}
+object testVoix extends App {
+  Voice.voices
 }
