@@ -224,6 +224,34 @@ class TestAnalyse {
     )
   }
 
+  LangueImpl.setLangueActuelle("Anglais") // pour les tests suivants on essaye dans une autre langue
+
+  @Test
+  def test_politeTest_08: Unit = {
+    assertEquals(
+      true,
+      AnalyseImpl.politeTest_Bonjour("hello")
+    )
+  }
+
+  @Test
+  def test_politeTest_09: Unit = {
+    assertEquals(
+      false,
+      AnalyseImpl.politeTest_Bonjour("hola")
+    )
+  }
+
+  @Test
+  def test_politeTest_10: Unit = {
+    assertEquals(
+      true,
+      AnalyseImpl.politeTest_Bonjour("hella")
+    )
+  }
+
+  LangueImpl.setLangueActuelle("Français") // on remet la langue par defaut pour les prochains tests
+
   // Tests de filtreLiason
 
   @Test
