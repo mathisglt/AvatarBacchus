@@ -166,9 +166,10 @@ class TestAnalyse {
   }
 
   // tests unitaires de politeTest_Bonjour
+  LangueImpl.setLangueActuelle("Français")
 
   @Test
-  def test_politeTest_1: Unit = {
+  def test_politeTest_01: Unit = {
     assertEquals(
       false,
       AnalyseImpl.politeTest_Bonjour("yo")
@@ -176,7 +177,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_politeTest_2: Unit = {
+  def test_politeTest_02: Unit = {
     assertEquals(
       true,
       AnalyseImpl.politeTest_Bonjour("bonjour, bonsoir, saluuuuut")
@@ -184,7 +185,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_politeTest_3: Unit = {
+  def test_politeTest_03: Unit = {
     assertEquals(
       true,
       AnalyseImpl.politeTest_Bonjour("BonJoUr")
@@ -192,7 +193,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_politeTest_4: Unit = {
+  def test_politeTest_04: Unit = {
     assertEquals(
       true,
       AnalyseImpl.politeTest_Bonjour("bonsoir")
@@ -200,7 +201,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_politeTest_5: Unit = {
+  def test_politeTest_05: Unit = {
     assertEquals(
       true,
       AnalyseImpl.politeTest_Bonjour("salut")
@@ -208,7 +209,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_politeTest_6: Unit = {
+  def test_politeTest_06: Unit = {
     assertEquals(
       true,
       AnalyseImpl.politeTest_Bonjour("bnjour")
@@ -216,12 +217,40 @@ class TestAnalyse {
   }
 
   @Test
-  def test_politeTest_7: Unit = {
+  def test_politeTest_07: Unit = {
     assertEquals(
       true,
       AnalyseImpl.politeTest_Bonjour("banjour")
     )
   }
+
+  LangueImpl.setLangueActuelle("Anglais") // pour les tests suivants on essaye dans une autre langue
+
+  @Test
+  def test_politeTest_08: Unit = {
+    assertEquals(
+      true,
+      AnalyseImpl.politeTest_Bonjour("hello")
+    )
+  }
+
+  @Test
+  def test_politeTest_09: Unit = {
+    assertEquals(
+      false,
+      AnalyseImpl.politeTest_Bonjour("hola")
+    )
+  }
+
+  @Test
+  def test_politeTest_10: Unit = {
+    assertEquals(
+      true,
+      AnalyseImpl.politeTest_Bonjour("hella")
+    )
+  }
+
+  LangueImpl.setLangueActuelle("Français") // on remet la langue par defaut pour les prochains tests
 
   // Tests de filtreLiason
 

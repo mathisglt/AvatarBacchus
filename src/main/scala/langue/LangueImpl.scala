@@ -18,7 +18,7 @@ object LangueImpl extends LangueTrait {
   /**
     * configuration de la langue actuelle
     *
-    * @param langue la langue souhaitée
+    * @param langue la langue souhaitée parmi "Anglais", "Espagnol", "Allemand", "Italien" ou any (="Français")
     */
   def setLangueActuelle(langue: String): Unit = {
     langue match {
