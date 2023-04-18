@@ -2,6 +2,10 @@ package VoiceManagement
 
 trait VoiceTrait {
 
+  /** initialise la voix à français
+    */
+  def InitVoix(): Unit
+
   /** change la langue en la langue demandée
     *
     * @param langue un entier correspondant à la langue voulue (l'espagnol n'est pas considéré)

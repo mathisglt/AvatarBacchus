@@ -13,6 +13,11 @@ object Voice extends VoiceTrait {
   private var interface: MaryInterface = new LocalMaryInterface();
   private var audioPlayer: AudioPlayer = new AudioPlayer();
 
+  def InitVoix(): Unit = {
+    interface = new LocalMaryInterface()
+    interface.setVoice("upmc-pierre-hsmm")
+  }
+
   def voice(langue: Int): Unit = {
     try {
       interface = new LocalMaryInterface();
