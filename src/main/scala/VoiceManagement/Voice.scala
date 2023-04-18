@@ -9,7 +9,7 @@ import marytts.util.data.audio.AudioPlayer;
 import java.io.IOException
 import marytts.server.Mary
 //les différentes voix : [istc-lucia-hsmm(italien), dfki-pavoque-neutral-hsmm(allemand), upmc-pierre-hsmm(francais), cmu-slt-hsmm(anglais)]
-object Voice {
+object Voice extends VoiceTrait {
   private var interface: MaryInterface = new LocalMaryInterface();
   private var audioPlayer: AudioPlayer = new AudioPlayer();
 
@@ -30,9 +30,9 @@ object Voice {
     }
   }
 
-  def say(input: String): Unit = {
+  def say(phrase: String): Unit = {
     try {
-      val audio: AudioInputStream = interface.generateAudio(input);
+      val audio: AudioInputStream = interface.generateAudio(phrase);
 
       audioPlayer.setAudio(audio);
       audioPlayer.start();
