@@ -65,6 +65,7 @@ object LangueImpl extends LangueTrait {
       case "español"  => 2
       case "deutsch"  => 3
       case "italiano" => 4
+      case _          => throw new Exception("langue inconnue")
     }
   }
 }
