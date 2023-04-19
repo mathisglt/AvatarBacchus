@@ -38,7 +38,10 @@ object LangueImpl extends LangueTrait {
       case 2 => "Hablas español?"
       case 3 => "Sprechen Sie Deutsch?"
       case 4 => "Parli italiano?"
-      case _ => "Je n'ai pas compris"
+      case _ =>
+        throw new Exception(
+          "quelque chose d'inédit s'est produit (voir getLangueQuestion)"
+        )
     }
   }
 
