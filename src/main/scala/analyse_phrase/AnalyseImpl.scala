@@ -7,6 +7,7 @@ import tolerance_fautes.FautesImpl
 import langue.LangueImpl
 
 case object ExceptionListeVide extends Exception
+
 object AnalyseImpl extends AnalyseTrait {
 
   //Recherche Adresse
@@ -121,12 +122,6 @@ object AnalyseImpl extends AnalyseTrait {
     }
   }
 
-  /**
-    * 
-    *
-    * @param phrase
-    * @return
-    */
   def detecLangue(phrase: String): (Boolean, Int) = detecLangue(decouper(phrase))
 
   private def detecLangue(phrase: List[String]): (Boolean, Int) = {
@@ -140,7 +135,6 @@ object AnalyseImpl extends AnalyseTrait {
           ) || langue == "langue non détéctée"
         ) detecLangue(next)
         else (true, LangueImpl.langueStringToInt(langue))
-
     }
   }
 
