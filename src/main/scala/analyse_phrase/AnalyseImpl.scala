@@ -132,7 +132,7 @@ object AnalyseImpl extends AnalyseTrait {
         if (
           langue.equals(
             LangueImpl.langueActuelleToString(LangueImpl.getLangueActuelle())
-          ) || langue == "langue non détéctée"
+          ) || langue == "langue non détectée"
         ) detecLangue(next)
         else (true, LangueImpl.langueStringToInt(langue))
     }
