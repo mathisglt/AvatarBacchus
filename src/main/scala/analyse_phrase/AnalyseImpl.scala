@@ -85,7 +85,9 @@ object AnalyseImpl extends AnalyseTrait {
     val salutationsLangueActuelle =
       BDDImpl
         .getDicoPRN()(LangueImpl.getLangueActuelle())
-        .dropRight(8) // à modifier : il faudra chopper le dico de politesse uniquement
+        .dropRight(
+          8
+        ) // à modifier : il faudra chopper le dico de politesse uniquement
     val phrase_corrigee: String = assembler(
       FautesImpl.correction(
         decouper(phrase),
@@ -103,26 +105,27 @@ object AnalyseImpl extends AnalyseTrait {
     val dicoExpr = BDDImpl.getDicoExpr
     val langue_actuelle = LangueImpl.getLangueActuelle
     dicoExpr(langue_actuelle).filter(
-      _ != LangueImpl.langueActuelleToString(langue_actuelle)
+      _ != LangueImpl.langueIntToString(langue_actuelle)
     )
   }
 
-  /**
-    * meme chose que getDicoLangue à la difference qu'ici on peut choisir le dictionnaire de la langue que l'on veut
+  /** meme chose que getDicoLangue à la difference qu'ici on peut choisir le dictionnaire de la langue que l'on veut
     *
     * @param lang un int compris entre 0 et 4 correspondant à la langue voulue
     * @return le dico de la langue choisie, renvoie une liste vide si le int n'est pas compris entre 0 et 4
     */
   def getDicoLangue(lang: Int): List[String] = {
     lang match {
-      case n if (lang>=0 && lang<=4) => 
+      case n if (lang >= 0 && lang <= 4) =>
         val dicoExpr = BDDImpl.getDicoExpr
-        dicoExpr(lang).filter(_ != LangueImpl.langueActuelleToString(lang))
+        dicoExpr(lang).filter(_ != LangueImpl.langueIntToString(lang))
       case _ => List()
     }
   }
 
-  def detecLangue(phrase: String): (Boolean, Int) = detecLangue(decouper(phrase))
+  def detecLangue(phrase: String): (Boolean, Int) = detecLangue(
+    decouper(phrase)
+  )
 
   private def detecLangue(phrase: List[String]): (Boolean, Int) = {
     filtreLiaison(phrase) match {
@@ -131,7 +134,7 @@ object AnalyseImpl extends AnalyseTrait {
         val langue = BDDImpl.langueDuMot(head)
         if (
           langue.equals(
-            LangueImpl.langueActuelleToString(LangueImpl.getLangueActuelle())
+            LangueImpl.langueIntToString(LangueImpl.getLangueActuelle())
           ) || langue == "langue non détectée"
         ) detecLangue(next)
         else (true, LangueImpl.langueStringToInt(langue))

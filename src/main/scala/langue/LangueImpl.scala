@@ -1,10 +1,12 @@
 package langue
 
 object LangueImpl extends LangueTrait {
-  private var langueActuelle = 0 //entier correspondant au numéro de la langue en cours d'utilisation
+  private var langueActuelle =
+    0 //entier correspondant au numéro de la langue en cours d'utilisation
 
   def langueSuivante(): Unit = {
-    langueActuelle = (langueActuelle + 1) % 5 //passe la langue actuelle à la langue suivante 
+    langueActuelle =
+      (langueActuelle + 1) % 5 //passe la langue actuelle à la langue suivante
   }
 
   def getLangueActuelle(): Int = {
@@ -12,11 +14,10 @@ object LangueImpl extends LangueTrait {
   }
 
   def reinitLangue(): Unit = {
-    setLangueActuelle("Français") //réinitialisation de la langue sur Français 
+    setLangueActuelle("Français") //réinitialisation de la langue sur Français
   }
 
-  /**
-    * configuration de la langue actuelle
+  /** configuration de la langue actuelle
     *
     * @param langue la langue souhaitée parmi "Anglais", "Espagnol", "Allemand", "Italien" ou any (="Français")
     */
@@ -30,7 +31,7 @@ object LangueImpl extends LangueTrait {
     }
   }
 
-  def getLangueQuestion():String={
+  def getLangueQuestion(): String = {
     langueActuelle match {
       case 0 => "Parlez-vous français?"
       case 1 => "Do you speak english?"
@@ -41,31 +42,29 @@ object LangueImpl extends LangueTrait {
     }
   }
 
-   
-
-  /**
-    * renvoie la langue actuelle sous forme de string
+  /** renvoie la langue actuelle sous forme de string
     *
     * @param langue_actuelle le numéro de la langue
     * @return la langue correspondante
     */
-  def langueActuelleToString(langue_actuelle: Int): String= {
-    langue_actuelle match {
+  def langueIntToString(langue: Int): String = {
+    langue match {
       case 0 => "français"
       case 1 => "english"
       case 2 => "español"
       case 3 => "deutsch"
       case 4 => "italiano"
+      case _ => throw new Exception("langue inconnue")
     }
   }
 
-  def langueStringToInt(langue : String): Int = {
-      langue match {
-        case "français" => 0
-        case "english" => 1
-        case "español" => 2
-        case "deutsch" => 3
-        case "italiano" => 4
-      }
+  def langueStringToInt(langue: String): Int = {
+    langue match {
+      case "français" => 0
+      case "english"  => 1
+      case "español"  => 2
+      case "deutsch"  => 3
+      case "italiano" => 4
     }
+  }
 }
