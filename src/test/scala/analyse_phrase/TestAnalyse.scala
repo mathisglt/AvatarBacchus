@@ -446,6 +446,32 @@ class TestAnalyse {
     )
   }
 
+  @Test
+  def test_getDicoLangue_06 {
+    assertEquals(
+      List(
+        "si",
+        "no",
+        "Indirizzo di XXX è",
+        "No capisco",
+        "Parli italiano?",
+        "Va bene, qual è la tua richiesta?",
+        "Ho XXX risposte",
+        "Qual è la vostra scelta?",
+        "ristorante, creperie, pizzeria"
+      ),
+      AnalyseImpl.getDicoLangue(4)
+    )
+  }
+
+  @Test
+  def test_getDicoLangue_07 {
+    assertEquals(
+      List(),
+      AnalyseImpl.getDicoLangue(5)
+    )
+  }
+
   //Test detecLangue
 
   @Test

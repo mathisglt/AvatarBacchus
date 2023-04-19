@@ -84,7 +84,7 @@ object AnalyseImpl extends AnalyseTrait {
     val salutationsLangueActuelle =
       BDDImpl
         .getDicoPRN()(LangueImpl.getLangueActuelle())
-        .dropRight(8) //A verifier
+        .dropRight(8) // à modifier : il faudra chopper le dico de politesse uniquement
     val phrase_corrigee: String = assembler(
       FautesImpl.correction(
         decouper(phrase),
@@ -106,15 +106,28 @@ object AnalyseImpl extends AnalyseTrait {
     )
   }
 
+  /**
+    * meme chose que getDicoLangue à la difference qu'ici on peut choisir le dictionnaire de la langue que l'on veut
+    *
+    * @param lang un int compris entre 0 et 4 correspondant à la langue voulue
+    * @return le dico de la langue choisie
+    */
   def getDicoLangue(lang: Int): List[String] = {
-    val dicoExpr = BDDImpl.getDicoExpr
-    dicoExpr(lang).filter(_ != LangueImpl.langueActuelleToString(lang))
-
+    lang match {
+      case n if (lang>=0 && lang<=4) => 
+        val dicoExpr = BDDImpl.getDicoExpr
+        dicoExpr(lang).filter(_ != LangueImpl.langueActuelleToString(lang))
+      case _ => List()
+    }
   }
 
-  def detecLangue(phrase: String): (Boolean, Int) = detecLangue(
-    decouper(phrase)
-  )
+  /**
+    * 
+    *
+    * @param phrase
+    * @return
+    */
+  def detecLangue(phrase: String): (Boolean, Int) = detecLangue(decouper(phrase))
 
   private def detecLangue(phrase: List[String]): (Boolean, Int) = {
     filtreLiaison(phrase) match {
