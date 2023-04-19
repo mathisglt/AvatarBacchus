@@ -111,7 +111,7 @@ object AnalyseImpl extends AnalyseTrait {
     * meme chose que getDicoLangue à la difference qu'ici on peut choisir le dictionnaire de la langue que l'on veut
     *
     * @param lang un int compris entre 0 et 4 correspondant à la langue voulue
-    * @return le dico de la langue choisie
+    * @return le dico de la langue choisie, renvoie une liste vide si le int n'est pas compris entre 0 et 4
     */
   def getDicoLangue(lang: Int): List[String] = {
     lang match {
