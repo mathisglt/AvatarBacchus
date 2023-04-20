@@ -214,18 +214,5 @@ object BDDImpl extends BaseDeDonnees{
             if (name.nonEmpty && streetName.nonEmpty) Some(name -> fullStreet) else None
         }.toList
     }
-
-    /**
-      * Récupère le nom des lieux , et l'ajoute dans un couple avec son adresse
-      *
-      * @param names
-      * @param lieux
-      * @return
-      */
-    def creerxml(names: Seq[String], lieux: Seq[String]): List[(String, String)] = {
-        (names, lieux) match {
-            case (Nil, _) | (_, Nil) => Nil
-            case (x :: xs, y :: ys)  => (x, y) :: creerxml(xs, ys)
-        }
-    }
+    
 }
