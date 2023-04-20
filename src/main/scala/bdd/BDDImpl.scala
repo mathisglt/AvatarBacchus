@@ -137,7 +137,6 @@ object BDDImpl extends BaseDeDonnees{
             listeit = listeit.map(_.replaceAll(" ", ""))
         }         
         dictionnairePRNInternationale = listefr::listeen::listees::listede::listeit::Nil
-        dictionnairePRNInternationale
     }
   }
 

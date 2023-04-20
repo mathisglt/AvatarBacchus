@@ -33,7 +33,6 @@ object AnalyseImpl extends AnalyseTrait {
         filtreLiaison(liste_lieux.flatMap(decouper(_)))
       )
     )
-    println("Requete corrigé  : " + phrase_corrigee)
     val mots = decouper(phrase_corrigee)
     mots match {
       case Nil => ("", "")
@@ -66,7 +65,7 @@ object AnalyseImpl extends AnalyseTrait {
 
   //Analyse politesse
 
-  def politeTest_Bonjour(phrase: String): (Boolean,List[String]) = {
+  def politeTest_Bonjour(phrase: String): (Boolean,String) = {
     val salutationsLangueActuelle = BDDImpl.createDicoSalutations(LangueImpl.langueIntToString(LangueImpl.getLangueActuelle()),LangueImpl.getLangueActuelle())
     val phrase_corrigee: String = assembler(
       FautesImpl.correction(
@@ -80,10 +79,10 @@ object AnalyseImpl extends AnalyseTrait {
       if(phrase_corrigee.toLowerCase().contains(salutationsLangueActuelle(i))) {testBonjour = true}
       i += 1
     }
-    (testBonjour,salutationsLangueActuelle)
+    (testBonjour,salutationsLangueActuelle(0))
   }
 
-  def politeTest_OnlyBonjour(phrase: String): (Boolean,List[String]) = {
+  def politeTest_OnlyBonjour(phrase: String): (Boolean,String) = {
     val salutationsLangueActuelle = BDDImpl.createDicoSalutations(LangueImpl.langueIntToString(LangueImpl.getLangueActuelle()),LangueImpl.getLangueActuelle())
     val phrase_corrigee: String = assembler(
       FautesImpl.correction(
@@ -97,7 +96,7 @@ object AnalyseImpl extends AnalyseTrait {
       if(phrase_corrigee.toLowerCase().equals(salutationsLangueActuelle(i))) {testOnlyBonjour = true}
       i += 1
     }
-    (testOnlyBonjour,salutationsLangueActuelle)
+    (testOnlyBonjour,salutationsLangueActuelle(0))
   }
 
   // Analyse Langue
@@ -105,9 +104,7 @@ object AnalyseImpl extends AnalyseTrait {
   def getDicoLangue(): List[String] = {
     val dicoExpr = BDDImpl.getDicoExpr
     val langue_actuelle = LangueImpl.getLangueActuelle
-    dicoExpr(langue_actuelle).filter(
-      _ != LangueImpl.langueIntToString(langue_actuelle)
-    )
+    dicoExpr(langue_actuelle).filter(_ != LangueImpl.langueIntToString(langue_actuelle))
   }
 
   /** meme chose que getDicoLangue à la difference qu'ici on peut choisir le dictionnaire de la langue que l'on veut
@@ -124,20 +121,21 @@ object AnalyseImpl extends AnalyseTrait {
     }
   }
 
-  def detecLangue(phrase: String): (Boolean, Int) = detecLangue(
-    decouper(phrase)
-  )
+  def detecLangue(phrase: String): (Boolean, Int) = {
+    detecLangue(decouper(phrase))
+  }
 
   private def detecLangue(phrase: List[String]): (Boolean, Int) = {
+    /*var phrase_corrigee: List[String] = phrase
+    for (langue <- BDDImpl.getDicoPRN()){
+      phrase_corrigee = FautesImpl.correction(phrase_corrigee,langue)
+    }*/
     filtreLiaison(phrase) match {
       case Nil => (false, LangueImpl.getLangueActuelle())
       case head :: next =>
         val langue = BDDImpl.langueDuMot(head)
-        if (
-          langue.equals(
-            LangueImpl.langueIntToString(LangueImpl.getLangueActuelle())
-          ) || langue == "langue non détectée"
-        ) detecLangue(next)
+        if (langue.equals(LangueImpl.langueIntToString(LangueImpl.getLangueActuelle())) || langue == "langue non détectée")
+          detecLangue(next)
         else (true, LangueImpl.langueStringToInt(langue))
     }
   }

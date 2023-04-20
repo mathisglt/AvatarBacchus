@@ -11,7 +11,7 @@ object MachineImpl extends MachineDialogue {
     val msgRobot = ConstructionImpl.construireLangue(requete) //renvoie le message du robot
 
     if (!changementEnCours) { //s'il n'y a pas de changement en cours et que le message du robot est une des phrases suivantes, on change la langue
-      msgRobot.head match {
+      msgRobot.last match {
         case "Parlez-vous français?" =>
           LangueImpl.setLangueActuelle("Français"); changementEnCours = true;
           msgRobot
@@ -29,6 +29,8 @@ object MachineImpl extends MachineDialogue {
           msgRobot
         case _ => msgRobot
       }
+      println("message robot : " + msgRobot)
+      msgRobot
 
     } else { //si un changement est en cours on regarde si l'utilisateur à confirmer la langue
       val confirmation = ConstructionImpl.construireConfirmation(requete,LangueImpl.getLangueActuelle()) //on construit la phrase en fonction de la confirmation ou non

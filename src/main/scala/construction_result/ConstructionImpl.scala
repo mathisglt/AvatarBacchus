@@ -31,8 +31,8 @@ object ConstructionImpl extends ConstructionTrait {
   def construirePolitesse(requete: String): List[String] = {
     val couple = AnalyseImpl.politeTest_OnlyBonjour(requete)
     val couple2 = AnalyseImpl.politeTest_Bonjour(requete)
-    if (couple._1) couple._2(0) :: Nil
-    else if (couple2._1) couple2._2(0) :: List(construire(requete))
+    if (couple._1) couple._2 :: Nil // couple._1 = seulement bonjour, couple._2 = bonjour dans la langue correspondante
+    else if (couple2._1) couple2._2 :: List(construire(requete)) // couple2._1 = bonjour + une requete, couple._2 = bonjour dans la langue correspondante
     else List(construire(requete))
   }
 
@@ -48,8 +48,7 @@ object ConstructionImpl extends ConstructionTrait {
     // case (lieu, adresse) => phrase += "L'adresse de " ++ lieu ++ " est : " ++ adresse ++ ". " ++ construirev1(reste)
     //}
     if (resultAnalyse != ("", ""))
-      phrase =
-        dicoExpr(2).replace("XXX", resultAnalyse._1) + " : " + resultAnalyse._2
+      phrase =dicoExpr(2).replace("XXX", resultAnalyse._1) + " : " + resultAnalyse._2
     else phrase = dicoExpr(3)
     phrase
   }
