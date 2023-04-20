@@ -16,8 +16,7 @@ object ConstructionImpl extends ConstructionTrait {
 
   def construireConfirmation(requete: String, langueActuelle: Int): String = {
     requete match {
-      case "oui" if (langueActuelle == 0) =>
-        "D'accord, quelle est votre demande?"
+      case "oui" if (langueActuelle == 0) => "D'accord, quelle est votre demande?"
       case "yes" if (langueActuelle == 1) => "OK, what is your query?"
       case "si" if (langueActuelle == 2)  => "Está bien, cuál es tu petición?"
       case "ja" if (langueActuelle == 3)  => "Okay, was ist Ihr Wunsch?"
@@ -30,9 +29,10 @@ object ConstructionImpl extends ConstructionTrait {
     * @return un bonjour si bonjour + construire
     */
   def construirePolitesse(requete: String): List[String] = {
-    if (AnalyseImpl.politeTest_OnlyBonjour(requete)) "Bonjour" :: Nil
-    else if (AnalyseImpl.politeTest_Bonjour(requete))
-      "Bonjour" :: List(construire(requete))
+    val couple = AnalyseImpl.politeTest_OnlyBonjour(requete)
+    val couple2 = AnalyseImpl.politeTest_Bonjour(requete)
+    if (couple._1) couple._2(0) :: Nil
+    else if (couple2._1) couple2._2(0) :: List(construire(requete))
     else List(construire(requete))
   }
 
@@ -51,7 +51,6 @@ object ConstructionImpl extends ConstructionTrait {
       phrase =
         dicoExpr(2).replace("XXX", resultAnalyse._1) + " : " + resultAnalyse._2
     else phrase = dicoExpr(3)
-    println("Requete corrigé  : " + phrase)
     phrase
   }
 }

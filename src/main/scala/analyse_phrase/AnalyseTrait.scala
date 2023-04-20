@@ -14,7 +14,7 @@ trait AnalyseTrait {
     * @param phrase la requete du user
     * @return true si contient un des mots, false sinon
     */
-  def politeTest_Bonjour(phrase: String): Boolean
+  def politeTest_Bonjour(phrase: String): (Boolean,List[String])
 
   /**
     * analyse la phrase du user et renvoie true s'il contient uniquement "bonjour", "bonsoir" ou "salut"
@@ -22,7 +22,7 @@ trait AnalyseTrait {
     * @param phrase la requete du user
     * @return vrai si la phrase ne contient que "bonjour", "bonsoir" ou "salut" modulo erreurs et majuscules
     */
-  def politeTest_OnlyBonjour(phrase: String): Boolean
+  def politeTest_OnlyBonjour(phrase: String): (Boolean,List[String])
   
   /**
     * Recupere le dictionnaire de la langue choisie par le user

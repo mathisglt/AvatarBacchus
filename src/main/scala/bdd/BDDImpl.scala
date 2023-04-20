@@ -141,6 +141,15 @@ object BDDImpl extends BaseDeDonnees{
         dictionnairePRNInternationale
     }
   }
+
+  def createDicoSalutations(langueActuelleStr: String, langueActuelle: Int): List[String]={
+    val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
+    val listeSalutations = List[String](lignesInter(7+langueActuelle))
+    val listeSansLangue = listeSalutations(0).split(": ")
+    val listeFinale = listeSansLangue(1).split(",").toList
+    listeFinale
+  }
+
   def langueDuMot(mot : String) : String = {
     createDicoPRN()
     if (dictionnairePRNInternationale(0).contains(mot.toLowerCase())) {return "français"}
@@ -148,7 +157,7 @@ object BDDImpl extends BaseDeDonnees{
     else if (dictionnairePRNInternationale(2).contains(mot.toLowerCase())) {return "español"}
     else if (dictionnairePRNInternationale(3).contains(mot.toLowerCase())) {return "deutsch"}
     else if (dictionnairePRNInternationale(4).contains(mot.toLowerCase())) {return "italiano"}
-    else "langue non détéctée"
+    else "langue non détectée"
   }
   def getDicoExpr(): List[List[String]] =  {createDicoExpr;dictionnaireExpressionsInternationale}
   def gettostrDicoExpr(): Unit = {

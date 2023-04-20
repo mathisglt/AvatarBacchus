@@ -32,6 +32,7 @@ object AnalyseImpl extends AnalyseTrait {
         filtreLiaison(liste_lieux.flatMap(decouper(_)))
       )
     )
+    println("Requete corrigé  : " + phrase_corrigee)
     val mots = decouper(phrase_corrigee)
     mots match {
       case Nil => ("", "")
@@ -64,36 +65,38 @@ object AnalyseImpl extends AnalyseTrait {
 
   //Analyse politesse
 
-  def politeTest_Bonjour(phrase: String): Boolean = {
-    val salutationsLangueActuelle =
-      BDDImpl
-        .getDicoPRN()(LangueImpl.getLangueActuelle())
-        .dropRight(8) //A verifier
+  def politeTest_Bonjour(phrase: String): (Boolean,List[String]) = {
+    val salutationsLangueActuelle = BDDImpl.createDicoSalutations(LangueImpl.langueActuelleToString(LangueImpl.getLangueActuelle()),LangueImpl.getLangueActuelle())
     val phrase_corrigee: String = assembler(
       FautesImpl.correction(
         decouper(phrase),
         salutationsLangueActuelle
       )
     )
-    phrase_corrigee.toLowerCase().contains("bonjour") || phrase_corrigee
-      .toLowerCase()
-      .contains("salut") || phrase_corrigee.toLowerCase().contains("bonsoir")
+    var testBonjour = false
+    var i = 0
+    while (i < salutationsLangueActuelle.length && !testBonjour){
+      if(phrase_corrigee.toLowerCase().contains(salutationsLangueActuelle(i))) {testBonjour = true}
+      i += 1
+    }
+    (testBonjour,salutationsLangueActuelle)
   }
 
-  def politeTest_OnlyBonjour(phrase: String): Boolean = {
-    val salutationsLangueActuelle =
-      BDDImpl
-        .getDicoPRN()(LangueImpl.getLangueActuelle())
-        .dropRight(8) //A verifier
+  def politeTest_OnlyBonjour(phrase: String): (Boolean,List[String]) = {
+    val salutationsLangueActuelle = BDDImpl.createDicoSalutations(LangueImpl.langueActuelleToString(LangueImpl.getLangueActuelle()),LangueImpl.getLangueActuelle())
     val phrase_corrigee: String = assembler(
       FautesImpl.correction(
         decouper(phrase),
         salutationsLangueActuelle
       )
     )
-    phrase_corrigee.toLowerCase().equals("bonjour") || phrase_corrigee
-      .toLowerCase()
-      .equals("salut") || phrase_corrigee.toLowerCase().equals("bonsoir")
+    var testOnlyBonjour = false
+    var i = 0
+    while (i < salutationsLangueActuelle.length && !testOnlyBonjour){
+      if(phrase_corrigee.toLowerCase().equals(salutationsLangueActuelle(i))) {testOnlyBonjour = true}
+      i += 1
+    }
+    (testOnlyBonjour,salutationsLangueActuelle)
   }
 
   // Analyse Langue
@@ -124,7 +127,7 @@ object AnalyseImpl extends AnalyseTrait {
         if (
           langue.equals(
             LangueImpl.langueActuelleToString(LangueImpl.getLangueActuelle())
-          ) || langue == "langue non détéctée"
+          ) || langue == "langue non détectée"
         ) detecLangue(next)
         else (true, LangueImpl.langueStringToInt(langue))
 
