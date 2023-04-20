@@ -67,7 +67,7 @@ object AnalyseImpl extends AnalyseTrait {
   //Analyse politesse
 
   def politeTest_Bonjour(phrase: String): (Boolean,List[String]) = {
-    val salutationsLangueActuelle = BDDImpl.createDicoSalutations(LangueImpl.langueActuelleToString(LangueImpl.getLangueActuelle()),LangueImpl.getLangueActuelle())
+    val salutationsLangueActuelle = BDDImpl.createDicoSalutations(LangueImpl.langueIntToString(LangueImpl.getLangueActuelle()),LangueImpl.getLangueActuelle())
     val phrase_corrigee: String = assembler(
       FautesImpl.correction(
         decouper(phrase),
@@ -84,7 +84,7 @@ object AnalyseImpl extends AnalyseTrait {
   }
 
   def politeTest_OnlyBonjour(phrase: String): (Boolean,List[String]) = {
-    val salutationsLangueActuelle = BDDImpl.createDicoSalutations(LangueImpl.langueActuelleToString(LangueImpl.getLangueActuelle()),LangueImpl.getLangueActuelle())
+    val salutationsLangueActuelle = BDDImpl.createDicoSalutations(LangueImpl.langueIntToString(LangueImpl.getLangueActuelle()),LangueImpl.getLangueActuelle())
     val phrase_corrigee: String = assembler(
       FautesImpl.correction(
         decouper(phrase),
@@ -135,7 +135,7 @@ object AnalyseImpl extends AnalyseTrait {
         val langue = BDDImpl.langueDuMot(head)
         if (
           langue.equals(
-            LangueImpl.langueActuelleToString(LangueImpl.getLangueActuelle())
+            LangueImpl.langueIntToString(LangueImpl.getLangueActuelle())
           ) || langue == "langue non détectée"
         ) detecLangue(next)
         else (true, LangueImpl.langueStringToInt(langue))
