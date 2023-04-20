@@ -20,6 +20,7 @@ object BDDImpl extends BaseDeDonnees{
     var varianceslieux = Map(("tnb","Théâtre National de Bretagne"),("hotel","Mairie de Rennes"))
     var dictionnaireExpressionsInternationale : List[List[String]] = List(List(),List(),List(),List(),List())
     var dictionnairePRNInternationale         : List[List[String]] = List(List(),List(),List(),List(),List())
+    var dictionnairePolitesseInternationale   : List[List[String]] = List(List(),List(),List(),List(),List())
     val xml = XML.loadFile("partie2/vAr.xml")
 
     def chercherAdresse(mot: String): String = {
@@ -141,6 +142,35 @@ object BDDImpl extends BaseDeDonnees{
         }
     }
 
+    def createDicoPolitesse(): Unit= {
+        val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
+        var listefr = List[String]()
+        var listeen = List[String]()
+        var listees = List[String]()
+        var listede = List[String]()
+        var listeit = List[String]()
+        for (lignes <- lignesInter) {
+            if (lignes.contains("Français:") && lignes.contains("bonjour") && !lignes.equals("Français:")) {
+                listefr = listefr:::lignes.split(":")(1).split(",").toList
+                listefr = listefr.map(_.replaceAll(" ", ""))}   
+            if (lignes.contains("Anglais:") && lignes.contains("hello") && !lignes.equals("Anglais:")) {
+                listeen = listeen:::lignes.split(":")(1).split(",").toList
+                listeen = listeen.map(_.replaceAll(" ", ""))}
+            if (lignes.contains("Espagnol:") && lignes.contains("hola") && !lignes.equals("Espagnol:")) {
+                listees = listees:::lignes.split(":")(1).split(",").toList
+                listees = listees.map(_.replaceAll(" ", ""))}
+            if (lignes.contains("Allemand:") && lignes.contains("hallo") && !lignes.equals("Allemand:")) {
+                listede = listede:::lignes.split(":")(1).split(",").toList
+                listede = listede.map(_.replaceAll(" ", ""))}
+            if (lignes.contains("Italien:") && lignes.contains("buongiorno") && !lignes.equals("Italien:")){
+                listeit = listeit:::lignes.split(":")(1).split(",").toList
+                listeit = listeit.map(_.replaceAll(" ", ""))
+            }         
+            dictionnairePolitesseInternationale = listefr::listeen::listees::listede::listeit::Nil
+            dictionnairePolitesseInternationale
+        }
+    }
+
     def langueDuMot(mot : String) : String = {
         createDicoPRN()
         if (dictionnairePRNInternationale(0).contains(mot.toLowerCase())) {return "français"}
@@ -151,17 +181,17 @@ object BDDImpl extends BaseDeDonnees{
         else "langue non détectée"
     }
 
-    def getDicoExpr(): List[List[String]] =  {createDicoExpr;dictionnaireExpressionsInternationale}
+    def getDicoExpr(): List[List[String]] =  {createDicoExpr(); dictionnaireExpressionsInternationale}
 
-    def gettostrDicoExpr(): Unit = {
-        println(dictionnaireExpressionsInternationale)
-    }
+    def getDicoPRN(): List[List[String]]= {createDicoPRN(); dictionnairePRNInternationale}
 
-    def gettostrDicoPRN(): Unit = {
-        println(dictionnairePRNInternationale)
-    }
+    def getDicoPolitesse(): List[List[String]]= {createDicoPolitesse(); dictionnairePolitesseInternationale}
 
-    def getDicoPRN(): List[List[String]]= {createDicoPRN; dictionnairePRNInternationale}
+    def gettostrDicoExpr(): Unit = println(dictionnaireExpressionsInternationale)
+
+    def gettostrDicoPRN(): Unit = println(dictionnairePRNInternationale)
+
+    def gettostrDicoPolitesse() : Unit = println(dictionnairePolitesseInternationale)
 
     /**
         * Récupère le fichier xml et récupère les noms trouvés dans la balise name , et les lieux associés dans la balise name de street
