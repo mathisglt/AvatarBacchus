@@ -7,6 +7,7 @@ import tolerance_fautes.FautesImpl
 import langue.LangueImpl
 
 case object ExceptionListeVide extends Exception
+
 object AnalyseImpl extends AnalyseTrait {
 
   //Recherche Adresse
@@ -105,14 +106,22 @@ object AnalyseImpl extends AnalyseTrait {
     val dicoExpr = BDDImpl.getDicoExpr
     val langue_actuelle = LangueImpl.getLangueActuelle
     dicoExpr(langue_actuelle).filter(
-      _ != LangueImpl.langueActuelleToString(langue_actuelle)
+      _ != LangueImpl.langueIntToString(langue_actuelle)
     )
   }
 
+  /** meme chose que getDicoLangue à la difference qu'ici on peut choisir le dictionnaire de la langue que l'on veut
+    *
+    * @param lang un int compris entre 0 et 4 correspondant à la langue voulue
+    * @return le dico de la langue choisie, renvoie une liste vide si le int n'est pas compris entre 0 et 4
+    */
   def getDicoLangue(lang: Int): List[String] = {
-    val dicoExpr = BDDImpl.getDicoExpr
-    dicoExpr(lang).filter(_ != LangueImpl.langueActuelleToString(lang))
-
+    lang match {
+      case n if (lang >= 0 && lang <= 4) =>
+        val dicoExpr = BDDImpl.getDicoExpr
+        dicoExpr(lang).filter(_ != LangueImpl.langueIntToString(lang))
+      case _ => List()
+    }
   }
 
   def detecLangue(phrase: String): (Boolean, Int) = detecLangue(
@@ -130,7 +139,6 @@ object AnalyseImpl extends AnalyseTrait {
           ) || langue == "langue non détectée"
         ) detecLangue(next)
         else (true, LangueImpl.langueStringToInt(langue))
-
     }
   }
 

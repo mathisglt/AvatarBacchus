@@ -18,3 +18,4 @@ project/metals.sbt
 sbtproject/metals.sbt
 project/project/metals.sbt
 *.sbt
+log/*

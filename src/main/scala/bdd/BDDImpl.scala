@@ -44,6 +44,7 @@ object BDDImpl extends BaseDeDonnees{
         }
         "Adresse non trouvée"
     }
+
     def chercherLieu(mot: String): String = {
         if (mot.isEmpty()) {"Adresse non trouvée"}
         for (ligne <- lignesBDD){
@@ -59,12 +60,12 @@ object BDDImpl extends BaseDeDonnees{
     }
     
    
-  def recupLieux(file: BufferedSource): List[String] = {
-    val listeFinale = ArrayBuffer[String]()
-    for (line <- file.getLines()) {
-        listeFinale += line.split(';')(0)
-    }
-    listeFinale.toList
+    def recupLieux(file: BufferedSource): List[String] = {
+        val listeFinale = ArrayBuffer[String]()
+        for (line <- file.getLines()) {
+            listeFinale += line.split(';')(0)
+        }
+        listeFinale.toList
     }
     
     def createDicoExpr(): Unit={
@@ -74,44 +75,41 @@ object BDDImpl extends BaseDeDonnees{
         var listees = List[String]()
         var listede = List[String]()
         var listeit = List[String]()
-        for (lignes <- lignesInter){
-            if (lignes.equals("Français:")){
+        for (lignes <- lignesInter) {
+            if (lignes.equals("Français:")) {
                 val index = lignesInter.indexOf(lignes)
-                for (i <- index+1 to index+9){
+                for (i <- index+1 to index+9) {
                     listefr = listefr:::lignesInter(i)::Nil
                 }
             }   
-            if (lignes.equals("Anglais:")){
+            if (lignes.equals("Anglais:")) {
                 val index = lignesInter.indexOf(lignes)
-                for (i <- index+1 to index+9){
+                for (i <- index+1 to index+9) {
                     listeen = listeen:::lignesInter(i)::Nil
                 }
             }
-            if (lignes.equals("Espagnol:")){
+            if (lignes.equals("Espagnol:")) {
                 val index = lignesInter.indexOf(lignes)
-                for (i <- index+1 to index+9){
+                for (i <- index+1 to index+9) {
                     listees = listees:::lignesInter(i)::Nil
                 }
                 
             }
-            if (lignes.equals("Allemand:")){
+            if (lignes.equals("Allemand:")) {
                val index = lignesInter.indexOf(lignes)
-                for (i <- index+1 to index+9){
+                for (i <- index+1 to index+9) {
                     listede = listede:::lignesInter(i)::Nil
                 }
                 
             }
-            if (lignes.equals("Italien:")){
+            if (lignes.equals("Italien:")) {
                 val index = lignesInter.indexOf(lignes)
                 for (i <- index+1 to index+9){
                     listeit = listeit:::lignesInter(i)::Nil
                 }
-                
             }         
             dictionnaireExpressionsInternationale = listefr::listeen::listees::listede::listeit::Nil
         }
-        
-        
     }
   def createDicoPRN(): Unit= {
     val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
@@ -193,7 +191,6 @@ object BDDImpl extends BaseDeDonnees{
         (names, lieux) match {
             case (Nil, _) | (_, Nil) => Nil
             case (x :: xs, y :: ys)  => (x, y) :: creerxml(xs, ys)
-  }
-
+        }
     }
 }
