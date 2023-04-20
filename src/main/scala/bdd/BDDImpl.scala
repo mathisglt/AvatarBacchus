@@ -44,6 +44,7 @@ object BDDImpl extends BaseDeDonnees{
         }
         "Adresse non trouvée"
     }
+
     def chercherLieu(mot: String): String = {
         if (mot.isEmpty()) {"Adresse non trouvée"}
         for (ligne <- lignesBDD){
@@ -59,12 +60,12 @@ object BDDImpl extends BaseDeDonnees{
     }
     
    
-  def recupLieux(file: BufferedSource): List[String] = {
-    val listeFinale = ArrayBuffer[String]()
-    for (line <- file.getLines()) {
-        listeFinale += line.split(';')(0)
-    }
-    listeFinale.toList
+    def recupLieux(file: BufferedSource): List[String] = {
+        val listeFinale = ArrayBuffer[String]()
+        for (line <- file.getLines()) {
+            listeFinale += line.split(';')(0)
+        }
+        listeFinale.toList
     }
     
     def createDicoExpr(): Unit={
@@ -74,105 +75,110 @@ object BDDImpl extends BaseDeDonnees{
         var listees = List[String]()
         var listede = List[String]()
         var listeit = List[String]()
-        for (lignes <- lignesInter){
-            if (lignes.equals("Français:")){
+        for (lignes <- lignesInter) {
+            if (lignes.equals("Français:")) {
                 val index = lignesInter.indexOf(lignes)
-                for (i <- index+1 to index+9){
+                for (i <- index+1 to index+9) {
                     listefr = listefr:::lignesInter(i)::Nil
                 }
             }   
-            if (lignes.equals("Anglais:")){
+            if (lignes.equals("Anglais:")) {
                 val index = lignesInter.indexOf(lignes)
-                for (i <- index+1 to index+9){
+                for (i <- index+1 to index+9) {
                     listeen = listeen:::lignesInter(i)::Nil
                 }
             }
-            if (lignes.equals("Espagnol:")){
+            if (lignes.equals("Espagnol:")) {
                 val index = lignesInter.indexOf(lignes)
-                for (i <- index+1 to index+9){
+                for (i <- index+1 to index+9) {
                     listees = listees:::lignesInter(i)::Nil
                 }
                 
             }
-            if (lignes.equals("Allemand:")){
+            if (lignes.equals("Allemand:")) {
                val index = lignesInter.indexOf(lignes)
-                for (i <- index+1 to index+9){
+                for (i <- index+1 to index+9) {
                     listede = listede:::lignesInter(i)::Nil
                 }
                 
             }
-            if (lignes.equals("Italien:")){
+            if (lignes.equals("Italien:")) {
                 val index = lignesInter.indexOf(lignes)
                 for (i <- index+1 to index+9){
                     listeit = listeit:::lignesInter(i)::Nil
                 }
-                
             }         
             dictionnaireExpressionsInternationale = listefr::listeen::listees::listede::listeit::Nil
         }
-        
-        
     }
-  def createDicoPRN(): Unit= {
-    val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
-    var listefr = List[String]()
-    var listeen = List[String]()
-    var listees = List[String]()
-    var listede = List[String]()
-    var listeit = List[String]()
-    for (lignes <- lignesInter){
-        if (lignes.contains("Français:") && !lignes.equals("Français:")){
-            listefr = listefr:::lignes.split(":")(1).split(",").toList
-            listefr = listefr.map(_.replaceAll(" ", "")) }   
-        if (lignes.contains("Anglais:") && !lignes.equals("Anglais:")){
-            listeen = listeen:::lignes.split(":")(1).split(",").toList
-            listeen = listeen.map(_.replaceAll(" ", ""))        }
-        if (lignes.contains("Espagnol:") && !lignes.equals("Espagnol:")){
-            listees = listees:::lignes.split(":")(1).split(",").toList
-            listees = listees.map(_.replaceAll(" ", ""))}
-        if (lignes.contains("Allemand:") && !lignes.equals("Allemand:")){
-            listede = listede:::lignes.split(":")(1).split(",").toList
-            listede = listede.map(_.replaceAll(" ", ""))   }
-        if (lignes.contains("Italien:") && !lignes.equals("Italien:")){
-            listeit = listeit:::lignes.split(":")(1).split(",").toList
-            listeit = listeit.map(_.replaceAll(" ", ""))
-        }         
-        dictionnairePRNInternationale = listefr::listeen::listees::listede::listeit::Nil
-        dictionnairePRNInternationale
+
+    def createDicoPRN(): Unit= {
+        val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
+        var listefr = List[String]()
+        var listeen = List[String]()
+        var listees = List[String]()
+        var listede = List[String]()
+        var listeit = List[String]()
+        for (lignes <- lignesInter) {
+            if (lignes.contains("Français:") && !lignes.equals("Français:")) {
+                listefr = listefr:::lignes.split(":")(1).split(",").toList
+                listefr = listefr.map(_.replaceAll(" ", ""))}   
+            if (lignes.contains("Anglais:") && !lignes.equals("Anglais:")) {
+                listeen = listeen:::lignes.split(":")(1).split(",").toList
+                listeen = listeen.map(_.replaceAll(" ", ""))}
+            if (lignes.contains("Espagnol:") && !lignes.equals("Espagnol:")) {
+                listees = listees:::lignes.split(":")(1).split(",").toList
+                listees = listees.map(_.replaceAll(" ", ""))}
+            if (lignes.contains("Allemand:") && !lignes.equals("Allemand:")) {
+                listede = listede:::lignes.split(":")(1).split(",").toList
+                listede = listede.map(_.replaceAll(" ", ""))}
+            if (lignes.contains("Italien:") && !lignes.equals("Italien:")){
+                listeit = listeit:::lignes.split(":")(1).split(",").toList
+                listeit = listeit.map(_.replaceAll(" ", ""))
+            }         
+            dictionnairePRNInternationale = listefr::listeen::listees::listede::listeit::Nil
+            dictionnairePRNInternationale
+        }
     }
-  }
-  def langueDuMot(mot : String) : String = {
-    createDicoPRN()
-    if (dictionnairePRNInternationale(0).contains(mot.toLowerCase())) {return "français"}
-    else if (dictionnairePRNInternationale(1).contains(mot.toLowerCase())) {return "english"}
-    else if (dictionnairePRNInternationale(2).contains(mot.toLowerCase())) {return "español"}
-    else if (dictionnairePRNInternationale(3).contains(mot.toLowerCase())) {return "deutsch"}
-    else if (dictionnairePRNInternationale(4).contains(mot.toLowerCase())) {return "italiano"}
-    else "langue non détéctée"
-  }
-  def getDicoExpr(): List[List[String]] =  {createDicoExpr;dictionnaireExpressionsInternationale}
-  def gettostrDicoExpr(): Unit = {
-    println(dictionnaireExpressionsInternationale)
-  }
-  def gettostrDicoPRN(): Unit = {
-    println(dictionnairePRNInternationale)
-  }
-  def getDicoPRN(): List[List[String]]= {createDicoPRN; dictionnairePRNInternationale}
-  /**
-    * Récupère le fichier xml et récupère les noms trouvés dans la balise name , et les lieux associés dans la balise name de street
-    *
-    * @return
-    */
-  def createListFromXML(): List[(String, String)] = {
-  val organizations = xml \\ "organization"
-  organizations.flatMap { organization =>
-    val name = (organization \\ "name").text.trim
-    val streetName = (organization \\ "street" \\ "name").text.trim
-    val streetNumber = (organization \\ "street" \\ "number").text.trim
-    val fullStreet = if (streetNumber.nonEmpty) s"$streetNumber $streetName" else streetName
-    if (name.nonEmpty && streetName.nonEmpty) Some(name -> fullStreet) else None
-  }.toList
-}
+
+    def langueDuMot(mot : String) : String = {
+        createDicoPRN()
+        if (dictionnairePRNInternationale(0).contains(mot.toLowerCase())) {return "français"}
+        else if (dictionnairePRNInternationale(1).contains(mot.toLowerCase())) {return "english"}
+        else if (dictionnairePRNInternationale(2).contains(mot.toLowerCase())) {return "español"}
+        else if (dictionnairePRNInternationale(3).contains(mot.toLowerCase())) {return "deutsch"}
+        else if (dictionnairePRNInternationale(4).contains(mot.toLowerCase())) {return "italiano"}
+        else "langue non détéctée"
+    }
+
+    def getDicoExpr(): List[List[String]] =  {createDicoExpr;dictionnaireExpressionsInternationale}
+
+    def gettostrDicoExpr(): Unit = {
+        println(dictionnaireExpressionsInternationale)
+    }
+
+    def gettostrDicoPRN(): Unit = {
+        println(dictionnairePRNInternationale)
+    }
+
+    def getDicoPRN(): List[List[String]]= {createDicoPRN; dictionnairePRNInternationale}
+
+    /**
+        * Récupère le fichier xml et récupère les noms trouvés dans la balise name , et les lieux associés dans la balise name de street
+        *
+        * @return
+        */
+    def createListFromXML(): List[(String, String)] = {
+        val organizations = xml \\ "organization"
+        organizations.flatMap { organization =>
+            val name = (organization \\ "name").text.trim
+            val streetName = (organization \\ "street" \\ "name").text.trim
+            val streetNumber = (organization \\ "street" \\ "number").text.trim
+            val fullStreet = if (streetNumber.nonEmpty) s"$streetNumber $streetName" else streetName
+            if (name.nonEmpty && streetName.nonEmpty) Some(name -> fullStreet) else None
+        }.toList
+    }
+
     /**
       * Récupère le nom des lieux , et l'ajoute dans un couple avec son adresse
       *
@@ -184,7 +190,6 @@ object BDDImpl extends BaseDeDonnees{
         (names, lieux) match {
             case (Nil, _) | (_, Nil) => Nil
             case (x :: xs, y :: ys)  => (x, y) :: creerxml(xs, ys)
-  }
-
+        }
     }
 }
