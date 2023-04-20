@@ -202,7 +202,7 @@ object BDDImpl extends BaseDeDonnees{
     /**
         * Récupère le fichier xml et récupère les noms trouvés dans la balise name , et les lieux associés dans la balise name de street
         *
-        * @return
+        * @return la liste de couple (lieu, adresse) de la base de donnees de Rennes (2059 couples)
         */
     def createListFromXML(): List[(String, String)] = {
         val organizations = xml \\ "organization"
@@ -214,5 +214,5 @@ object BDDImpl extends BaseDeDonnees{
             if (name.nonEmpty && streetName.nonEmpty) Some(name -> fullStreet) else None
         }.toList
     }
-    
+
 }
