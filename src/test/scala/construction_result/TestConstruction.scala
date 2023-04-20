@@ -28,7 +28,7 @@ class TestConstruction {
     def test_constructionPolitesse_1 {
         //test pour un seul bonjour
         assertEquals(
-            List("Bonjour"),
+            List("bonjour"),
             ConstructionImpl.construirePolitesse("Bonjour")   
         )
     }
@@ -36,7 +36,7 @@ class TestConstruction {
     def test_constructionPolitesse_2 {
         //test pour bonjour + requete
         assertEquals(
-            List("Bonjour","L'adresse de Mairie de Rennes est : Place de la Mairie"),
+            List("bonjour","L'adresse de Mairie de Rennes est : Place de la Mairie"),
             ConstructionImpl.construirePolitesse("Bonjour, Place de la Mairie")   
         )
     }

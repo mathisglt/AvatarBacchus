@@ -69,7 +69,7 @@ class TestLangue {
     LangueImpl.langueSuivante()
     LangueImpl.langueSuivante()
     LangueImpl.langueSuivante()
-    assertEquals(0, LangueImpl.getLangueActuelle())
+    assertEquals(1, LangueImpl.getLangueActuelle())
   }
   @Test
   def setLangueActuelle_1(): Unit = {
