@@ -20,9 +20,6 @@ object BDDImpl extends BaseDeDonnees{
     var varianceslieux = Map(("tnb","Théâtre National de Bretagne"),("hotel","Mairie de Rennes"))
     var dictionnaireExpressionsInternationale : List[List[String]] = List(List(),List(),List(),List(),List())
     var dictionnairePRNInternationale         : List[List[String]] = List(List(),List(),List(),List(),List())
-    var dictionnairePolitesseInternationale   : List[List[String]] = List(List(),List(),List(),List(),List())
-    var dictionnaireRechercheInternationale   : List[List[String]] = List(List(),List(),List(),List(),List())
-    var dictionnaireNomLangueInternationale   : List[List[String]] = List(List(),List(),List(),List(),List())
     val xml = XML.loadFile("partie2/vAr.xml")
 
     def chercherAdresse(mot: String): String = {
@@ -116,35 +113,6 @@ object BDDImpl extends BaseDeDonnees{
     }
 
     def createDicoPRN(): Unit= {
-        val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
-        var listefr = List[String]()
-        var listeen = List[String]()
-        var listees = List[String]()
-        var listede = List[String]()
-        var listeit = List[String]()
-        for (lignes <- lignesInter) {
-            if (lignes.contains("Français:") && !lignes.equals("Français:")) {
-                listefr = listefr:::lignes.split(":")(1).split(",").toList
-                listefr = listefr.map(_.replaceAll(" ", ""))}   
-            if (lignes.contains("Anglais:") && !lignes.equals("Anglais:")) {
-                listeen = listeen:::lignes.split(":")(1).split(",").toList
-                listeen = listeen.map(_.replaceAll(" ", ""))}
-            if (lignes.contains("Espagnol:") && !lignes.equals("Espagnol:")) {
-                listees = listees:::lignes.split(":")(1).split(",").toList
-                listees = listees.map(_.replaceAll(" ", ""))}
-            if (lignes.contains("Allemand:") && !lignes.equals("Allemand:")) {
-                listede = listede:::lignes.split(":")(1).split(",").toList
-                listede = listede.map(_.replaceAll(" ", ""))}
-            if (lignes.contains("Italien:") && !lignes.equals("Italien:")){
-                listeit = listeit:::lignes.split(":")(1).split(",").toList
-                listeit = listeit.map(_.replaceAll(" ", ""))
-            }         
-            dictionnairePRNInternationale = listefr::listeen::listees::listede::listeit::Nil
-            dictionnairePRNInternationale
-        }
-    }
-
-    def createDicoPolitesse(): Unit= {
         val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
         var listefr = List[String]()
         var listeen = List[String]()
