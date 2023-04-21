@@ -147,7 +147,15 @@ class BDDTest {
    def createDicoPRN1: Unit = {
       assertEquals(List(List("bonjour", "salut", "bonsoir", "recherche", "cherche", "ou", "est", "donc", "trouve", "trouver", "français"), List("hi", "hello", "morning", "evening", "afternoon", "hey", "seek", "seeking", "search", "searching", "look", "looking", "where", "find", "english"), List("hola", "buenos", "dias", "donde", "esta", "busco", "buscando", "español"), List("hallo", "guten", "morgen", "tag", "abend", "wo", "ist", "suche", "suchen", "deutsch"), List("buongiorno", "ciao", "salve", "buon", "pomeriggio", "buonasera", "incantato", "dove", "trova", "cerco", "cercando", "italiano")),BDDImpl.getDicoPRN())
    }
-
+   @Test
+   def xml1erelement: Unit = {
+      assertEquals(("Direction habitat social","1 Place de la Communauté"),BDDImpl.createListFromXML().head)
+   }
+   @Test
+   def xmldernierelement: Unit = {
+      assertEquals(("Xylocus","JARDIN DU SECHOIR"),BDDImpl.createListFromXML().last)
+   }
+   
 
    @Test
    def newchercherlieu1: Unit = {
