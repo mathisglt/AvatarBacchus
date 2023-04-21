@@ -44,7 +44,7 @@ object BDDImpl extends BaseDeDonnees{
         }
         for ((first, second) <- xmllist) {
             first.toLowerCase match {
-                case f if (f == mot.toLowerCase()) =>;return second
+                case f if (f.replaceAll("d'", "") == mot.toLowerCase()) =>;return second
                 case _ => // Ne rien faire si le mot n'est pas trouvé
             }
         }
@@ -64,7 +64,7 @@ object BDDImpl extends BaseDeDonnees{
         }
         for ((first, second) <- xmllist) {
             first.toLowerCase match {
-                case f if (f == mot.toLowerCase()) =>;return f
+                case f if (f.replaceAll("d'", "") == mot.toLowerCase()) =>;return f
                 case _ => // Ne rien faire si le mot n'est pas trouvé
             }
         }
@@ -184,7 +184,7 @@ object BDDImpl extends BaseDeDonnees{
     def createListFromXML(): List[(String, String)] = {
         val organizations = xml \\ "organization"
         organizations.flatMap { organization =>
-            val name = (organization \\ "name").headOption.map(_.text.trim).getOrElse("").replaceAll("d'", "")
+            val name = (organization \\ "name").headOption.map(_.text.trim).getOrElse("")
             val streetName = (organization \\ "street" \\ "name").text.trim
             val streetNumber = (organization \\ "street" \\ "number").text.trim
             val fullStreet = if (streetNumber.nonEmpty) s"$streetNumber $streetName" else streetName

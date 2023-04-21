@@ -22,7 +22,7 @@ object AnalyseImpl extends AnalyseTrait {
     *  @return la phrase sous forme de liste de string sans les mots de liaisons
     */
   def filtreLiaison(listeLieu: List[String]): List[String] = {
-    val liaisons = List("de", "La", "l", "d")
+    val liaisons = List("de", "La", "l")
     listeLieu.filter(listeLieu => !liaisons.contains(listeLieu))
   }
 
