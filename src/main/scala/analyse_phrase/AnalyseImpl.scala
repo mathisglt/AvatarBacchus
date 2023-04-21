@@ -54,7 +54,7 @@ object AnalyseImpl extends AnalyseTrait {
 
   /** découpe un string en plusieurs string éléments d'une liste de string 
     *  @param phrase qui est le string à découper
-    *  @result une liste de string représentant la phrase
+    *  @return une liste de string représentant la phrase
     */
   def decouper(phrase: String): List[String] = phrase.split("[ .!?,;']+").toList
 
