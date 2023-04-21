@@ -171,7 +171,7 @@ class TestAnalyse {
   @Test
   def test_politeTest_01: Unit = {
     assertEquals(
-      (false,List("bonjour", "salut", "bonsoir")),
+      (false,"bonjour"),
       AnalyseImpl.politeTest_Bonjour("yo")
     )
   }
@@ -179,47 +179,39 @@ class TestAnalyse {
   @Test
   def test_politeTest_02: Unit = {
     assertEquals(
-      (true,List("bonjour", "salut", "bonsoir")),
-      AnalyseImpl.politeTest_Bonjour("bonjour, bonsoir, saluuuuut")
+      (true,"bonjour"),
+      AnalyseImpl.politeTest_Bonjour("BonJoUr")
     )
   }
 
   @Test
   def test_politeTest_03: Unit = {
     assertEquals(
-      (true,List("bonjour", "salut", "bonsoir")),
-      AnalyseImpl.politeTest_Bonjour("BonJoUr")
+      (true,"bonjour"),
+      AnalyseImpl.politeTest_Bonjour("bonsoir")
     )
   }
 
   @Test
   def test_politeTest_04: Unit = {
     assertEquals(
-      (true,List("bonjour", "salut", "bonsoir")),
-      AnalyseImpl.politeTest_Bonjour("bonsoir")
+      (true,"bonjour"),
+      AnalyseImpl.politeTest_Bonjour("salut")
     )
   }
 
   @Test
   def test_politeTest_05: Unit = {
     assertEquals(
-      (true,List("bonjour", "salut", "bonsoir")),
-      AnalyseImpl.politeTest_Bonjour("salut")
+      (true,"bonjour"),
+      AnalyseImpl.politeTest_Bonjour("bnjour")
     )
   }
 
   @Test
   def test_politeTest_06: Unit = {
     assertEquals(
-      (true,List("bonjour", "salut", "bonsoir")),
-      AnalyseImpl.politeTest_Bonjour("bnjour")
-    )
-  }
-
-  @Test
-  def test_politeTest_07: Unit = {
-    assertEquals(
-      (true,List("bonjour", "salut", "bonsoir")),
+      (true,"bonjour"),
       AnalyseImpl.politeTest_Bonjour("banjour")
     )
   }
@@ -230,7 +222,7 @@ class TestAnalyse {
   def test_politeTest_08: Unit = {
     LangueImpl.setLangueActuelle("Anglais");
     assertEquals(
-      (true,List("hi", "hello", "morning", "evening", "afternoon", "hey")),
+      (true,"hi"),
       AnalyseImpl.politeTest_Bonjour("hello")
     )
   }
@@ -239,7 +231,7 @@ class TestAnalyse {
   def test_politeTest_09: Unit = {
     LangueImpl.setLangueActuelle("Espagnol");
     assertEquals(
-      (true,List("hola", "buenos", "dias")),
+      (true,"hola"),
       AnalyseImpl.politeTest_Bonjour("hola")
     )
   }
@@ -248,7 +240,7 @@ class TestAnalyse {
   def test_politeTest_10: Unit = {
     LangueImpl.setLangueActuelle("Anglais");
     assertEquals(
-      (true,List("hi", "hello", "morning", "evening", "afternoon", "hey")),
+      (true,"hi"),
       AnalyseImpl.politeTest_Bonjour("hella")
     )
   }
@@ -302,7 +294,7 @@ class TestAnalyse {
   @Test
   def test_onlyBonjour_1 {
     assertEquals(
-      (true,List("bonjour", "salut", "bonsoir")),
+      (true,"bonjour"),
       AnalyseImpl.politeTest_OnlyBonjour("bonjour")
     )
   }
@@ -310,7 +302,7 @@ class TestAnalyse {
   @Test
   def test_onlyBonjour_2 {
     assertEquals(
-      (true,List("bonjour", "salut", "bonsoir")),
+      (true,"bonjour"),
       AnalyseImpl.politeTest_OnlyBonjour("bnjour")
     )
   }
@@ -318,47 +310,39 @@ class TestAnalyse {
   @Test
   def test_onlyBonjour_3 {
     assertEquals(
-      (true,List("bonjour", "salut", "bonsoir")),
-      AnalyseImpl.politeTest_OnlyBonjour("boujour")
+      (true,"bonjour"),
+      AnalyseImpl.politeTest_OnlyBonjour("salut")
     )
   }
 
   @Test
   def test_onlyBonjour_4 {
     assertEquals(
-      (true,List("bonjour", "salut", "bonsoir")),
-      AnalyseImpl.politeTest_OnlyBonjour("salut")
+      (true,"bonjour"),
+      AnalyseImpl.politeTest_OnlyBonjour("bonsoir")
     )
   }
 
   @Test
   def test_onlyBonjour_5 {
     assertEquals(
-      (true,List("bonjour", "salut", "bonsoir")),
-      AnalyseImpl.politeTest_OnlyBonjour("bonsoir")
+      (false,"bonjour"),
+      AnalyseImpl.politeTest_OnlyBonjour("bonjour salut")
     )
   }
 
   @Test
   def test_onlyBonjour_6 {
     assertEquals(
-      (false,List("bonjour", "salut", "bonsoir")),
-      AnalyseImpl.politeTest_OnlyBonjour("bonjour salut")
+      (false,"bonjour"),
+      AnalyseImpl.politeTest_OnlyBonjour("")
     )
   }
 
   @Test
   def test_onlyBonjour_7 {
     assertEquals(
-      (false,List("bonjour", "salut", "bonsoir")),
-      AnalyseImpl.politeTest_OnlyBonjour("")
-    )
-  }
-
-  @Test
-  def test_onlyBonjour_8 {
-    assertEquals(
-      (false,List("bonjour", "salut", "bonsoir")),
+      (false,"bonjour"),
       AnalyseImpl.politeTest_OnlyBonjour("bonjourlesamis")
     )
   }

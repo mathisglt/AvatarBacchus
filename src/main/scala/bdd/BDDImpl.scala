@@ -187,7 +187,7 @@ object BDDImpl extends BaseDeDonnees{
             val name = (organization \\ "name").headOption.map(_.text.trim).getOrElse("")
             val streetName = (organization \\ "street" \\ "name").text.trim
             val streetNumber = (organization \\ "street" \\ "number").text.trim
-            val fullStreet = if (streetNumber.nonEmpty) s"$streetNumber $streetName" else streetName
+            val fullStreet = if (streetNumber.nonEmpty) s"$streetNumber, $streetName" else streetName
             if (name.nonEmpty && streetName.nonEmpty) Some(name -> fullStreet) else None
         }.toList
     }
