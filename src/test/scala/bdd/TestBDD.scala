@@ -67,7 +67,7 @@ class BDDTest {
    }
    @Test
    def testchercheradressebug2: Unit = {
-      assertEquals("Adresse non trouvée",BDDImpl.chercherLieu("askdhlkajh"))
+      assertEquals("Lieu non trouvé",BDDImpl.chercherLieu("askdhlkajh"))
    }
    @Test
    def testchercheradressebug3: Unit = {
@@ -147,7 +147,15 @@ class BDDTest {
    def createDicoPRN1: Unit = {
       assertEquals(List(List("bonjour", "salut", "bonsoir", "recherche", "cherche", "ou", "est", "donc", "trouve", "trouver", "français"), List("hi", "hello", "morning", "evening", "afternoon", "hey", "seek", "seeking", "search", "searching", "look", "looking", "where", "find", "english"), List("hola", "buenos", "dias", "donde", "esta", "busco", "buscando", "español"), List("hallo", "guten", "morgen", "tag", "abend", "wo", "ist", "suche", "suchen", "deutsch"), List("buongiorno", "ciao", "salve", "buon", "pomeriggio", "buonasera", "incantato", "dove", "trova", "cerco", "cercando", "italiano")),BDDImpl.getDicoPRN())
    }
-
+   @Test
+   def xml1erelement: Unit = {
+      assertEquals(("Direction habitat social","1 Place de la Communauté"),BDDImpl.createListFromXML().head)
+   }
+   @Test
+   def xmldernierelement: Unit = {
+      assertEquals(("Xylocus","JARDIN DU SECHOIR"),BDDImpl.createListFromXML().last)
+   }
+   
 
    @Test
    def newchercherlieu1: Unit = {
@@ -164,6 +172,17 @@ class BDDTest {
       assertEquals("clair obscur",BDDImpl.chercherLieu("clair obscur"))
    }
 
+   @Test
+   def newchercheradresse1xml: Unit = {
+      assertEquals("48 AVENUE SERGENT MAGINOT",BDDImpl.chercherAdresse("40mcube"))
+   }
 
-
+   @Test
+   def newchercheradresse2xml: Unit = {
+      assertEquals("5 RUE DE LORRAINE,RUE DE LORRAINE",BDDImpl.chercherAdresse("clair obscur"))
+   }
+   @Test
+   def newchercheradresse3xml: Unit = {
+      assertEquals("103 RUE DE LORIENT,RUE DE LORIENT",BDDImpl.chercherAdresse("Ecole maternelle Moulin du Comte"))
+   }
 }
