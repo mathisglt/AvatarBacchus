@@ -8,8 +8,7 @@ object MachineImpl extends MachineDialogue {
 
   def ask(requete: String): List[String] = {
     println("requete : " + requete)
-    val msgRobot =
-      ConstructionImpl.construireLangue(requete) //renvoie le message du robot
+    val msgRobot = ConstructionImpl.construireLangue(requete) //renvoie le message du robot
 
     if (!changementEnCours) { //s'il n'y a pas de changement en cours et que le message du robot est une des phrases suivantes, on change la langue
       msgRobot.last match {
@@ -57,7 +56,7 @@ object MachineImpl extends MachineDialogue {
             case _ => LangueImpl.langueSuivante(); LangueImpl.getLangueQuestion() :: Nil
           }
         //s'il y a confirmation, il n'y a plus de changement de langue en cours et on renvoie la confirmation que la langue à été changée
-        case _ => changementEnCours = false; confirmation :: Nil
+        case _ => changementEnCours = false;println("message robot : " + confirmation); confirmation :: Nil
       }
     }
   }

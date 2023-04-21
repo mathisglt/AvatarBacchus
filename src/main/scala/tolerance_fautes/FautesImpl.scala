@@ -24,7 +24,8 @@ object FautesImpl extends FautesTrait {
     * @return l'emplacement du mot le plus proche dans la liste ou -1 s'il n'y en a pas
     */
   def testChaqueMot(motATester: String, modeles: List[String]): Int = {
-    modeles.indexWhere((modele) => distanceDeHammingInf1(motATester, modele))
+    if(motATester.length<=2){return -1}
+    else {modeles.indexWhere((modele) => distanceDeHammingInf1(motATester, modele))}
   }
 
   /** regarde si la distance de Hamming entre deux strings est supérieure ou égal à 1

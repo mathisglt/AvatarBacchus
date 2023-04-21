@@ -70,7 +70,7 @@ object AnalyseImpl extends AnalyseTrait {
     val phrase_corrigee: String = assembler(
       FautesImpl.correction(
         decouper(phrase),
-        salutationsLangueActuelle
+        filtreLiaison(salutationsLangueActuelle)
       )
     )
     var testBonjour = false
@@ -87,7 +87,7 @@ object AnalyseImpl extends AnalyseTrait {
     val phrase_corrigee: String = assembler(
       FautesImpl.correction(
         decouper(phrase),
-        salutationsLangueActuelle
+        filtreLiaison(salutationsLangueActuelle)
       )
     )
     var testOnlyBonjour = false
@@ -126,10 +126,6 @@ object AnalyseImpl extends AnalyseTrait {
   }
 
   private def detecLangue(phrase: List[String]): (Boolean, Int) = {
-    /*var phrase_corrigee: List[String] = phrase
-    for (langue <- BDDImpl.getDicoPRN()){
-      phrase_corrigee = FautesImpl.correction(phrase_corrigee,langue)
-    }*/
     filtreLiaison(phrase) match {
       case Nil => (false, LangueImpl.getLangueActuelle())
       case head :: next =>
