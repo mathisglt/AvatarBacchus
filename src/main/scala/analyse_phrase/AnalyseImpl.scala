@@ -22,7 +22,7 @@ object AnalyseImpl extends AnalyseTrait {
     *  @return la phrase sous forme de liste de string sans les mots de liaisons
     */
   def filtreLiaison(listeLieu: List[String]): List[String] = {
-    val liaisons = List("de", "La", "l")
+    val liaisons = List("de", "La", "l", "d")
     listeLieu.filter(listeLieu => !liaisons.contains(listeLieu))
   }
 
@@ -54,7 +54,7 @@ object AnalyseImpl extends AnalyseTrait {
 
   /** découpe un string en plusieurs string éléments d'une liste de string 
     *  @param phrase qui est le string à découper
-    *  @result une liste de string représentant la phrase
+    *  @return une liste de string représentant la phrase
     */
   def decouper(phrase: String): List[String] = phrase.split("[ .!?,;']+").toList
 
