@@ -122,61 +122,36 @@ object BDDImpl extends BaseDeDonnees{
             dictionnaireExpressionsInternationale = listefr::listeen::listees::listede::listeit::Nil
         }
     }
-  def createDicoPRN(): Unit= {
-    val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
-    var listefr,listeen,listees,listede,listeit = List[String]()
-    for (lignes <- lignesInter){
-        if (lignes.contains("Français:") && !lignes.equals("Français:")){
-            listefr = listefr:::lignes.split(":")(1).split(",").toList
-            listefr = listefr.map(_.replaceAll(" ", "")) }   
-        if (lignes.contains("Anglais:") && !lignes.equals("Anglais:")){
-            listeen = listeen:::lignes.split(":")(1).split(",").toList
-            listeen = listeen.map(_.replaceAll(" ", ""))        }
-        if (lignes.contains("Espagnol:") && !lignes.equals("Espagnol:")){
-            listees = listees:::lignes.split(":")(1).split(",").toList
-            listees = listees.map(_.replaceAll(" ", ""))}
-        if (lignes.contains("Allemand:") && !lignes.equals("Allemand:")){
-            listede = listede:::lignes.split(":")(1).split(",").toList
-            listede = listede.map(_.replaceAll(" ", ""))   }
-        if (lignes.contains("Italien:") && !lignes.equals("Italien:")){
-            listeit = listeit:::lignes.split(":")(1).split(",").toList
-            listeit = listeit.map(_.replaceAll(" ", ""))
-        }         
-        dictionnairePRNInternationale = listefr::listeen::listees::listede::listeit::Nil
-    }
-  }
-
-  def createDicoSalutations(langueActuelleStr: String, langueActuelle: Int): List[String]={
-    val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
-    val listeSalutations = List[String](lignesInter(7+langueActuelle))
-    val listeSansLangue = listeSalutations(0).split(": ")
-    val listeFinale = listeSansLangue(1).split(",").toList
-    listeFinale
-  }
-
-    def createDicoPolitesse(): Unit= {
+    def createDicoPRN(): Unit= {
         val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
         var listefr,listeen,listees,listede,listeit = List[String]()
-        for (lignes <- lignesInter) {
-            if (lignes.contains("Français:") && lignes.contains("bonjour") && !lignes.equals("Français:")) {
+        for (lignes <- lignesInter){
+            if (lignes.contains("Français:") && !lignes.equals("Français:")){
                 listefr = listefr:::lignes.split(":")(1).split(",").toList
-                listefr = listefr.map(_.replaceAll(" ", ""))}   
-            if (lignes.contains("Anglais:") && lignes.contains("hello") && !lignes.equals("Anglais:")) {
+                listefr = listefr.map(_.replaceAll(" ", "")) }   
+            if (lignes.contains("Anglais:") && !lignes.equals("Anglais:")){
                 listeen = listeen:::lignes.split(":")(1).split(",").toList
-                listeen = listeen.map(_.replaceAll(" ", ""))}
-            if (lignes.contains("Espagnol:") && lignes.contains("hola") && !lignes.equals("Espagnol:")) {
+                listeen = listeen.map(_.replaceAll(" ", ""))        }
+            if (lignes.contains("Espagnol:") && !lignes.equals("Espagnol:")){
                 listees = listees:::lignes.split(":")(1).split(",").toList
                 listees = listees.map(_.replaceAll(" ", ""))}
-            if (lignes.contains("Allemand:") && lignes.contains("hallo") && !lignes.equals("Allemand:")) {
+            if (lignes.contains("Allemand:") && !lignes.equals("Allemand:")){
                 listede = listede:::lignes.split(":")(1).split(",").toList
-                listede = listede.map(_.replaceAll(" ", ""))}
-            if (lignes.contains("Italien:") && lignes.contains("buongiorno") && !lignes.equals("Italien:")){
+                listede = listede.map(_.replaceAll(" ", ""))   }
+            if (lignes.contains("Italien:") && !lignes.equals("Italien:")){
                 listeit = listeit:::lignes.split(":")(1).split(",").toList
                 listeit = listeit.map(_.replaceAll(" ", ""))
             }         
-            dictionnairePolitesseInternationale = listefr::listeen::listees::listede::listeit::Nil
-            dictionnairePolitesseInternationale
+            dictionnairePRNInternationale = listefr::listeen::listees::listede::listeit::Nil
         }
+    }
+
+    def createDicoSalutations(langueActuelleStr: String, langueActuelle: Int): List[String]={
+        val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
+        val listeSalutations = List[String](lignesInter(7+langueActuelle))
+        val listeSansLangue = listeSalutations(0).split(": ")
+        val listeFinale = listeSansLangue(1).split(",").toList
+        listeFinale
     }
 
     def langueDuMot(mot : String) : String = {
