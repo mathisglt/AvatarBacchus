@@ -133,7 +133,8 @@ object AnalyseImpl extends AnalyseTrait {
   }
 
   private def detecLangue(phrase: List[String]): (Boolean, Int) = {
-    filtreLiaison(phrase) match {
+    var phrase_corrigee = FautesImpl.correction(filtreLiaison(phrase), List("français","english","español","deutsch","italiano"))
+    phrase_corrigee match {
       case Nil => (false, LangueImpl.getLangueActuelle())
       case head :: next =>
         val langue = BDDImpl.langueDuMot(head)

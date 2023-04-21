@@ -15,12 +15,13 @@ object ConstructionImpl extends ConstructionTrait {
   }
 
   def construireConfirmation(requete: String, langueActuelle: Int): String = {
+    val dicoExpr = AnalyseImpl.getDicoLangue(langueActuelle)
     requete match {
-      case "oui" if (langueActuelle == 0) => "D'accord, quelle est votre demande?"
-      case "yes" if (langueActuelle == 1) => "OK, what is your query?"
-      case "si" if (langueActuelle == 2)  => "Está bien, cuál es tu petición?"
-      case "ja" if (langueActuelle == 3)  => "Okay, was ist Ihr Wunsch?"
-      case "si" if (langueActuelle == 4)  => "Va bene, qual è la tua richiesta?"
+      case "oui" if (langueActuelle == 0) => dicoExpr(5) //"D'accord, quelle est votre demande?"
+      case "yes" if (langueActuelle == 1) => dicoExpr(5) //"OK, what is your query?"
+      case "si" if (langueActuelle == 2)  => dicoExpr(5) //"Está bien, cuál es tu petición?"
+      case "ja" if (langueActuelle == 3)  => dicoExpr(5) //"Okay, was ist Ihr Wunsch?"
+      case "si" if (langueActuelle == 4)  => dicoExpr(5) //"Va bene, qual è la tua richiesta?"
       case _                              => "Pas de confirmation"
     }
   }
