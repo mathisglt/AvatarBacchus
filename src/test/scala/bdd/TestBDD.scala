@@ -67,7 +67,7 @@ class BDDTest {
    }
    @Test
    def testchercheradressebug2: Unit = {
-      assertEquals("Adresse non trouvée",BDDImpl.chercherLieu("askdhlkajh"))
+      assertEquals("Lieu non trouvé",BDDImpl.chercherLieu("askdhlkajh"))
    }
    @Test
    def testchercheradressebug3: Unit = {
@@ -172,6 +172,17 @@ class BDDTest {
       assertEquals("clair obscur",BDDImpl.chercherLieu("clair obscur"))
    }
 
+   @Test
+   def newchercheradresse1xml: Unit = {
+      assertEquals("48 AVENUE SERGENT MAGINOT",BDDImpl.chercherAdresse("40mcube"))
+   }
 
-
+   @Test
+   def newchercheradresse2xml: Unit = {
+      assertEquals("5 RUE DE LORRAINE,RUE DE LORRAINE",BDDImpl.chercherAdresse("clair obscur"))
+   }
+   @Test
+   def newchercheradresse3xml: Unit = {
+      assertEquals("103 RUE DE LORIENT,RUE DE LORIENT",BDDImpl.chercherAdresse("Ecole maternelle Moulin du Comte"))
+   }
 }
