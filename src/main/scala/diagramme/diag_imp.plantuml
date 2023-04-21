@@ -1,8 +1,11 @@
 @startuml Avatar
 
 interface BDDTrait{
-	val lignesBDD: Array[String]
 	chercherAdresse(str:String): String
+	recupLieux(file:BufferedSource):List[String]
+	chercherLieu(mot: String): String
+	getDicoExpr(): Array[Array[String]]
+	getDicoPRN(): Array[Array[String]]
 }
 
 interface MachineDialogue {
@@ -25,11 +28,17 @@ interface FautesTrait{
 
 interface AnalyseTrait{
 	analyser(phrase: String): List[(String,String)]
+	politeTest_Bonjour(phrase: String): Boolean
+	politeTest_OnlyBonjour(phrase: String): Boolean
+	getDicoLangue(): List[String]
 }
 
 interface LangueTrait{
-	def changementLangue(langue : String) : Unit
-	def getLangueActuelle() : Int
+	langueSuivante(): Unit
+ 	getLangueActuelle(): Int
+  	setLangueActuelle(langue: String): Unit
+  	reinitLangue():Unit
+  	langueActuelleToString(langue_actuelle: Int): String
 }
 
 
@@ -46,13 +55,15 @@ BDDTrait <|-  BDDImpl
 ConstructionImpl -|>  ConstructionTrait
 AnalyseImpl -|>  AnalyseTrait
 FautesImpl -|> FautesTrait
-LangueImpl -|> LangueTrait
+LangueTrait <|-  LangueImpl
 
 MachineDialogue --> ConstructionTrait
 MachineDialogue <- InterfaceGraphique
 ConstructionTrait --> AnalyseTrait
-AnalyseTrait -> BDDTrait
-AnalyseTrait --> LangueTrait
+
+AnalyseTrait -> LangueTrait
 AnalyseTrait --> FautesTrait
+AnalyseTrait --> BDDTrait
+MachineDialogue --> LangueTrait
 
 @enduml

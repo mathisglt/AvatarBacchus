@@ -7,14 +7,15 @@ import tolerance_fautes.FautesImpl
 import langue.LangueImpl
 
 case object ExceptionListeVide extends Exception
+
 object AnalyseImpl extends AnalyseTrait {
 
   //Recherche Adresse
 
   val liste_lieux = BDDImpl
     .recupLieux(Source.fromFile("doc/DonneesInitiales.txt"))
-    .concat(List("TNB", "hotel"))
-  val listeAvecLiason = liste_lieux.map(decouper(_))
+    .concat(List("TNB", "Hotel de Ville"))
+  val listeAvecLiaison = liste_lieux.map(decouper(_))
 
   /** permet de retirer les mots de liaisons de phrase sous formes de liste de string
     *  @param phrase sous forme de liste de string
@@ -69,30 +70,40 @@ object AnalyseImpl extends AnalyseTrait {
     else list.reduce(_ + " " + _)
   }
 
-  //Analyse politesse 
+  //Analyse politesse
 
-  def politeTest_Bonjour(phrase: String): Boolean = {
+  def politeTest_Bonjour(phrase: String): (Boolean,String) = {
+    val salutationsLangueActuelle = BDDImpl.createDicoSalutations(LangueImpl.langueIntToString(LangueImpl.getLangueActuelle()),LangueImpl.getLangueActuelle())
     val phrase_corrigee: String = assembler(
       FautesImpl.correction(
         decouper(phrase),
-        List("bonjour", "bonsoir", "salut")
+        filtreLiaison(salutationsLangueActuelle)
       )
     )
-    phrase_corrigee.toLowerCase().contains("bonjour") || phrase_corrigee
-      .toLowerCase()
-      .contains("salut") || phrase_corrigee.toLowerCase().contains("bonsoir")
+    var testBonjour = false
+    var i = 0
+    while (i < salutationsLangueActuelle.length && !testBonjour){
+      if(phrase_corrigee.toLowerCase().contains(salutationsLangueActuelle(i))) {testBonjour = true}
+      i += 1
+    }
+    (testBonjour,salutationsLangueActuelle(0))
   }
 
-  def politeTest_OnlyBonjour(phrase: String): Boolean = {
+  def politeTest_OnlyBonjour(phrase: String): (Boolean,String) = {
+    val salutationsLangueActuelle = BDDImpl.createDicoSalutations(LangueImpl.langueIntToString(LangueImpl.getLangueActuelle()),LangueImpl.getLangueActuelle())
     val phrase_corrigee: String = assembler(
       FautesImpl.correction(
         decouper(phrase),
-        List("bonjour", "bonsoir", "salut")
+        filtreLiaison(salutationsLangueActuelle)
       )
     )
-    phrase_corrigee.toLowerCase().equals("bonjour") || phrase_corrigee
-      .toLowerCase()
-      .equals("salut") || phrase_corrigee.toLowerCase().equals("bonsoir")
+    var testOnlyBonjour = false
+    var i = 0
+    while (i < salutationsLangueActuelle.length && !testOnlyBonjour){
+      if(phrase_corrigee.toLowerCase().equals(salutationsLangueActuelle(i))) {testOnlyBonjour = true}
+      i += 1
+    }
+    (testOnlyBonjour,salutationsLangueActuelle(0))
   }
 
   // Analyse Langue
@@ -100,7 +111,36 @@ object AnalyseImpl extends AnalyseTrait {
   def getDicoLangue(): List[String] = {
     val dicoExpr = BDDImpl.getDicoExpr
     val langue_actuelle = LangueImpl.getLangueActuelle
-    dicoExpr(langue_actuelle).toList
+    dicoExpr(langue_actuelle).filter(_ != LangueImpl.langueIntToString(langue_actuelle))
+  }
+
+  /** meme chose que getDicoLangue à la difference qu'ici on peut choisir le dictionnaire de la langue que l'on veut
+    *
+    * @param lang un int compris entre 0 et 4 correspondant à la langue voulue
+    * @return le dico de la langue choisie, renvoie une liste vide si le int n'est pas compris entre 0 et 4
+    */
+  def getDicoLangue(lang: Int): List[String] = {
+    lang match {
+      case n if (lang >= 0 && lang <= 4) =>
+        val dicoExpr = BDDImpl.getDicoExpr
+        dicoExpr(lang).filter(_ != LangueImpl.langueIntToString(lang))
+      case _ => List()
+    }
+  }
+
+  def detecLangue(phrase: String): (Boolean, Int) = {
+    detecLangue(decouper(phrase))
+  }
+
+  private def detecLangue(phrase: List[String]): (Boolean, Int) = {
+    filtreLiaison(phrase) match {
+      case Nil => (false, LangueImpl.getLangueActuelle())
+      case head :: next =>
+        val langue = BDDImpl.langueDuMot(head)
+        if (langue.equals(LangueImpl.langueIntToString(LangueImpl.getLangueActuelle())) || langue == "langue non détectée")
+          detecLangue(next)
+        else (true, LangueImpl.langueStringToInt(langue))
+    }
   }
 
 }

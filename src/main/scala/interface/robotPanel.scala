@@ -14,7 +14,7 @@ class RobotPanel(text: String) extends BoxPanel(Orientation.Horizontal){
 
     // Création des composants
     private val robotMsg = new BubbleText (text, Alignment.Left) // création du label contenant le contenu du message avec Aligment.Left car le robot est à gauche
-    private val robotImage = new ImageIcon(new File("doc/Robot.jpg").getAbsolutePath).getImage() // création de l'icône contenant la photo du robot
+    private val robotImage = new ImageIcon(new File("doc/robot.jpg").getAbsolutePath).getImage() // création de l'icône contenant la photo du robot
     private val resizedrobotImage = new ImageIcon(robotImage.getScaledInstance(50,50,Image.SCALE_DEFAULT)) // redimensionne l'image
     private val labelRobot = new Label("Avatar | ", resizedrobotImage, Alignment.Center){ // création d'un label avec l'image et le nom du robot
         font = new Font("Arial", Font.BOLD, 15) // choix de la police et de la taille pour le nom du robot

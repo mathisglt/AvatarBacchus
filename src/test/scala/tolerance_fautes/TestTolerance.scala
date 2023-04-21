@@ -13,6 +13,7 @@ class TestTolerance {
         .recupLieux(Source.fromFile("doc/DonneesInitiales.txt"))
         .flatMap(AnalyseImpl.decouper)
     )
+  val dicoBDD = BDDImpl.getDicoExpr()
 
   val listeTest: List[String] = List("Ou", "est", "la", "mAirie")
 
@@ -116,6 +117,17 @@ class TestTolerance {
       FautesImpl.correction(
         List("tnb", "TNA", "hotel de valle"),
         List("TNB", "Hôtel de Ville")
+      )
+    )
+  }
+
+  @Test
+  def Test6_correction(): Unit = {
+    assertEquals(
+      List("yes"),
+      FautesImpl.correction(
+        List("yes"),dicoBDD(0)
+        
       )
     )
   }
