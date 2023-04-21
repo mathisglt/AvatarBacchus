@@ -258,31 +258,42 @@ class TestAnalyse {
   // Tests de filtreLiason
 
   @Test
-  def test_filtreLiason_1 {
+  def test_filtreLiason_01 {
     assertEquals(
       List("Hôtel", "Ville"),
       AnalyseImpl.filtreLiaison(List("Hôtel", "de", "Ville"))
     )
   }
   @Test
-  def test_filtreLiason_2 {
+  def test_filtreLiason_02 {
     assertEquals(
       List("Hôtel", "Ville"),
       AnalyseImpl.filtreLiaison(List("Hôtel", "Ville"))
     )
   }
   @Test
-  def test_filtreLiason_3 {
+  def test_filtreLiason_03 {
     assertEquals(
       Nil,
       AnalyseImpl.filtreLiaison(Nil)
     )
   }
   @Test
-  def test_filtreLiason_4 {
+  def test_filtreLiason_04 {
     assertEquals(
       List("gare", "Rennes"),
       AnalyseImpl.filtreLiaison(List("de", "gare", "de", "Rennes"))
+    )
+  }
+  @Test
+  def test_filtreLiason_05: Unit = {
+    /* note :
+      on utilise AnalyseImpl.decouper avant d'utiliser AnalyseImpl.filtreLiaison
+      donc les caracteres "'" seront deja suppr et les lettres "d" et "l" isolees
+    */
+    assertEquals(
+      List("Mur", "eau"),
+      AnalyseImpl.filtreLiaison(List("Mur","d","eau"))
     )
   }
 
