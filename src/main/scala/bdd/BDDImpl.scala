@@ -209,7 +209,7 @@ object BDDImpl extends BaseDeDonnees{
     def createListFromXML(): List[(String, String)] = {
         val organizations = xml \\ "organization"
         organizations.flatMap { organization =>
-            val name = (organization \\ "name").headOption.map(_.text.trim).getOrElse("")
+            val name = (organization \\ "name").headOption.map(_.text.trim).getOrElse("").replaceAll("d'", "")
             val streetName = (organization \\ "street" \\ "name").text.trim
             val streetNumber = (organization \\ "street" \\ "number").text.trim
             val fullStreet = if (streetNumber.nonEmpty) s"$streetNumber $streetName" else streetName

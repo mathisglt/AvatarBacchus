@@ -185,4 +185,8 @@ class BDDTest {
    def newchercheradresse3xml: Unit = {
       assertEquals("103 RUE DE LORIENT,RUE DE LORIENT",BDDImpl.chercherAdresse("Ecole maternelle Moulin du Comte"))
    }
+   @Test
+   def newchercheradresse4xml: Unit = {
+      assertEquals("7 QUAI CHATEAUBRIAND,QUAI CHATEAUBRIAND",BDDImpl.chercherAdresse("consulat honoraire espagne"))
+   }
 }
