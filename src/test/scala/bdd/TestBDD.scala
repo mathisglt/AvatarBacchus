@@ -153,6 +153,21 @@ class BDDTest {
       assertEquals("ddd",BDDImpl.createListFromXML())
    }
 
+   @Test
+   def newchercherlieu1: Unit = {
+      assertEquals("Mairie de Rennes",BDDImpl.chercherLieu("Mairie"))
+   }
+
+   @Test
+   def newchercherlieu2: Unit = {
+      assertEquals("48 AVENUE SERGENT MAGINOT",BDDImpl.chercherLieu("40mcube"))
+   }
+
+   @Test
+   def newchercherlieu3: Unit = {
+      assertEquals("5 RUE DE LORRAINE,RUE DE LORRAINE",BDDImpl.chercherLieu("clair obscur?"))
+   }
+
 
 
 }

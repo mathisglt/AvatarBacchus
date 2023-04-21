@@ -22,6 +22,7 @@ object BDDImpl extends BaseDeDonnees{
     var dictionnairePRNInternationale         : List[List[String]] = List(List(),List(),List(),List(),List())
     var dictionnairePolitesseInternationale   : List[List[String]] = List(List(),List(),List(),List(),List())
     val xml = XML.loadFile("partie2/vAr.xml")
+    val xmllist = createListFromXML()
 
     def chercherAdresse(mot: String): String = {
         if (mot.isEmpty()) return "Adresse non trouvée"
@@ -34,20 +35,24 @@ object BDDImpl extends BaseDeDonnees{
                     return variancesaddr.getOrElse(mot.toLowerCase(),"")
                 }
                 //Sinon on récupère son adresse
-                if ( ((fields(0).toLowerCase).contains(" "+ mot.toLowerCase())
+                else if ( ((fields(0).toLowerCase).contains(" "+ mot.toLowerCase())
                    || (fields(0).toLowerCase).contains(mot.toLowerCase()+ " ")) 
                         && !banwords.contains(mot.toLowerCase())){
                     return fields(1)
                 }  
+            }           
+        }
+        for ((first, second) <- xmllist) {
+            first.toLowerCase match {
+                case f if (f == mot.toLowerCase()) =>;return second
+                case _ => // Ne rien faire si le mot n'est pas trouvé
             }
-            
-            
         }
         "Adresse non trouvée"
     }
 
     def chercherLieu(mot: String): String = {
-        if (mot.isEmpty()) {"Adresse non trouvée"}
+        if (mot.isEmpty()) {"Lieu non trouvé"}
         for (ligne <- lignesBDD){
             val fields = ligne.split(";")
             if (varianceslieux.contains(mot.toLowerCase())){
@@ -57,9 +62,14 @@ object BDDImpl extends BaseDeDonnees{
                 return fields(0)
             }
         }
-        "Adresse non trouvée"
-    }
-    
+        for ((first, second) <- xmllist) {
+            first.toLowerCase match {
+                case f if (f == mot.toLowerCase()) =>;return f
+                case _ => // Ne rien faire si le mot n'est pas trouvé
+            }
+        }
+    "Lieu non trouvé"
+}
    
     def recupLieux(file: BufferedSource): List[String] = {
         val listeFinale = ArrayBuffer[String]()
@@ -114,11 +124,7 @@ object BDDImpl extends BaseDeDonnees{
     }
   def createDicoPRN(): Unit= {
     val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
-    var listefr = List[String]()
-    var listeen = List[String]()
-    var listees = List[String]()
-    var listede = List[String]()
-    var listeit = List[String]()
+    var listefr,listeen,listees,listede,listeit = List[String]()
     for (lignes <- lignesInter){
         if (lignes.contains("Français:") && !lignes.equals("Français:")){
             listefr = listefr:::lignes.split(":")(1).split(",").toList
@@ -150,11 +156,7 @@ object BDDImpl extends BaseDeDonnees{
 
     def createDicoPolitesse(): Unit= {
         val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
-        var listefr = List[String]()
-        var listeen = List[String]()
-        var listees = List[String]()
-        var listede = List[String]()
-        var listeit = List[String]()
+        var listefr,listeen,listees,listede,listeit = List[String]()
         for (lignes <- lignesInter) {
             if (lignes.contains("Français:") && lignes.contains("bonjour") && !lignes.equals("Français:")) {
                 listefr = listefr:::lignes.split(":")(1).split(",").toList

@@ -33,6 +33,10 @@ object AnalyseImpl extends AnalyseTrait {
         filtreLiaison(liste_lieux.flatMap(decouper(_)))
       )
     )
+    // Cas où l'on demande l'adresse directement , sans aucun mot supplémentaire
+    if(BDDImpl.chercherAdresse(phrase_corrigee) != "Adresse non trouvée"){
+      return (BDDImpl.chercherLieu(phrase_corrigee), BDDImpl.chercherAdresse(phrase_corrigee))
+    }
     val mots = decouper(phrase_corrigee)
     mots match {
       case Nil => ("", "")
