@@ -22,7 +22,7 @@ object AnalyseImpl extends AnalyseTrait {
     *  @return la phrase sous forme de liste de string sans les mots de liaisons
     */
   def filtreLiaison(listeLieu: List[String]): List[String] = {
-    val liaisons = List("de", "La", "l")
+    val liaisons = List("de", "La", "l", "d")
     listeLieu.filter(listeLieu => !liaisons.contains(listeLieu))
   }
 
@@ -132,19 +132,20 @@ object AnalyseImpl extends AnalyseTrait {
     }
   }
 
-  def detecLangue(phrase: String): (Boolean, Int) = {
+  def detecLangue(phrase: String): (Boolean, Int, Int) = {
     detecLangue(decouper(phrase))
   }
 
-  private def detecLangue(phrase: List[String]): (Boolean, Int) = {
+  private def detecLangue(phrase: List[String]): (Boolean, Int, Int) = {
     var phrase_corrigee = FautesImpl.correction(filtreLiaison(phrase), List("français","english","español","deutsch","italiano"))
     phrase_corrigee match {
-      case Nil => (false, LangueImpl.getLangueActuelle())
+      case Nil => (false, LangueImpl.getLangueActuelle(), LangueImpl.getLangueActuelle())
       case head :: next =>
         val langue = BDDImpl.langueDuMot(head)
-        if (langue.equals(LangueImpl.langueIntToString(LangueImpl.getLangueActuelle())) || langue == "langue non détectée")
-          detecLangue(next)
-        else (true, LangueImpl.langueStringToInt(langue))
+        langue match {
+          case "langue non détectée" => detecLangue(next)
+          case _ => (true, LangueImpl.langueStringToInt(langue), LangueImpl.getLangueActuelle())
+        }
     }
   }
 

@@ -476,7 +476,7 @@ class TestAnalyse {
   def test_detecLangue_01 {
     LangueImpl.setLangueActuelle("Français")
     assertEquals(
-      (false, 0),
+      (true, 0, 0),
       AnalyseImpl.detecLangue("je cherche la mairie")
     )
   }
@@ -485,8 +485,17 @@ class TestAnalyse {
   def test_detecLangue_02 {
     LangueImpl.setLangueActuelle("Français")
     assertEquals(
-      (true, 1),
+      (true, 1, 0),
       AnalyseImpl.detecLangue("I am seeking la mairie de Rennes")
+    )
+  }
+
+  @Test
+  def test_detecLangue_03 {
+    LangueImpl.setLangueActuelle("Français")
+    assertEquals(
+      (false, 0, 0),
+      AnalyseImpl.detecLangue("aucun mot ne doit être détecté")
     )
   }
 }

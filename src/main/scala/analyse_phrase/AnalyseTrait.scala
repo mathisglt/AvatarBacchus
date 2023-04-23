@@ -37,6 +37,6 @@ trait AnalyseTrait {
     * @param phrase
     * @return le couple (boolean ; int) : (true si changement, false sinon ; int de la langue actuelle, qu'elle ait change ou non)
     */
-  def detecLangue(phrase: String): (Boolean, Int)
+  def detecLangue(phrase: String): (Boolean, Int, Int)
   
 }

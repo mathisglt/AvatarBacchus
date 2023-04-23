@@ -1,14 +1,17 @@
 package construction_result
 
 import analyse_phrase.AnalyseImpl
+import langue.LangueImpl
 
 object ConstructionImpl extends ConstructionTrait {
 
   def construireLangue(requete: String): List[String] = {
-    val change = AnalyseImpl.detecLangue(requete)
-    val dicoExpr = AnalyseImpl.getDicoLangue(change._2)
-    if (change._1) { //true = changer langue
-      dicoExpr(4) :: Nil
+    val detection = AnalyseImpl.detecLangue(requete) // recherche de mots de détection dans la phrase
+    val dicoExpr = AnalyseImpl.getDicoLangue(detection._2) // on récupère le dico correspondant à la langue détéctée
+    if (detection._1 && detection._2 != detection._3) { 
+      // detection._1 = une langue est détéctée, detection._2 = la langue détéctée, detection._3 la langue actuelle car construction n'y a pas accès
+      dicoExpr(4) :: Nil 
+      // on renvoie la question correspondante si jamais la langue détectée est différente de la langue actuelle
     } else {
       construirePolitesse(requete)
     }
