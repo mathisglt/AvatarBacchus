@@ -10,6 +10,7 @@ import scala.collection.mutable.ArrayBuffer
 import java.util.ArrayList
 import scala.xml.XML
 import scala.xml.NodeSeq
+import java.text.Normalizer
 
 object BDDImpl extends BaseDeDonnees{
     // TEST2
@@ -23,6 +24,23 @@ object BDDImpl extends BaseDeDonnees{
     var dictionnairePolitesseInternationale   : List[List[String]] = List(List(),List(),List(),List(),List())
     val xml = XML.loadFile("partie2/vAr.xml")
     val xmllist = createListFromXML()
+    def removeAccents(str: String): String = {
+        val normalized = Normalizer.normalize(str, Normalizer.Form.NFD)
+        normalized.replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
+    }
+    def removeLiaisonAccentsWords(str: String): String = {
+        val liaisonWords = List("de", "des", "du", "le", "la", "les", "un", "une", "et")
+        val words = str.split("\\s+")
+        val result = words.flatMap { word =>
+            val lowerWord = word.toLowerCase
+            if (liaisonWords.contains(lowerWord)) None
+            else Some(lowerWord)
+        }
+        removeAccents(result.mkString(" ").replaceAll("d'",""))
+    }
+
+
+
 
     def chercherAdresse(mot: String): String = {
         if (mot.isEmpty()) return "Adresse non trouvée"
@@ -40,11 +58,11 @@ object BDDImpl extends BaseDeDonnees{
                         && !banwords.contains(mot.toLowerCase())){
                     return fields(1)
                 }  
-            }           
-        }
+            }       
+        }    
         for ((first, second) <- xmllist) {
-            first.toLowerCase match {
-                case f if (f.replaceAll("d'", "") == mot.toLowerCase()) =>;return second
+            first match {
+                case f if (removeLiaisonAccentsWords(f) == removeLiaisonAccentsWords(mot)) =>return second
                 case _ => // Ne rien faire si le mot n'est pas trouvé
             }
         }
@@ -63,8 +81,8 @@ object BDDImpl extends BaseDeDonnees{
             }
         }
         for ((first, second) <- xmllist) {
-            first.toLowerCase match {
-                case f if (f.replaceAll("d'", "") == mot.toLowerCase()) =>;return f
+            first match {
+                case f if (removeLiaisonAccentsWords(f) == removeLiaisonAccentsWords(mot)) =>return f
                 case _ => // Ne rien faire si le mot n'est pas trouvé
             }
         }
