@@ -8,6 +8,12 @@ trait MachineDialogue {
     */
   def ask(s: String): List[String]
 
+  /**
+    * renvoie la langue actuelle
+    * @return langue actuelle
+    */
+  def getLangueActuelle (): Int 
+
   // Pour la partie test par le client
   /** réinitialisation de l'avatar */
   def reinit(): Unit

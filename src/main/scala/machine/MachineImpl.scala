@@ -48,7 +48,7 @@ object MachineImpl extends MachineDialogue {
     * @return soit la réponse du robot après avoir changé la langue, 
     *         soit "Cas par défaut" lorsque le message n'est pas une des questions
     */
-  def analyseMsgRobot(msgRobot: List[String]): (List[String]) = {
+  private def analyseMsgRobot(msgRobot: List[String]): (List[String]) = {
     msgRobot.last match {
       case "Parlez-vous français?" =>
         LangueImpl.setLangueActuelle("Français"); 
@@ -67,6 +67,15 @@ object MachineImpl extends MachineDialogue {
         msgRobot
       case _                 => "Cas par défaut" :: Nil
     }
+  }
+
+  /**
+    * Retourne la langue actuelle aux fichiers qui n'y ont pas accès
+    *
+    * @return la langue actuelle
+    */
+  def getLangueActuelle (): Int ={
+    LangueImpl.getLangueActuelle()
   }
 
   // Pour la partie test par le client
