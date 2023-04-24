@@ -76,9 +76,6 @@ object MachineImpl extends MachineDialogue {
     changementEnCours = false //réinitialise la changement de langue au cas où il y en avait un en cours
   }
   def test(l: List[String]): List[String] = {
-    l match {
-      case Nil          => Nil
-      case head :: next => ask(head) ++ test(next)
-    }
+    l.flatMap(ask(_))
   }
 }
