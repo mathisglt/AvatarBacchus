@@ -52,4 +52,10 @@ trait BaseDeDonnees {
     *  Recupère la variable dictionnairePRNInternationale
     */
   def getDicoPRN(): List[List[String]]
+  
+  /** Récupère le fichier xml et récupère les noms trouvés dans la balise name , et les lieux associés dans la balise name de street
+    *@param un lieu(String) à chercher dans une base de donnée (bdd sous forme de List de couple String (lieu,adrese))
+    * @return la liste de couple (lieu, adresse) de la base de donnees de Rennes correspondant au lieu pris en paramètre
+    */
+    def chercherCouplesXML(lieu : String, bdd:List[(String,String)]): List[(String,String)]
 }
