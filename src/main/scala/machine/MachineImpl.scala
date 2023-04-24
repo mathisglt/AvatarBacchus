@@ -21,7 +21,7 @@ object MachineImpl extends MachineDialogue {
     } else {
       //si un changement de langue est en cours on regarde si l'utilisateur à confirmé la langue
 
-      val confirmation = ConstructionImpl.construireConfirmation(requete,LangueImpl.getLangueActuelle()) 
+      val confirmation = ConstructionImpl.construireConfirmation(requete.replaceAll(" ",""),LangueImpl.getLangueActuelle()) 
       //on construit la phrase en fonction de la confirmation ou non
 
       confirmation match {
