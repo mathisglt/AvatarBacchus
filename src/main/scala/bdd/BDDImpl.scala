@@ -39,7 +39,15 @@ object BDDImpl extends BaseDeDonnees{
         removeAccents(result.mkString(" ").replaceAll("d'",""))
     }
 
+    def chercherCouplesXML(lieu : String, bdd: List[(String,String)]): List[(String, String)] ={
+        xmllist match{
+            case Nil => Nil
+            case head :: next => head match {
+               case (first,second) if (removeLiaisonAccentsWords(first).contains(removeLiaisonAccentsWords(lieu)))=> (first,second) :: chercherCouplesXML(lieu,next)
+            }
 
+        }
+    }
 
 
     def chercherAdresse(mot: String): String = {
