@@ -5,6 +5,7 @@ import event._
 import java.awt.{Color, Font}
 import machine.MachineDialogue
 import machine.MachineImpl
+import VoiceManagement.Voice
 
 /**
   * Création du bouton pour envoyer un message
@@ -27,6 +28,10 @@ class SendButton(conv: BoxPanel,scrollBar: ScrollBar, from: InField) extends But
   case ButtonClicked(_) | KeyPressed(_, Key.Enter, _, _) if(from.text != "")=> {conv.contents += new UserPanel(from.text); // ajout à la conversation d'un message de l'utilisateur avec le texte qu'il a tapé
                                                                                 for (reponse <- MachineImpl.ask(from.text)){
                                                                                   conv.contents += new RobotPanel(reponse); // ajout à la conversation de la/les reponse(s) du robot
+                                                                                  if(MachineImpl.getLangueActuelle()!=2){ // on vérifie que la langue n'est pas espagnol car la voix n'existe pas
+                                                                                    Voice.voice(MachineImpl.getLangueActuelle()) // on configure la voix sur la langue actuelle
+                                                                                    Voice.say(reponse) // on fait lire la réponse
+                                                                                  }
                                                                                 }
                                                                                 from.text = ""; // efface la zone de texte
                                                                                 conv.peer.updateUI; // actualise la fenêtre
