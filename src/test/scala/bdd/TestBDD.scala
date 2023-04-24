@@ -149,7 +149,7 @@ class BDDTest {
    }
    @Test
    def xml1erelement: Unit = {
-      assertEquals(("Direction habitat social","1 Place de la Communauté"),BDDImpl.createListFromXML().head)
+      assertEquals(("Direction habitat social","1, Place de la Communauté"),BDDImpl.createListFromXML().head)
    }
    @Test
    def xmldernierelement: Unit = {
@@ -169,24 +169,28 @@ class BDDTest {
 
    @Test
    def newchercherlieu3: Unit = {
-      assertEquals("clair obscur",BDDImpl.chercherLieu("clair obscur"))
+      assertEquals("Clair Obscur",BDDImpl.chercherLieu("Clair Obscur"))
    }
 
    @Test
    def newchercheradresse1xml: Unit = {
-      assertEquals("48 AVENUE SERGENT MAGINOT",BDDImpl.chercherAdresse("40mcube"))
+      assertEquals("48, AVENUE SERGENT MAGINOT",BDDImpl.chercherAdresse("40mcube"))
    }
 
    @Test
    def newchercheradresse2xml: Unit = {
-      assertEquals("5 RUE DE LORRAINE,RUE DE LORRAINE",BDDImpl.chercherAdresse("clair obscur"))
+      assertEquals("5, RUE DE LORRAINE,RUE DE LORRAINE",BDDImpl.chercherAdresse("clair obscur"))
    }
    @Test
    def newchercheradresse3xml: Unit = {
-      assertEquals("103 RUE DE LORIENT,RUE DE LORIENT",BDDImpl.chercherAdresse("Ecole maternelle Moulin du Comte"))
+      assertEquals("103, RUE DE LORIENT,RUE DE LORIENT",BDDImpl.chercherAdresse("Ecole maternelle Moulin du Comte"))
    }
    @Test
    def newchercheradresse4xml: Unit = {
-      assertEquals("7 QUAI CHATEAUBRIAND,QUAI CHATEAUBRIAND",BDDImpl.chercherAdresse("consulat honoraire espagne"))
+      assertEquals("7, QUAI CHATEAUBRIAND,QUAI CHATEAUBRIAND",BDDImpl.chercherAdresse("consulat honoraire espagne"))
+   }
+   @Test
+   def newchercheradresse5xmlaccents: Unit = {
+      assertEquals("10, Boulevard Albert 1er",BDDImpl.chercherAdresse("Piscine de Bréquigny"))
    }
 }
