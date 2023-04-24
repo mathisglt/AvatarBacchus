@@ -49,23 +49,22 @@ object MachineImpl extends MachineDialogue {
     *         soit "Cas par défaut" lorsque le message n'est pas une des questions
     */
   def analyseMsgRobot(msgRobot: List[String]): (List[String]) = {
-    var reponse = msgRobot
     msgRobot.last match {
       case "Parlez-vous français?" =>
         LangueImpl.setLangueActuelle("Français"); 
-        reponse
+        msgRobot
       case "Do you speak english?" =>
         LangueImpl.setLangueActuelle("Anglais"); 
-        reponse
+        msgRobot
       case "Hablas español?" =>
         LangueImpl.setLangueActuelle("Espagnol"); 
-        reponse
+        msgRobot
       case "Sprechen Sie Deutsch?" =>
         LangueImpl.setLangueActuelle("Allemand"); 
-        reponse
+        msgRobot
       case "Parli italiano?" => 
         LangueImpl.setLangueActuelle("Italien"); 
-        reponse
+        msgRobot
       case _                 => "Cas par défaut" :: Nil
     }
   }
