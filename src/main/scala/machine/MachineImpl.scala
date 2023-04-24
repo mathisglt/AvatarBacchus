@@ -27,7 +27,7 @@ object MachineImpl extends MachineDialogue {
       confirmation match {
         //s'il n'y a pas de confirmation, on passe à la langue suivante et on demande à l'utilisateur si cela lui convient
         case "Pas de confirmation" =>
-          if (analyseMsgRobot(msgRobot).head == "Cas par défaut") {
+          if (analyseMsgRobot(msgRobot) == "Cas par défaut"::Nil) {
             LangueImpl.langueSuivante(); 
             LangueImpl.getLangueQuestion() :: Nil
           } else {
