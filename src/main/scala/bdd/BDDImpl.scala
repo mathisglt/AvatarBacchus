@@ -24,7 +24,11 @@ object BDDImpl extends BaseDeDonnees{
     var dictionnairePolitesseInternationale   : List[List[String]] = List(List(),List(),List(),List(),List())
     val xml = XML.loadFile("partie2/vAr.xml")
     val xmllist = createListFromXML()
-    def removeLiaisonWords(str: String): String = {
+    def removeAccents(str: String): String = {
+        val normalized = Normalizer.normalize(str, Normalizer.Form.NFD)
+        normalized.replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
+    }
+    def removeLiaisonAccentsWords(str: String): String = {
         val liaisonWords = List("de", "des", "du", "le", "la", "les", "un", "une", "et")
         val words = str.split("\\s+")
         val result = words.flatMap { word =>
@@ -32,8 +36,9 @@ object BDDImpl extends BaseDeDonnees{
             if (liaisonWords.contains(lowerWord)) None
             else Some(lowerWord)
         }
-        result.mkString(" ").replaceAll("d'","")
+        removeAccents(result.mkString(" ").replaceAll("d'",""))
     }
+
 
 
 
@@ -57,7 +62,7 @@ object BDDImpl extends BaseDeDonnees{
         }    
         for ((first, second) <- xmllist) {
             first match {
-                case f if (removeLiaisonWords(f) == removeLiaisonWords(mot)) =>return second
+                case f if (removeLiaisonAccentsWords(f) == removeLiaisonAccentsWords(mot)) =>return second
                 case _ => // Ne rien faire si le mot n'est pas trouvé
             }
         }
@@ -77,7 +82,7 @@ object BDDImpl extends BaseDeDonnees{
         }
         for ((first, second) <- xmllist) {
             first match {
-                case f if (removeLiaisonWords(f) == removeLiaisonWords(mot)) =>return f
+                case f if (removeLiaisonAccentsWords(f) == removeLiaisonAccentsWords(mot)) =>return f
                 case _ => // Ne rien faire si le mot n'est pas trouvé
             }
         }
