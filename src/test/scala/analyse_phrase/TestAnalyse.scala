@@ -119,6 +119,30 @@ class TestAnalyse {
     )
   }
 
+  @Test
+  def test_analyser_14: Unit = {
+    assertEquals(
+      ("Golf de Rennes","Lieu-dit le Temple du Cerisier"),
+      AnalyseImpl.analyser("je cherche le golf de rennes")
+    )
+  }
+
+  @Test
+  def test_analyser_15: Unit = {
+    assertEquals(
+      ("Golf de Rennes","Lieu-dit le Temple du Cerisier"),
+      AnalyseImpl.analyser("je cherche le gol de rennes")
+    )
+  }
+
+  @Test
+  def test_analyser_16: Unit = {
+    assertEquals(
+      ("Golf de Rennes","Lieu-dit le Temple du Cerisier"),
+      AnalyseImpl.analyser("je cherche le golt de rennes")
+    )
+  }
+
   // tests unitaires de decouper
 
   @Test
