@@ -190,14 +190,32 @@ object BDDImpl extends BaseDeDonnees {
     }
   }
 
-  def createDicoSalutations(
-      langueActuelleStr: String,
-      langueActuelle: Int
-  ): List[String] = {
-    val lignesInter =
-      Source.fromFile("partie2/international.txt").getLines.toList
+  /**
+    * renvoie la liste de toutes les formes de salutations dans la langue demandée
+    *
+    * @param langueActuelleStr la langue actuelle sous forme de String
+    * @param langueActuelle la langue actuelle sous forme de Int
+    * @return la liste de tous les "bonjour" dans cette langue
+    */
+  def createDicoSalutations(langueActuelleStr: String, langueActuelle: Int): List[String] = {
+    val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
     val listeSalutations = List[String](lignesInter(7 + langueActuelle))
     val listeSansLangue = listeSalutations(0).split(": ")
+    val listeFinale = listeSansLangue(1).split(",").toList
+    listeFinale
+  }
+
+  /**
+    * renvoie la liste de toutes les formes de recherches dans la langue demandée
+    *
+    * @param langueActuelleStr la langue actuelle sous forme de String
+    * @param langueActuelle la langue actuelle sous forme de Int
+    * @return la liste de toutes les "recherche" dans cette langue
+    */
+  def createDicoRecherche(langueActuelleStr: String, langueActuelle: Int): List[String] = {
+    val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
+    val listeRecherche= List[String](lignesInter(14 + langueActuelle))
+    val listeSansLangue = listeRecherche(0).split(": ")
     val listeFinale = listeSansLangue(1).split(",").toList
     listeFinale
   }

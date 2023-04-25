@@ -117,6 +117,37 @@ class BDDTest {
    def testlanguedumotRecherche5: Unit = {
       assertEquals("italiano",BDDImpl.langueDuMot("cercando"))
    }
+
+   @Test 
+   def createDicoSalutations1: Unit = {
+      assertEquals(BDDImpl.createDicoSalutations("Français",0),List("bonjour","salut","bonsoir"))
+   }
+
+   @Test 
+   def createDicoSalutations2: Unit = {
+      assertEquals(BDDImpl.createDicoSalutations("Anglais",1),List("hi","hello","morning","evening","afternoon","hey"))
+   }
+
+   @Test 
+   def createDicoSalutations3: Unit = {
+      assertEquals(BDDImpl.createDicoSalutations("Espagnol",2),List("hola","buenos","dias"))
+   }
+
+   @Test 
+   def createDicoRecherche1: Unit = {
+      assertEquals(BDDImpl.createDicoRecherche("Français",0),List("recherche","cherche","ou","est","donc","trouve","trouver"))
+   }
+
+   @Test 
+   def createDicoRecherche2: Unit = {
+      assertEquals(BDDImpl.createDicoRecherche("Anglais",1),List("seek","seeking","search","searching","look","looking","where","find"))
+   }
+
+   @Test 
+   def createDicoRecherche3: Unit = {
+      assertEquals(BDDImpl.createDicoRecherche("Espagnol",2),List("donde","esta","busco","buscando"))
+   }
+
    @Test
    def createDicoExpr1: Unit = {
       assertEquals(List(List("oui", "non", "L'adresse de XXX est", "Je ne comprends pas votre demande", "Parlez-vous français?", "D'accord, quelle est votre demande?", "J'ai XXX réponses possibles", "Quel est votre choix?", "restaurant, creperie, pizzeria"), List("yes", "no", "The address of XXX is", "I do not understand", "Do you speak english?", "OK, what is your query?", "I found XXX answers", "What is your choice?", "restaurant, creperie, pizzeria"), List("si", "no", "La dirección de XXX es", "No comprendo", "Hablas español?", "Está bien, cuál es tu petición?", "Tengo XXX opciones", "Cuál es su elección?", "restaurante, creperie, pizzeria"), List("ja", "nein", "Die adresse von XXX ist", "Ich verstehe nicht", "Sprechen Sie Deutsch?", "Okay, was ist Ihr Wunsch?", "Ich habe XXX Antworten", "Was ist Ihre Wahl?", "restaurant, creperie, pizzeria"), List("si", "no", "Indirizzo di XXX è", "No capisco", "Parli italiano?", "Va bene, qual è la tua richiesta?", "Ho XXX risposte", "Qual è la vostra scelta?", "ristorante, creperie, pizzeria")),BDDImpl.getDicoExpr())

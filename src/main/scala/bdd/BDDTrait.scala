@@ -47,6 +47,25 @@ trait BaseDeDonnees {
   /**
     * Recupère la variable dictionnaireExpressionsInternationale
     */
+
+  /**
+    * renvoie la liste de toutes les formes de salutations dans la langue demandée
+    *
+    * @param langueActuelleStr la langue actuelle sous forme de String
+    * @param langueActuelle la langue actuelle sous forme de Int
+    * @return la liste de tous les "bonjour" dans cette langue
+    */
+  def createDicoSalutations(langueActuelleStr: String, langueActuelle: Int): List[String] 
+
+  /**
+    * renvoie la liste de toutes les formes de recherches dans la langue demandée
+    *
+    * @param langueActuelleStr la langue actuelle sous forme de String
+    * @param langueActuelle la langue actuelle sous forme de Int
+    * @return la liste de toutes les "recherche" dans cette langue
+    */
+  def createDicoRecherche(langueActuelleStr: String, langueActuelle: Int): List[String]
+
   def getDicoExpr(): List[List[String]]
   /**
     *  Recupère la variable dictionnairePRNInternationale
