@@ -251,6 +251,11 @@ object BDDImpl extends BaseDeDonnees {
     }.toList
   }
 
+    /**
+      * cree la liste de tous les lieux de la bdd uniquement s'ils ont une adresse
+      *
+      * @return la liste des lieux du doc vAr.xml
+      */
     def createListLieuFromXML(): List[String] = {
         val organizations = xml \\ "organization"
         organizations.flatMap { organization => 
