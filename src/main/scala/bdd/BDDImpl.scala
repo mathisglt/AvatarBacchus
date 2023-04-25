@@ -235,18 +235,17 @@ object BDDImpl extends BaseDeDonnees {
 
   /** Récupère le fichier xml et récupère les noms trouvés dans la balise name , et les lieux associés dans la balise name de street
     *
-    * @return la liste de couple (lieu, adresse) de la base de donnees de Rennes (2059 couples)
+    * @return la liste de couple (lieu, adresse) de la base de donnees de Rennes (1629 couples)
     */
   def createListFromXML(): List[(String, String)] = {
     val organizations = xml \\ "organization"
     organizations.flatMap { organization =>
-      val name =
-        (organization \\ "name").headOption.map(_.text.trim).getOrElse("").replace("’","'")
+      val name = (organization \\ "name").headOption.map(_.text.trim).getOrElse("").replace("’","'")
       val streetName = (organization \\ "street" \\ "name").text.trim.replace("’","'")
       val streetNumber = (organization \\ "street" \\ "number").text.trim
-      val fullStreet =
-        if (streetNumber.nonEmpty) s"$streetNumber, $streetName" else streetName
-      if (name.nonEmpty && streetName.nonEmpty) Some(name -> fullStreet)
+      val cityName = (organization \\ "city").text.trim // pour ne prendre que les adresses de Rennes
+      val fullStreet = if (streetNumber.nonEmpty) s"$streetNumber, $streetName" else streetName
+      if (name.nonEmpty && streetName.nonEmpty && cityName.equals("Rennes")) Some(name -> fullStreet)
       else None
     }.toList
   }
@@ -262,7 +261,8 @@ object BDDImpl extends BaseDeDonnees {
             val name = (organization \\ "name").headOption.map(_.text.trim).getOrElse("").replace("’","'")
             val streetName = (organization \\ "street" \\ "name").text.trim
             val streetNumber = (organization \\ "street" \\ "number").text.trim
-            if (name.nonEmpty && streetName.nonEmpty) Some(name) else None // on ne prend le lieu que s'il a une adresse
+            val cityName = (organization \\ "city").text.trim
+            if (name.nonEmpty && streetName.nonEmpty && cityName.equals("Rennes")) Some(name) else None // on ne prend le lieu que s'il a une adresse et dans Rennes
         }.toList
     }   
 
