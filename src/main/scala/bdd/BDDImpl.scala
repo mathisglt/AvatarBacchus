@@ -241,8 +241,8 @@ object BDDImpl extends BaseDeDonnees {
     val organizations = xml \\ "organization"
     organizations.flatMap { organization =>
       val name =
-        (organization \\ "name").headOption.map(_.text.trim).getOrElse("")
-      val streetName = (organization \\ "street" \\ "name").text.trim
+        (organization \\ "name").headOption.map(_.text.trim).getOrElse("").replace("’","'")
+      val streetName = (organization \\ "street" \\ "name").text.trim.replace("’","'")
       val streetNumber = (organization \\ "street" \\ "number").text.trim
       val fullStreet =
         if (streetNumber.nonEmpty) s"$streetNumber, $streetName" else streetName
