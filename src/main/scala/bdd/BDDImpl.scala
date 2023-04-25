@@ -29,10 +29,13 @@ object BDDImpl extends BaseDeDonnees {
     List(List(), List(), List(), List(), List())
   val xml = XML.loadFile("partie2/vAr.xml")
   val xmllist = createListFromXML()
+  val xmlListLieu = createListLieuFromXML()
+
   def removeAccents(str: String): String = {
     val normalized = Normalizer.normalize(str, Normalizer.Form.NFD)
     normalized.replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
   }
+
   def removeLiaisonAccentsWords(str: String): String = {
     val liaisonWords =
       List("de", "des", "du", "le", "la", "les", "un", "une", "et")
@@ -247,6 +250,16 @@ object BDDImpl extends BaseDeDonnees {
       else None
     }.toList
   }
+
+    def createListLieuFromXML(): List[String] = {
+        val organizations = xml \\ "organization"
+        organizations.flatMap { organization => 
+            val name = (organization \\ "name").headOption.map(_.text.trim).getOrElse("").replace("’","'")
+            val streetName = (organization \\ "street" \\ "name").text.trim
+            val streetNumber = (organization \\ "street" \\ "number").text.trim
+            if (name.nonEmpty && streetName.nonEmpty) Some(name) else None // on ne prend le lieu que s'il a une adresse
+        }.toList
+    }   
 
   def chercherCouplesXML(lieu: String, bdd:List[(String, String)]): List[(String, String)] = {
     bdd match {
