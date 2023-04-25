@@ -18,12 +18,24 @@ object AnalyseImpl extends AnalyseTrait {
   val listeAvecLiaison = liste_lieux.map(decouper(_))
 
   /** permet de retirer les mots de liaisons de phrase sous formes de liste de string
-    *  @param phrase sous forme de liste de string
+    *  @param requete sous forme de liste de string
     *  @return la phrase sous forme de liste de string sans les mots de liaisons
     */
-  def filtreLiaison(listeLieu: List[String]): List[String] = {
-    val liaisons = List("de", "La", "l", "d")
-    listeLieu.filter(listeLieu => !liaisons.contains(listeLieu))
+  def filtreLiaison(requete: List[String]): List[String] = {
+    val liaisons = List("de", "des", "du", "le", "la", "les", "un", "une", "et", "l", "d")
+    requete.filter(mot => !liaisons.contains(mot.toLowerCase()))
+  }
+
+  /**
+    * enleve de la requete du user tous les mots de Recherche ou de Politesse (on enleve "Rennes" aussi)
+    *
+    * @param requete la requete du user (String)
+    * @return la requete sans les mots de Recherche ou de Politesse
+    */
+  def filtrePolitesseRecherche(requete: String): String = {
+    val dicoRecherche = BDDImpl.createDicoRecherche("français",0)
+    val dicoPolitesse = BDDImpl.createDicoSalutations("français",0)
+    assembler(decouper(requete).filter(mot => !dicoPolitesse.contains(mot.toLowerCase()) && !dicoRecherche.contains(mot.toLowerCase()) && !mot.toLowerCase().equals("rennes")))
   }
 
   def analyser(phrase: String): (String, String) = {
@@ -52,12 +64,46 @@ object AnalyseImpl extends AnalyseTrait {
     }
   }
 
-  /** découpe un string en plusieurs string éléments d'une liste de string 
-    *  @param phrase qui est le string à découper
-    *  @return une liste de string représentant la phrase
+  /**
+    * on cherche tous les lieux que cherche le user dans sa requete en regardant chaque mot un à un
+    * attention : les filtres anti parasites sont déjà appliqués
+    *
+    * @param requete la requete du user en List[String]
+    * @return la liste des lieux
+    */
+  def analyserList(requete: List[String]): List[String] = {
+    requete match {
+      case Nil => Nil
+      case head :: next => quiContient(head, BDDImpl.xmlListLieu) ++ analyserList(next)
+    }
+  }
+
+  /** 
+    * cherche tous les lieux de la bdd qui contiennent le mot passé en param
+    * 
+    * @param mot le mot que l'on cherche dans la base de données
+    * @param list, la liste des lieux de vAr.xml (à Rennes et ayant une adresse)
+    * @return une liste de string représentant la liste des lieux contenant mot
+    */
+  def quiContient(mot: String, list: List[String]): List[String] = {
+    list match {
+      case Nil => Nil
+      case head :: next => 
+        val head_to_list = decouper(head.toLowerCase()) // on cherchera si le mot entier est un mot dans une adresse
+        if (head_to_list.contains(mot.toLowerCase())) head :: quiContient(mot, next)
+        else quiContient(mot, next)
+    }
+  }
+
+  /**
+    * découpe un string en plusieurs string éléments d'une liste de string 
+    *
+    * @param phrase qui est le string à découper
+    * @return une liste de string représentant la phrase
     */
   def decouper(phrase: String): List[String] = phrase.split("[ .!?,;']+").toList
 
+  // XXX fonction non utilisée :
   def separatewords(mots: List[String]): List[String] = {
     mots match {
       case head :: next => head.split(" ").toList ::: separatewords(next)
@@ -65,7 +111,9 @@ object AnalyseImpl extends AnalyseTrait {
     }
   }
 
-  /** assemble une liste de mot (string) pour former une phrase sous forme de string avec un espace entre chaque mot
+  /** 
+    *  assemble une liste de mot (string) pour former une phrase sous forme de string avec un espace entre chaque mot
+    * 
     *  @param list une list de mot
     *  @return un string qui sera la phrase décrit par les éléments de départ
     */

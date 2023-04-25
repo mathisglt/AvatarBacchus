@@ -2,6 +2,7 @@ package analyse_phrase
 import org.junit.Test
 import org.junit.Assert._
 import langue.LangueImpl
+import bdd.BDDImpl
 
 class TestAnalyse {
 
@@ -522,4 +523,33 @@ class TestAnalyse {
       AnalyseImpl.detecLangue("aucun mot ne doit être détecté")
     )
   }
+
+  // tests quiContient
+
+  @Test
+  def test_quiContient_01 {
+    assertEquals(
+      List("Piscine Bréquigny", "Piscine Gayeulles", "Piscine Saint-Georges", "Piscine Villejean"),
+      AnalyseImpl.quiContient("piscine", BDDImpl.xmlListLieu)
+    )
+  }
+
+  // tests filtrePolitesseRecherche
+
+  @Test
+  def test_filtrePoliRech_01 {
+    assertEquals(
+      "je la mairie de",
+      AnalyseImpl.filtrePolitesseRecherche("je cherche la mairie de rennes")
+    )
+  }
+
+  @Test
+  def test_filtrePoliRech_02 {
+    assertEquals(
+      "je la mairie de",
+      AnalyseImpl.filtrePolitesseRecherche("je CHERCHE la mairie de ReNnEs")
+    )
+  }
+
 }
