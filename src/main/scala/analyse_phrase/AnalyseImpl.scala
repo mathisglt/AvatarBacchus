@@ -22,28 +22,6 @@ object AnalyseImpl extends AnalyseTrait {
   */
   private val tmp = BDDImpl.xmlListLieu.map(l => AnalyseImpl.decouper(BDDImpl.removeAccents(l.toLowerCase()))).flatten.distinct
   val liste_mots_bdd_xml = tmp.map(mot => mot.split("-").toList).flatten.distinct
-  
-
-  /** permet de retirer les mots de liaisons de phrase sous formes de liste de string
-    *  @param requete sous forme de liste de string
-    *  @return la phrase sous forme de liste de string sans les mots de liaisons
-    */
-  def filtreLiaison(requete: List[String]): List[String] = {
-    val liaisons = List("de", "des", "du", "d", "le", "la", "les", "l", "un", "une", "et", "je", "for")
-    requete.filter(mot => !liaisons.contains(mot.toLowerCase()))
-  }
-
-  /**
-    * enleve de la requete du user tous les mots de Recherche ou de Politesse (on enleve "Rennes" aussi)
-    *
-    * @param requete la requete du user (String)
-    * @return la requete sans les mots de Recherche ou de Politesse
-    */
-  def filtrePolitesseRecherche(requete: String): String = {
-    val dicoUniversel = BDDImpl.getDicoPRN().flatten
-    val requete_corrigee = FautesImpl.correction(decouper(requete),dicoUniversel)
-    assembler(requete_corrigee.filter(mot => !dicoUniversel.contains(mot.toLowerCase()) && !mot.toLowerCase().equals("rennes")))
-  }
 
   def analyser(phrase: String): (String, String) = {
     // on enleve les accents :
@@ -94,6 +72,27 @@ object AnalyseImpl extends AnalyseTrait {
         (lieu_le_plus_courant,BDDImpl.chercherAdresse(lieu_le_plus_courant))
     }
   }
+
+  /** permet de retirer les mots de liaisons de phrase sous formes de liste de string
+    *  @param requete sous forme de liste de string
+    *  @return la phrase sous forme de liste de string sans les mots de liaisons
+    */
+  def filtreLiaison(requete: List[String]): List[String] = {
+    val liaisons = List("de", "des", "du", "d", "le", "la", "les", "l", "un", "une", "et", "je", "for")
+    requete.filter(mot => !liaisons.contains(mot.toLowerCase()))
+  }
+
+  /**
+    * enleve de la requete du user tous les mots de Recherche ou de Politesse (on enleve "Rennes" aussi)
+    *
+    * @param requete la requete du user (String)
+    * @return la requete sans les mots de Recherche ou de Politesse
+    */
+  def filtrePolitesseRecherche(requete: String): String = {
+    val dicoUniversel = BDDImpl.getDicoPRN().flatten
+    val requete_corrigee = FautesImpl.correction(decouper(requete),dicoUniversel)
+    assembler(requete_corrigee.filter(mot => !dicoUniversel.contains(mot.toLowerCase()) && !mot.toLowerCase().equals("rennes")))
+  }
   
   /**
     * on cherche tous les lieux que cherche le user dans sa requete en regardant chaque mot un à un
@@ -107,19 +106,6 @@ object AnalyseImpl extends AnalyseTrait {
       case Nil => Nil
       case head :: next => quiContient(head, BDDImpl.xmlListLieu) ++ analyserList(next)
     }
-  }
-
-
-  /**
-    * Retire de la phrase le mot bonjour et ses traductions
-    *
-    * @param phrase str représentant une phrase
-    * @return la phrase modifiée
-    */
-  def removeBonjour(phrase:String): String = {
-    val motsASupprimer = List("bonjour", "hello", "hola", "hallo", "buongiorno")
-    val regex = s"\\b(${motsASupprimer.mkString("|")})\\b"
-    phrase.replaceAll(regex, "")
   }
 
   /** 
@@ -142,20 +128,12 @@ object AnalyseImpl extends AnalyseTrait {
   }
 
   /**
-    * découpe un string en plusieurs string éléments d'une liste de string 
+    * découpe un string en liste de mots
     *
     * @param phrase qui est le string à découper
-    * @return une liste de string représentant la phrase
+    * @return une liste de string représentant la phrase decoupee
     */
   def decouper(phrase: String): List[String] = phrase.split("[ .!?,;']+").toList
-
-  // XXX fonction non utilisée :
-  def separatewords(mots: List[String]): List[String] = {
-    mots match {
-      case head :: next => head.split(" ").toList ::: separatewords(next)
-      case Nil          => Nil
-    }
-  }
 
   /** 
     *  assemble une liste de mot (string) pour former une phrase sous forme de string avec un espace entre chaque mot
