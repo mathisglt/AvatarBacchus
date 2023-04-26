@@ -258,7 +258,7 @@ object BDDImpl extends BaseDeDonnees {
   def createListFromXML(): List[(String, String)] = {
     val organizations = xml \\ "organization"
     organizations.flatMap { organization =>
-      val name = (organization \\ "name").headOption.map(_.text.trim).getOrElse("").replace("’","'")
+      val name = (organization \\ "name").headOption.map(_.text.trim).getOrElse("").replace("’","'").replace("–","-")
       val streetName = (organization \\ "street" \\ "name").text.trim.replace("’","'")
       val streetNumber = (organization \\ "street" \\ "number").text.trim
       val cityName = (organization \\ "city").text.trim // pour ne prendre que les adresses de Rennes
@@ -276,7 +276,7 @@ object BDDImpl extends BaseDeDonnees {
     def createListLieuFromXML(): List[String] = {
         val organizations = xml \\ "organization"
         organizations.flatMap { organization => 
-            val name = (organization \\ "name").headOption.map(_.text.trim).getOrElse("").replace("’","'")
+            val name = (organization \\ "name").headOption.map(_.text.trim).getOrElse("").replace("’","'").replace("–","-")
             val streetName = (organization \\ "street" \\ "name").text.trim
             val streetNumber = (organization \\ "street" \\ "number").text.trim
             val cityName = (organization \\ "city").text.trim
