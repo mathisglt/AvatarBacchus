@@ -251,6 +251,9 @@ object BDDImpl extends BaseDeDonnees {
     createDicoPRN; dictionnairePRNInternationale
   }
 
+  def recuplieuxBases() : List[String] ={
+    lignesBDD.flatMap(_.split(";").head.split("\\s+")).toList
+  }
   /** Récupère le fichier xml et récupère les noms trouvés dans la balise name , et les lieux associés dans la balise name de street
     *
     * @return la liste de couple (lieu, adresse) de la base de donnees de Rennes (1629 couples)

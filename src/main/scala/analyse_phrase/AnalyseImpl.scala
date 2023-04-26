@@ -48,7 +48,7 @@ object AnalyseImpl extends AnalyseTrait {
     val mots_a_garder = decouper(sans_rech_poli).filter(mot => liste_mots_bdd_xml.contains(mot.toLowerCase()))
     print("mots à garder : " + mots_a_garder + " ; ")
     // on corrige ce qu'il faut corriger : // TODO il faut cacher un peu qu'on met gare au début non ?
-    val liste_mots_corriges = FautesImpl.correction(mots_a_corriger, "gare" :: liste_mots_bdd_xml)
+    val liste_mots_corriges = FautesImpl.correction(mots_a_corriger, BDDImpl.recuplieuxBases ++ liste_mots_bdd_xml)
     // on concatene les mots corrigés et gardés séparés par des espaces :
     val requete_corrigee = assembler(mots_a_garder ++ liste_mots_corriges)
     println("requete corrigée : " + requete_corrigee)
