@@ -108,7 +108,7 @@ class TestAnalyse {
   def test_analyser_12: Unit = {
     assertEquals(
       ("Gare SNCF", "19, Place de la Gare"),
-      AnalyseImpl.analyser("où est la gre")
+      AnalyseImpl.analyser("où est la gar")
     )
   }
 
@@ -123,24 +123,24 @@ class TestAnalyse {
   @Test
   def test_analyser_14: Unit = {
     assertEquals(
-      ("Golf de Rennes","Lieu-dit le Temple du Cerisier"),
-      AnalyseImpl.analyser("je cherche le golf de rennes")
+      ("GIP bretagne environnement","6, RUE DU BIGNON,RUE DU BIGNON"),
+      AnalyseImpl.analyser("je cherche le gip bretagne environnement")
     )
   }
 
   @Test
   def test_analyser_15: Unit = {
     assertEquals(
-      ("Golf de Rennes","Lieu-dit le Temple du Cerisier"),
-      AnalyseImpl.analyser("je cherche le gol de rennes")
+      ("GIP bretagne environnement","6, RUE DU BIGNON,RUE DU BIGNON"),
+      AnalyseImpl.analyser("je cherche le ip retagne nvironnement")
     )
   }
 
   @Test
   def test_analyser_16: Unit = {
     assertEquals(
-      ("Golf de Rennes","Lieu-dit le Temple du Cerisier"),
-      AnalyseImpl.analyser("je cherche le golt de rennes")
+      ("GIP bretagne environnement","6, RUE DU BIGNON,RUE DU BIGNON"),
+      AnalyseImpl.analyser("je cherche le tip tretagne tnvironnement")
     )
   }
 
@@ -522,6 +522,24 @@ class TestAnalyse {
     )
   }
 
+  // tests analyserList
+
+  @Test
+  def test_analyserList_01 {
+    assertEquals(
+      List("Service Fret - SNCF", "Gare SNCF", "Service Fret - SNCF"),
+      AnalyseImpl.analyserList(List("fret","sncf"))
+    )
+  }
+
+  @Test
+  def test_analyserList_02 {
+    assertEquals(
+      List("Gare SNCF", "Gare SNCF", "Service Fret - SNCF"),
+      AnalyseImpl.analyserList(List("gare","sncf"))
+    )
+  }
+
   // tests quiContient
 
   @Test
@@ -529,6 +547,14 @@ class TestAnalyse {
     assertEquals(
       List("Piscine Bréquigny", "Piscine Gayeulles", "Piscine Saint-Georges", "Piscine Villejean"),
       AnalyseImpl.quiContient("piscine", BDDImpl.xmlListLieu)
+    )
+  }
+
+  @Test
+  def test_quiContient_02 {
+    assertEquals(
+      List("Gare SNCF"),
+      AnalyseImpl.quiContient("gare", BDDImpl.xmlListLieu)
     )
   }
 
