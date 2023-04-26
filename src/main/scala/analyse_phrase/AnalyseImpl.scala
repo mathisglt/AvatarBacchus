@@ -52,8 +52,6 @@ object AnalyseImpl extends AnalyseTrait {
     // on concatene les mots corrigés et gardés séparés par des espaces :
     val requete_corrigee = assembler(mots_a_garder ++ liste_mots_corriges)
     println("requete corrigée : " + requete_corrigee)
-    // Les lieux de la base XML en version clean
-    val listlieuxxml = BDDImpl.xmlListLieu.map(x=>BDDImpl.removeLiaisonAccentsWords(BDDImpl.removeAccents(x.toLowerCase())))
     // Cas où l'on demande l'adresse directement, sans aucun mot supplémentaire :
     if(BDDImpl.chercherAdresse(requete_corrigee) != "Adresse non trouvée") {
       return (BDDImpl.chercherLieu(requete_corrigee), BDDImpl.chercherAdresse(requete_corrigee))
