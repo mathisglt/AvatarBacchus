@@ -78,7 +78,7 @@ object AnalyseImpl extends AnalyseTrait {
     *  @return la phrase sous forme de liste de string sans les mots de liaisons
     */
   def filtreLiaison(requete: List[String]): List[String] = {
-    val liaisons = List("de", "des", "du", "d", "le", "la", "les", "l", "un", "une", "et", "je", "for")
+    val liaisons = List("se", "de", "des", "du", "d", "le", "la", "les", "l", "un", "une", "et", "je", "for")
     requete.filter(mot => !liaisons.contains(mot.toLowerCase()))
   }
 
