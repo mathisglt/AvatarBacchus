@@ -174,12 +174,10 @@ class TestAnalyse {
 
   @Test
   def test_assembler_1: Unit = {
-    try {
-      AnalyseImpl.assembler(Nil)
-      fail();
-    } catch {
-      case ExceptionListeVide => ()
-    }
+    assertEquals(
+      "",
+      AnalyseImpl.assembler(List())
+    )
   }
 
   @Test
