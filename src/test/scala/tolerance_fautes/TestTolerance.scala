@@ -62,7 +62,7 @@ class TestTolerance {
   }
   @Test
   def Test3_distanceDeHammingInf1(): Unit = {
-    assertFalse(FautesImpl.distanceDeHammingInf1("ouin", "oui"))
+    assertTrue(FautesImpl.distanceDeHammingInf1("ouin", "oui"))
   }
   @Test
   def Test4_distanceDeHammingInf1(): Unit = {
@@ -78,7 +78,7 @@ class TestTolerance {
   }
   @Test
   def Test2_testChaqueMot(): Unit = {
-    assertEquals(0, FautesImpl.testChaqueMot("Ou", listeTest))
+    assertEquals(-1, FautesImpl.testChaqueMot("Ou", listeTest))
   }
   @Test
   def Test3_testChaqueMot(): Unit = {

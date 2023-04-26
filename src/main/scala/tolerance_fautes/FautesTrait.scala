@@ -11,11 +11,19 @@ trait FautesTrait {
   // -une fonction qui compare deux mots avec levenstein
 
   //ici la liste de mots 'modele' en quelque sorte
-  /** applique testChaque mot sur toute une liste de mot et en renvoie la string corrigée
+  //on ne regarde pas les petits mots (<3)
+  /** applique testChaqueMot sur toute une liste de mot et en renvoie la string corrigée
     *
     * @param mots une liste de mots
     * @return la meme liste corrigée
     */
 
   def correction(mots: List[String], modeles: List[String]): List[String]
+  //meme fonction que la precedente mais on corrige les petits mots
+    /** applique testChaqueMotAvecPetitsMots sur toute une liste de mot et en renvoie la string corrigée
+    *
+    * @param mots une liste de mots
+    * @return la meme liste corrigée
+    */
+  def correctionAvecPetitsMots(mots:List[String],modeles:List[String]):List[String]
 }

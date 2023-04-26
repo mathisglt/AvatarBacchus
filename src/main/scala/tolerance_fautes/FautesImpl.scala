@@ -16,32 +16,51 @@ object FautesImpl extends FautesTrait {
     result.reverse
   }
 
+    def correctionAvecPetitsMots(mots: List[String], modeles: List[String]): List[String] = {
+    var result: List[String] = Nil
+    val modelesCleared = clearAccentToMaj(modeles)
+    val motsTestsCleared = clearAccentToMaj(mots)
+    for (incr <- 0 to motsTestsCleared.length - 1) {
+      testChaqueMotAvecPetitsMots(motsTestsCleared(incr), modelesCleared) match {
+        case -1  => result = mots(incr) :: result
+        case num => result = modeles(num) :: result
+      }
+    }
+    result.reverse
+  }
+
   /** prends un mot et une liste de modele et renvoie
     * son emplacement dans la liste modele ou -1 si il n'y figure pas
     *
     * @param motATester une String qu'on veut tester
     * @param modeles une liste des modeles
-    * @return l'emplacement du mot le plus proche dans la liste ou -1 s'il n'y en a pas
+    * @return l'emplacement du mot le plus proche dans la liste ou -1 s'il n'y en a pas (si c'est un petit mot on ne regarde plus)
     */
   def testChaqueMot(motATester: String, modeles: List[String]): Int = {
     if(motATester.length<=2){return -1}
     else {modeles.indexWhere((modele) => distanceDeHammingInf1(motATester, modele))}
   }
 
+    /** prends un mot et une liste de modele et renvoie
+    * son emplacement dans la liste modele ou -1 si il n'y figure pas
+    *
+    * @param motATester une String qu'on veut tester
+    * @param modeles une liste des modeles
+    * @return l'emplacement du mot le plus proche dans la liste ou -1 s'il n'y en a pas 
+    */
+  def testChaqueMotAvecPetitsMots(motATester: String, modeles: List[String]): Int = {
+    modeles.indexWhere((modele) => distanceDeHammingInf1(motATester, modele))
+  }
   /** regarde si la distance de Hamming entre deux strings est supérieure ou égal à 1
     * si on voit que la chaine a tester est plus petite que la chaine modele on regarde si c'est du a un decalage
     * si on voit qu'elles sont de meme taille on regarde si il n'y a bien qu'une faute max
     *
     * @param strtest une string a tester
-    * @param strmodele le modele (plus grand que le test)
+    * @param strmodele le modele
     * @return true si la string test est à 1 de distance maximum de la string modele
     */
   def distanceDeHammingInf1(strtest: String, strmodele: String): Boolean = {
-    (strmodele.length - strtest.length == 0 && test1FauteMax(
-      strtest,
-      strmodele
-    )) ||
-    (strmodele.length - strtest.length == 1 && testDecalage(strtest, strmodele))
+    (strmodele.length - strtest.length == 0 && test1FauteMax(strtest,strmodele)) || (strmodele.length - strtest.length == 1 && testDecalage(strtest, strmodele))||(strtest.length-strmodele.length==1&&testDecalage(strmodele,strtest))
   }
 
   /** prends deux string de meme taille et renvoie si elles sont décalées de 1 (en gros si il y a une lettre erronée)
