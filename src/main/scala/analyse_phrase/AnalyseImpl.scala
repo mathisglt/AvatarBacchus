@@ -6,6 +6,7 @@ import bdd.BDDImpl
 import tolerance_fautes.FautesImpl
 import langue.LangueImpl
 
+// TODO suppr
 case object ExceptionListeVide extends Exception
 
 object AnalyseImpl extends AnalyseTrait {
@@ -47,7 +48,7 @@ object AnalyseImpl extends AnalyseTrait {
     // on stocke les autres mots sans les corriger :
     val mots_a_garder = decouper(sans_rech_poli).filter(mot => liste_mots_bdd_xml.contains(mot.toLowerCase()))
     print("mots à garder : " + mots_a_garder + " ; ")
-    // on corrige ce qu'il faut corriger : // TODO il faut cacher un peu qu'on met gare au début non ?
+    // on corrige ce qu'il faut corriger : // TODO récup les mots pas les lieux entiers
     val liste_mots_corriges = FautesImpl.correction(mots_a_corriger, BDDImpl.recuplieuxBases ++ liste_mots_bdd_xml)
     // on concatene les mots corrigés et gardés séparés par des espaces :
     val requete_corrigee = assembler(mots_a_garder ++ liste_mots_corriges)
@@ -71,13 +72,17 @@ object AnalyseImpl extends AnalyseTrait {
     }
   }
 
-  /** permet de retirer les mots de liaisons de phrase sous formes de liste de string
-    *  @param requete sous forme de liste de string
-    *  @return la phrase sous forme de liste de string sans les mots de liaisons
+  /** 
+    * permet de retirer les mots de liaisons de phrase sous formes de liste de string
+    * - on retire les mots ayant une longueur inf a 2
+    * - on retire d'autres mots choisis
+    * 
+    * @param requete sous forme de liste de string
+    * @return la phrase sous forme de liste de string sans les mots de liaisons
     */
   def filtreLiaison(requete: List[String]): List[String] = {
-    val liaisons = List("se", "de", "des", "du", "d", "le", "la", "les", "l", "un", "une", "et", "je", "for")
-    requete.filter(mot => !liaisons.contains(mot.toLowerCase()))
+    val liaisons = List("des", "les", "une", "for")
+    requete.filter(mot => !liaisons.contains(mot.toLowerCase())).filter(_.length > 2)
   }
 
   /**
