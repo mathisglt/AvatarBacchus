@@ -41,6 +41,7 @@ object Voice extends VoiceTrait {
 
       audioPlayer.setAudio(audio);
       audioPlayer.start();
+      wait(audio.getFrameLength())
     } catch {
       case ex: SynthesisException => System.err.println("Error saying phrase.");
     }
