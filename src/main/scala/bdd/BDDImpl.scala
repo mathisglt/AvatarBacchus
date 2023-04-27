@@ -251,6 +251,10 @@ object BDDImpl extends BaseDeDonnees {
     createDicoPRN; dictionnairePRNInternationale
   }
 
+  def recuplieuxBases() : List[String] ={
+    val dico = lignesBDD.flatMap(_.split(";").head.split("\\s+")).toList
+    dico.map(mot => removeAccents(mot.toLowerCase))
+  }
   /** Récupère le fichier xml et récupère les noms trouvés dans la balise name , et les lieux associés dans la balise name de street
     *
     * @return la liste de couple (lieu, adresse) de la base de donnees de Rennes (1629 couples)
@@ -258,8 +262,8 @@ object BDDImpl extends BaseDeDonnees {
   def createListFromXML(): List[(String, String)] = {
     val organizations = xml \\ "organization"
     organizations.flatMap { organization =>
-      val name = (organization \\ "name").headOption.map(_.text.trim).getOrElse("").replace("’","'").replace("–","-")
-      val streetName = (organization \\ "street" \\ "name").text.trim.replace("’","'")
+      val name = (organization \\ "name").headOption.map(_.text.trim).getOrElse("")
+      val streetName = (organization \\ "street" \\ "name").text.trim
       val streetNumber = (organization \\ "street" \\ "number").text.trim
       val cityName = (organization \\ "city").text.trim // pour ne prendre que les adresses de Rennes
       val fullStreet = if (streetNumber.nonEmpty) s"$streetNumber, $streetName" else streetName
@@ -276,7 +280,7 @@ object BDDImpl extends BaseDeDonnees {
     def createListLieuFromXML(): List[String] = {
         val organizations = xml \\ "organization"
         organizations.flatMap { organization => 
-            val name = (organization \\ "name").headOption.map(_.text.trim).getOrElse("").replace("’","'").replace("–","-")
+            val name = (organization \\ "name").headOption.map(_.text.trim).getOrElse("")
             val streetName = (organization \\ "street" \\ "name").text.trim
             val streetNumber = (organization \\ "street" \\ "number").text.trim
             val cityName = (organization \\ "city").text.trim
