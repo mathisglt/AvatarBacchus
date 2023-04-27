@@ -6,9 +6,6 @@ import bdd.BDDImpl
 import tolerance_fautes.FautesImpl
 import langue.LangueImpl
 
-// TODO suppr
-case object ExceptionListeVide extends Exception
-
 object AnalyseImpl extends AnalyseTrait {
 
   //Recherche Adresse
@@ -48,7 +45,7 @@ object AnalyseImpl extends AnalyseTrait {
     // on stocke les autres mots sans les corriger :
     val mots_a_garder = decouper(sans_rech_poli).filter(mot => liste_mots_bdd_xml.contains(mot.toLowerCase()))
     print("mots à garder : " + mots_a_garder + " ; ")
-    // on corrige ce qu'il faut corriger : // TODO récup les mots pas les lieux entiers
+    // on corrige ce qu'il faut corriger :
     val liste_mots_corriges = FautesImpl.correction(mots_a_corriger, BDDImpl.recuplieuxBases ++ liste_mots_bdd_xml)
     // on concatene les mots corrigés et gardés séparés par des espaces :
     val requete_corrigee = assembler(mots_a_garder ++ liste_mots_corriges)
@@ -80,10 +77,10 @@ object AnalyseImpl extends AnalyseTrait {
     * @param requete sous forme de liste de string
     * @return la phrase sous forme de liste de string sans les mots de liaisons
     */
-  def filtreLiaison(requete: List[String]): List[String] = {
-    val liaisons = List("des", "les", "une", "for")
-    requete.filter(mot => !liaisons.contains(mot.toLowerCase())).filter(_.length > 2)
-  }
+    def filtreLiaison(requete: List[String]): List[String] = {
+      val liaisons = List("se", "de", "des", "du", "d", "le", "la", "les", "l", "un", "une", "et", "je", "for")
+      requete.filter(mot => !liaisons.contains(mot.toLowerCase()))
+    }
 
   /**
     * enleve de la requete du user tous les mots de Recherche ou de Politesse (on enleve "Rennes" aussi)
