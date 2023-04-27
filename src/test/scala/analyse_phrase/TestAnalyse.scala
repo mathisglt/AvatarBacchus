@@ -11,7 +11,7 @@ class TestAnalyse {
   @Test
   def test_analyser_01: Unit = {
     assertEquals(
-      ("", ""),
+      Nil,
       AnalyseImpl.analyser("où et ?")
     )
   }
@@ -19,7 +19,7 @@ class TestAnalyse {
   @Test
   def test_analyser_02: Unit = {
     assertEquals(
-      ("Mairie de Rennes", "Place de la Mairie"),
+      List(("Mairie de Rennes", "Place de la Mairie")),
       AnalyseImpl.analyser("où est la mairie ?")
     )
   }
@@ -27,7 +27,7 @@ class TestAnalyse {
   @Test
   def test_analyser_03: Unit = {
     assertEquals(
-      ("Mairie de Rennes", "Place de la Mairie"),
+      List(("Mairie de Rennes", "Place de la Mairie")),
       AnalyseImpl.analyser("où est la Mairie de Rennes ?")
     )
   }
@@ -37,7 +37,7 @@ class TestAnalyse {
     // note : gare sncf privilégié car formé de 2 mots contre 1 mot pour mairie
     // le programme décide donc qu'il y a plus de chance que le user veuille trouver la gare
     assertEquals( 
-      ("Gare SNCF", "19, Place de la Gare"),
+      List(("Gare SNCF", "19, Place de la Gare")),
       AnalyseImpl.analyser("où sont la gare sncf et la mairie ?")
     )
   }
@@ -45,7 +45,7 @@ class TestAnalyse {
   @Test
   def test_analyser_05: Unit = {
     assertEquals(
-      ("", ""),
+      Nil,
       AnalyseImpl.analyser("où se trouve Rennes ?")
     )
   }
@@ -53,7 +53,7 @@ class TestAnalyse {
   @Test
   def test_analyser_055: Unit = {
     assertEquals(
-      ("", ""),
+      Nil,
       AnalyseImpl.analyser("où se trouve Bretagne ?")
     )
   }
@@ -61,7 +61,7 @@ class TestAnalyse {
   @Test
   def test_analyser_06: Unit = {
     assertEquals(
-      ("Théâtre National de Bretagne", "1, Rue Saint-Hélier"),
+      List(("Théâtre National de Bretagne", "1, Rue Saint-Hélier")),
       AnalyseImpl.analyser("où se trouvent le tnb et le théâtre de Bretagne ?")
     )
   }
@@ -69,7 +69,7 @@ class TestAnalyse {
   @Test
   def test_analyser_07: Unit = {
     assertEquals(
-      ("Mairie de Rennes", "Place de la Mairie"),
+      List(("Mairie de Rennes", "Place de la Mairie")),
       AnalyseImpl.analyser("où est hôtel de ville")
     )
   }
@@ -77,7 +77,7 @@ class TestAnalyse {
   @Test // ne marche pas encore
   def test_analyser_08: Unit = {
     assertEquals(
-      ("Mairie de Rennes", "Place de la Mairie"),
+      List(("Mairie de Rennes", "Place de la Mairie")),
       AnalyseImpl.analyser("où est l'hôtel de ville")
     )
   }
@@ -85,7 +85,7 @@ class TestAnalyse {
   @Test
   def test_analyser_09: Unit = {
     assertEquals(
-      ("Gare SNCF", "19, Place de la Gare"),
+      List(("Gare SNCF", "19, Place de la Gare")),
       AnalyseImpl.analyser("où se trouve la gare sncf ?")
     )
   }
@@ -93,7 +93,7 @@ class TestAnalyse {
   @Test
   def test_analyser_10: Unit = {
     assertEquals(
-      ("Mairie de Rennes", "Place de la Mairie"),
+      List(("Mairie de Rennes", "Place de la Mairie")),
       AnalyseImpl.analyser("Place de la mairie")
     )
   }
@@ -101,7 +101,7 @@ class TestAnalyse {
   @Test
   def test_analyser_11: Unit = {
     assertEquals(
-      ("Gare SNCF", "19, Place de la Gare"),
+      List(("Gare SNCF", "19, Place de la Gare")),
       AnalyseImpl.analyser("où est la grre")
     )
   }
@@ -109,7 +109,7 @@ class TestAnalyse {
   @Test
   def test_analyser_12: Unit = {
     assertEquals(
-      ("Gare SNCF", "19, Place de la Gare"),
+      List(("Gare SNCF", "19, Place de la Gare")),
       AnalyseImpl.analyser("où est la gar")
     )
   }
@@ -117,7 +117,7 @@ class TestAnalyse {
   @Test
   def test_analyser_13: Unit = {
     assertEquals(
-      ("Gare SNCF", "19, Place de la Gare"),
+      List(("Gare SNCF", "19, Place de la Gare")),
       AnalyseImpl.analyser("où est la G#Ré")
     )
   }
@@ -125,7 +125,7 @@ class TestAnalyse {
   @Test
   def test_analyser_14: Unit = {
     assertEquals(
-      ("GIP bretagne environnement","6, RUE DU BIGNON,RUE DU BIGNON"),
+      List(("GIP bretagne environnement","6, RUE DU BIGNON,RUE DU BIGNON")),
       AnalyseImpl.analyser("je cherche le gip bretagne environnement")
     )
   }
@@ -133,7 +133,7 @@ class TestAnalyse {
   @Test
   def test_analyser_15: Unit = {
     assertEquals(
-      ("GIP bretagne environnement","6, RUE DU BIGNON,RUE DU BIGNON"),
+      List(("GIP bretagne environnement","6, RUE DU BIGNON,RUE DU BIGNON")),
       AnalyseImpl.analyser("je cherche le ip retagne nvironnement")
     )
   }
@@ -141,7 +141,7 @@ class TestAnalyse {
   @Test
   def test_analyser_16: Unit = {
     assertEquals(
-      ("GIP bretagne environnement","6, RUE DU BIGNON,RUE DU BIGNON"),
+      List(("GIP bretagne environnement","6, RUE DU BIGNON,RUE DU BIGNON")),
       AnalyseImpl.analyser("je cherche le tip tretagne tnvironnement")
     )
   }

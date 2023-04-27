@@ -44,16 +44,12 @@ object ConstructionImpl extends ConstructionTrait {
     * @return la phrase representant la reponse dans la langue voulu sous la forme d'une String
     */
   def construire(requete: String): String = {
-    var phrase: String = ""
     var resultAnalyse = AnalyseImpl.analyser(requete)
     val dicoExpr = AnalyseImpl.getDicoLangue
-    //resultAnalyse match {
-    //    case Nil => ""
-    // case (lieu, adresse) => phrase += "L'adresse de " ++ lieu ++ " est : " ++ adresse ++ ". " ++ construirev1(reste)
-    //}
-    if (resultAnalyse != ("", ""))
-      phrase = dicoExpr(2).replace("XXX", resultAnalyse._1) + " : " + resultAnalyse._2
-    else phrase = dicoExpr(3)
-    phrase
+    resultAnalyse match {
+      case Nil => dicoExpr(3)
+      case head :: Nil => dicoExpr(2).replace("XXX", head._1) + " : " + head._2
+      case head :: next => ??? // TODO gérer les différents résultats
+    }
   }
 }

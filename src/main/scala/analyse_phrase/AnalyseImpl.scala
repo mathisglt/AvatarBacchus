@@ -24,7 +24,7 @@ object AnalyseImpl extends AnalyseTrait {
   private val tmp = BDDImpl.xmlListLieu.map(l => AnalyseImpl.decouper(BDDImpl.removeAccents(l.toLowerCase()))).flatten.distinct
   val liste_mots_bdd_xml = tmp.map(mot => mot.split("-").toList).flatten.distinct
 
-  def analyser(phrase: String): (String, String) = {
+  def analyser(phrase: String): List[(String, String)] = {
     // on enleve les accents :
     val sans_accents = BDDImpl.removeAccents(phrase)
     print("sans_accents : " + sans_accents + " ; ")
@@ -39,7 +39,7 @@ object AnalyseImpl extends AnalyseTrait {
     val correction = assembler(FautesImpl.correction(decouper(sans_rech_poli),List("hotel","ville","tnb")))
     for (elem <- exceptions){ 
       if (correction.contains(elem._1)){
-        return (BDDImpl.chercherLieu(elem._2), BDDImpl.chercherAdresse(elem._2))
+        return List((BDDImpl.chercherLieu(elem._2), BDDImpl.chercherAdresse(elem._2)))
       }
     }
     // on selectionne des mots a corriger qui ne sont pas dans la bdd :
@@ -55,20 +55,20 @@ object AnalyseImpl extends AnalyseTrait {
     println("requete corrigée : " + requete_corrigee)
     // Cas où l'on demande l'adresse directement, sans aucun mot supplémentaire :
     if(BDDImpl.chercherAdresse(requete_corrigee) != "Adresse non trouvée") {
-      return (BDDImpl.chercherLieu(requete_corrigee), BDDImpl.chercherAdresse(requete_corrigee))
+      return List((BDDImpl.chercherLieu(requete_corrigee), BDDImpl.chercherAdresse(requete_corrigee)))
     }
     // on recupere la liste des lieux potentiels :
     val lieux = analyserList(decouper(requete_corrigee))
     // étude de cas en fonction du nombre de lieux trouvés :
     lieux match {
-      case Nil => ("", "")
+      case Nil => Nil
       case head :: Nil =>
         if (BDDImpl.chercherAdresse(head) != "Adresse non trouvée") {
-          (head, BDDImpl.chercherAdresse(head))
-        } else ("", "")
+          List((head, BDDImpl.chercherAdresse(head)))
+        } else Nil
       case head :: next => // TODO F6 il faudra gérer les cas avec plusieurs résultats 
         val lieu_le_plus_courant = lieux.groupBy(identity).maxBy(_._2.length)._1
-        (lieu_le_plus_courant,BDDImpl.chercherAdresse(lieu_le_plus_courant))
+        List((lieu_le_plus_courant,BDDImpl.chercherAdresse(lieu_le_plus_courant)))
     }
   }
 

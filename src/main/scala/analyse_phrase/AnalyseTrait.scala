@@ -2,11 +2,14 @@ package analyse_phrase
 
 trait AnalyseTrait {
 
-  /** analyse une phrase sous forme de string en entrée, la corrige et y identifie un lieu que l'on connaît afin de nous renvoyer notre couple (lieu, adresse)
-    *  @param phrase qui est le string à analyser
-    *  @return un couple de string représentant le lieu ainsi que son adresse (lieu,adresse)
+  /** 
+    * analyse une phrase sous forme de string en entrée et y identifie des lieux que l'on connaît afin de nous renvoyer 
+    * la liste des couples (lieu, adresse)
+    * 
+    * @param phrase qui est le string à analyser
+    * @return une liste de couples de string représentant des lieus ainsi que leur adresse (lieu,adresse)
     */
-  def analyser(phrase: String): (String,String)
+  def analyser(phrase: String): List[(String,String)]
 
   /**
     * analyse la phrase du user et renvoie true s'il contient "bonjour", "bonsoir" ou "salut", puis le bonjour à répondre
