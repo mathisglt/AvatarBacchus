@@ -47,7 +47,3 @@ object Voice extends VoiceTrait {
     }
   }
 }
-object test extends App{
-  Voice.voice(0)
-  Voice.say("le sel est dans le placard")
-}
