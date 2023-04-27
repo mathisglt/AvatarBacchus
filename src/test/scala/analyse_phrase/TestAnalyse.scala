@@ -34,7 +34,9 @@ class TestAnalyse {
 
   @Test
   def test_analyser_04: Unit = {
-    assertEquals( // XXX "mairie se trouve avant gare dans la bdd"
+    // note : gare sncf privilégié car formé de 2 mots contre 1 mot pour mairie
+    // le programme décide donc qu'il y a plus de chance que le user veuille trouver la gare
+    assertEquals( 
       ("Gare SNCF", "19, Place de la Gare"),
       AnalyseImpl.analyser("où sont la gare sncf et la mairie ?")
     )
@@ -273,28 +275,28 @@ class TestAnalyse {
   // Tests de filtreLiason
 
   @Test
-  def test_filtreLiason_01 {
+  def test_filtreLiason_01:Unit = {
     assertEquals(
       List("Hôtel", "Ville"),
       AnalyseImpl.filtreLiaison(List("Hôtel", "de", "Ville"))
     )
   }
   @Test
-  def test_filtreLiason_02 {
+  def test_filtreLiason_02 :Unit ={
     assertEquals(
       List("Hôtel", "Ville"),
       AnalyseImpl.filtreLiaison(List("Hôtel", "Ville"))
     )
   }
   @Test
-  def test_filtreLiason_03 {
+  def test_filtreLiason_03 :Unit ={
     assertEquals(
       Nil,
       AnalyseImpl.filtreLiaison(Nil)
     )
   }
   @Test
-  def test_filtreLiason_04 {
+  def test_filtreLiason_04 :Unit ={
     assertEquals(
       List("gare", "Rennes"),
       AnalyseImpl.filtreLiaison(List("de", "gare", "de", "Rennes"))
@@ -315,7 +317,7 @@ class TestAnalyse {
   // tests unitaire de politeTest_OnlyBonjour
 
   @Test
-  def test_onlyBonjour_1 {
+  def test_onlyBonjour_1 :Unit ={
     assertEquals(
       (true,"bonjour"),
       AnalyseImpl.politeTest_OnlyBonjour("bonjour")
@@ -323,7 +325,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_onlyBonjour_2 {
+  def test_onlyBonjour_2 :Unit ={
     assertEquals(
       (true,"bonjour"),
       AnalyseImpl.politeTest_OnlyBonjour("bnjour")
@@ -331,7 +333,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_onlyBonjour_3 {
+  def test_onlyBonjour_3:Unit = {
     assertEquals(
       (true,"bonjour"),
       AnalyseImpl.politeTest_OnlyBonjour("salut")
@@ -339,7 +341,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_onlyBonjour_4 {
+  def test_onlyBonjour_4 :Unit ={
     assertEquals(
       (true,"bonjour"),
       AnalyseImpl.politeTest_OnlyBonjour("bonsoir")
@@ -347,7 +349,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_onlyBonjour_5 {
+  def test_onlyBonjour_5 :Unit ={
     assertEquals(
       (false,"bonjour"),
       AnalyseImpl.politeTest_OnlyBonjour("bonjour salut")
@@ -355,7 +357,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_onlyBonjour_6 {
+  def test_onlyBonjour_6 :Unit ={
     assertEquals(
       (false,"bonjour"),
       AnalyseImpl.politeTest_OnlyBonjour("")
@@ -363,7 +365,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_onlyBonjour_7 {
+  def test_onlyBonjour_7 :Unit ={
     assertEquals(
       (false,"bonjour"),
       AnalyseImpl.politeTest_OnlyBonjour("bonjourlesamis")
@@ -373,7 +375,7 @@ class TestAnalyse {
   // tests unitaire de getDicoLangue
 
   @Test
-  def test_getDicoLangue_01 {
+  def test_getDicoLangue_01 :Unit ={
     LangueImpl.setLangueActuelle("Français")
     assertEquals(
       List(
@@ -392,7 +394,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_getDicoLangue_02 {
+  def test_getDicoLangue_02 :Unit ={
     LangueImpl.setLangueActuelle("Anglais")
     assertEquals(
       List(
@@ -411,7 +413,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_getDicoLangue_03 {
+  def test_getDicoLangue_03 :Unit ={
     LangueImpl.setLangueActuelle("Espagnol")
     assertEquals(
       List(
@@ -430,7 +432,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_getDicoLangue_04 {
+  def test_getDicoLangue_04 :Unit ={
     LangueImpl.setLangueActuelle("Allemand")
     assertEquals(
       List(
@@ -449,7 +451,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_getDicoLangue_05 {
+  def test_getDicoLangue_05 :Unit ={
     LangueImpl.setLangueActuelle("Italien")
     assertEquals(
       List(
@@ -468,7 +470,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_getDicoLangue_06 {
+  def test_getDicoLangue_06 :Unit ={
     assertEquals(
       List(
         "si",
@@ -486,7 +488,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_getDicoLangue_07 {
+  def test_getDicoLangue_07:Unit = {
     assertEquals(
       List(),
       AnalyseImpl.getDicoLangue(5)
@@ -496,7 +498,7 @@ class TestAnalyse {
   //Test detecLangue
 
   @Test
-  def test_detecLangue_01 {
+  def test_detecLangue_01 :Unit ={
     LangueImpl.setLangueActuelle("Français")
     assertEquals(
       (true, 0, 0),
@@ -505,7 +507,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_detecLangue_02 {
+  def test_detecLangue_02 :Unit ={
     LangueImpl.setLangueActuelle("Français")
     assertEquals(
       (true, 1, 0),
@@ -514,7 +516,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_detecLangue_03 {
+  def test_detecLangue_03:Unit = {
     LangueImpl.setLangueActuelle("Français")
     assertEquals(
       (false, 0, 0),
@@ -543,7 +545,7 @@ class TestAnalyse {
   // tests quiContient
 
   @Test
-  def test_quiContient_01 {
+  def test_quiContient_01 :Unit ={
     assertEquals(
       List("Piscine Bréquigny", "Piscine Gayeulles", "Piscine Saint-Georges", "Piscine Villejean"),
       AnalyseImpl.quiContient("piscine", BDDImpl.xmlListLieu)
@@ -561,7 +563,7 @@ class TestAnalyse {
   // tests filtrePolitesseRecherche
 
   @Test
-  def test_filtrePoliRech_01 {
+  def test_filtrePoliRech_01 :Unit ={
     assertEquals(
       "je la mairie de",
       AnalyseImpl.filtrePolitesseRecherche("je cherche la mairie de rennes")
@@ -569,11 +571,20 @@ class TestAnalyse {
   }
 
   @Test
-  def test_filtrePoliRech_02 {
+  def test_filtrePoliRech_02 :Unit ={
     assertEquals(
       "je la mairie de",
       AnalyseImpl.filtrePolitesseRecherche("je CHERCHE la mairie de ReNnEs")
     )
+  }
+   @Test
+  def test_analyseBis :Unit ={
+    print(AnalyseImpl.analyserBis("Direction habitat social"))
+    assertEquals(
+      List(("Direction habitat social","1, Place de la Communauté")),
+      AnalyseImpl.analyserBis("Direction habitat social")
+    )
+    
   }
 
 }

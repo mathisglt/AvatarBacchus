@@ -252,7 +252,8 @@ object BDDImpl extends BaseDeDonnees {
   }
 
   def recuplieuxBases() : List[String] ={
-    lignesBDD.flatMap(_.split(";").head.split("\\s+")).toList
+    val dico = lignesBDD.flatMap(_.split(";").head.split("\\s+")).toList
+    dico.map(mot => removeAccents(mot.toLowerCase))
   }
   /** Récupère le fichier xml et récupère les noms trouvés dans la balise name , et les lieux associés dans la balise name de street
     *
@@ -287,15 +288,22 @@ object BDDImpl extends BaseDeDonnees {
         }.toList
     }   
 
-  def chercherCouplesXML(lieu: String, bdd:List[(String, String)]): List[(String, String)] = {
+   def chercherCouplesXML(lieu: String, bdd:List[(String, String)]): List[(String, String)] = {
     bdd match {
       case Nil => Nil
       case head :: next =>
         head match {
-          case (first, second)
-              if (removeLiaisonAccentsWords(first).contains(removeLiaisonAccentsWords(lieu))) =>(first, second) :: chercherCouplesXML(lieu, next)
+          case (first, second)=> if (removeLiaisonAccentsWords(first).contains(removeLiaisonAccentsWords(lieu))){(first, second) :: chercherCouplesXML(lieu, next)}else{chercherCouplesXML(lieu, next)}
         }
 
+    }
+  }
+  def lieuXML(bdd : List[(String,String)]): List[String] = {
+    bdd match {
+      case Nil => Nil
+      case head :: next => head match {
+        case (lieu, adresse) => lieu :: lieuXML(next)
+      }
     }
   }
 

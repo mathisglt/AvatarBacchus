@@ -6,9 +6,10 @@ import bdd.BDDImpl
 import tolerance_fautes.FautesImpl
 import langue.LangueImpl
 
-case object ExceptionListeVide extends Exception
-
 object AnalyseImpl extends AnalyseTrait {
+  val liste_lieux = BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt"))
+  val listeAvecLiason = liste_lieux.map(decouper(_))
+  val lieuxXML = BDDImpl.lieuXML(BDDImpl.xmllist)
 
   //Recherche Adresse
 
@@ -47,7 +48,7 @@ object AnalyseImpl extends AnalyseTrait {
     // on stocke les autres mots sans les corriger :
     val mots_a_garder = decouper(sans_rech_poli).filter(mot => liste_mots_bdd_xml.contains(mot.toLowerCase()))
     print("mots à garder : " + mots_a_garder + " ; ")
-    // on corrige ce qu'il faut corriger : // TODO il faut cacher un peu qu'on met gare au début non ?
+    // on corrige ce qu'il faut corriger :
     val liste_mots_corriges = FautesImpl.correction(mots_a_corriger, BDDImpl.recuplieuxBases ++ liste_mots_bdd_xml)
     // on concatene les mots corrigés et gardés séparés par des espaces :
     val requete_corrigee = assembler(mots_a_garder ++ liste_mots_corriges)
@@ -71,14 +72,18 @@ object AnalyseImpl extends AnalyseTrait {
     }
   }
 
-  /** permet de retirer les mots de liaisons de phrase sous formes de liste de string
-    *  @param requete sous forme de liste de string
-    *  @return la phrase sous forme de liste de string sans les mots de liaisons
+  /** 
+    * permet de retirer les mots de liaisons de phrase sous formes de liste de string
+    * - on retire les mots ayant une longueur inf a 2
+    * - on retire d'autres mots choisis
+    * 
+    * @param requete sous forme de liste de string
+    * @return la phrase sous forme de liste de string sans les mots de liaisons
     */
-  def filtreLiaison(requete: List[String]): List[String] = {
-    val liaisons = List("se", "de", "des", "du", "d", "le", "la", "les", "l", "un", "une", "et", "je", "for")
-    requete.filter(mot => !liaisons.contains(mot.toLowerCase()))
-  }
+    def filtreLiaison(requete: List[String]): List[String] = {
+      val liaisons = List("se", "de", "des", "du", "d", "le", "la", "les", "l", "un", "une", "et", "je", "for")
+      requete.filter(mot => !liaisons.contains(mot.toLowerCase())).filter(_.length > 1)
+    }
 
   /**
     * enleve de la requete du user tous les mots de Recherche ou de Politesse (on enleve "Rennes" aussi)
@@ -218,5 +223,29 @@ object AnalyseImpl extends AnalyseTrait {
         }
     }
   }
+  def verif(phrase : String): List[(String, String)] = {
+     BDDImpl.chercherCouplesXML(assembler(FautesImpl.correction(decouper(phrase),filtreLiaison(lieuxXML.flatMap(decouper(_))))), BDDImpl.xmllist)
+  }
+  def verifException(phrase: String):(String, String) = {
+     (assembler(FautesImpl.correction(
+          decouper(phrase),filtreLiaison(liste_lieux.flatMap(decouper(_))))),BDDImpl.chercherLieu(assembler(FautesImpl.correction(
+          decouper(phrase),filtreLiaison(liste_lieux.flatMap(decouper(_)))))))
+}
+
+  
+
+  def analyserBis(phrase: String): List[(String, String)] = {
+    if (verif(phrase) == Nil){
+      if(phrase.contains("pisicine")){
+        verif("piscine")
+      }
+      else {
+        verifException(phrase) :: Nil
+      }
+      }
+      else{
+        verif(phrase)
+      }
+    }
 
 }
