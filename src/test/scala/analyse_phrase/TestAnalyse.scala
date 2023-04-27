@@ -34,7 +34,9 @@ class TestAnalyse {
 
   @Test
   def test_analyser_04: Unit = {
-    assertEquals( // XXX "mairie se trouve avant gare dans la bdd"
+    // note : gare sncf privilégié car formé de 2 mots contre 1 mot pour mairie
+    // le programme décide donc qu'il y a plus de chance que le user veuille trouver la gare
+    assertEquals( 
       ("Gare SNCF", "19, Place de la Gare"),
       AnalyseImpl.analyser("où sont la gare sncf et la mairie ?")
     )
