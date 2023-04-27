@@ -247,6 +247,5 @@ object AnalyseImpl extends AnalyseTrait {
         verif(phrase)
       }
     }
-val test = analyserBis("Direction habitat social")
 
 }
