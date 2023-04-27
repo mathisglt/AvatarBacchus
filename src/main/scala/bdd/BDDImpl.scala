@@ -252,7 +252,8 @@ object BDDImpl extends BaseDeDonnees {
   }
 
   def recuplieuxBases() : List[String] ={
-    lignesBDD.flatMap(_.split(";").head.split("\\s+")).toList
+    val dico = lignesBDD.flatMap(_.split(";").head.split("\\s+")).toList
+    dico.map(mot => removeAccents(mot.toLowerCase))
   }
   /** Récupère le fichier xml et récupère les noms trouvés dans la balise name , et les lieux associés dans la balise name de street
     *
