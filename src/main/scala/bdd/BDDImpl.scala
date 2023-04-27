@@ -288,15 +288,22 @@ object BDDImpl extends BaseDeDonnees {
         }.toList
     }   
 
-  def chercherCouplesXML(lieu: String, bdd:List[(String, String)]): List[(String, String)] = {
+   def chercherCouplesXML(lieu: String, bdd:List[(String, String)]): List[(String, String)] = {
     bdd match {
       case Nil => Nil
       case head :: next =>
         head match {
-          case (first, second)
-              if (removeLiaisonAccentsWords(first).contains(removeLiaisonAccentsWords(lieu))) =>(first, second) :: chercherCouplesXML(lieu, next)
+          case (first, second)=> if (removeLiaisonAccentsWords(first).contains(removeLiaisonAccentsWords(lieu))){(first, second) :: chercherCouplesXML(lieu, next)}else{chercherCouplesXML(lieu, next)}
         }
 
+    }
+  }
+  def lieuXML(bdd : List[(String,String)]): List[String] = {
+    bdd match {
+      case Nil => Nil
+      case head :: next => head match {
+        case (lieu, adresse) => lieu :: lieuXML(next)
+      }
     }
   }
 

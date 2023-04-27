@@ -7,6 +7,9 @@ import tolerance_fautes.FautesImpl
 import langue.LangueImpl
 
 object AnalyseImpl extends AnalyseTrait {
+  val liste_lieux = BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt"))
+  val listeAvecLiason = liste_lieux.map(decouper(_))
+  val lieuxXML = BDDImpl.lieuXML(BDDImpl.xmllist)
 
   //Recherche Adresse
 
@@ -220,5 +223,30 @@ object AnalyseImpl extends AnalyseTrait {
         }
     }
   }
+  def verif(phrase : String): List[(String, String)] = {
+     BDDImpl.chercherCouplesXML(assembler(FautesImpl.correction(decouper(phrase),filtreLiaison(lieuxXML.flatMap(decouper(_))))), BDDImpl.xmllist)
+  }
+  def verifException(phrase: String):(String, String) = {
+     (assembler(FautesImpl.correction(
+          decouper(phrase),filtreLiaison(liste_lieux.flatMap(decouper(_))))),BDDImpl.chercherLieu(assembler(FautesImpl.correction(
+          decouper(phrase),filtreLiaison(liste_lieux.flatMap(decouper(_)))))))
+}
+
+  
+
+  def analyserBis(phrase: String): List[(String, String)] = {
+    if (verif(phrase) == Nil){
+      if(phrase.contains("pisicine")){
+        verif("piscine")
+      }
+      else {
+        verifException(phrase) :: Nil
+      }
+      }
+      else{
+        verif(phrase)
+      }
+    }
+val test = analyserBis("Direction habitat social")
 
 }

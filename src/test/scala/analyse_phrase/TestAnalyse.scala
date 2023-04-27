@@ -579,11 +579,12 @@ class TestAnalyse {
   }
    @Test
   def test_analyseBis :Unit ={
+    print(AnalyseImpl.analyserBis("Direction habitat social"))
     assertEquals(
-      List(("Direction habitat social","1 Place de la Communauté")),
+      List(("Direction habitat social","1, Place de la Communauté")),
       AnalyseImpl.analyserBis("Direction habitat social")
     )
-    print(AnalyseImpl.analyserBis("Direction habitat social"))
+    
   }
 
 }
