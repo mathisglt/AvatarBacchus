@@ -35,15 +35,15 @@ object Voice extends VoiceTrait {
     }
   }
 
-  def say(phrase: String): Unit = {
+  def say(phrase: String): Long = {
     try {
       val audio: AudioInputStream = interface.generateAudio(phrase);
 
       audioPlayer.setAudio(audio);
       audioPlayer.start();
-      wait(audio.getFrameLength())
+      return audio.getFrameLength()
     } catch {
-      case ex: SynthesisException => System.err.println("Error saying phrase.");
+      case ex: SynthesisException => throw new Exception("impossible de dire la phrase")
     }
   }
 }

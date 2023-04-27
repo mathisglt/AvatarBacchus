@@ -16,7 +16,7 @@ trait VoiceTrait {
   /** prononce la phrase en paramètre
     *
     * @param phrase une phrase sous forme de String
-    * @return la phrase sous forme de son
+    * @return le temps que l'interface met à dire la phrase et dit la phrase
     */
-  def say(phrase: String): Unit
+  def say(phrase: String): Long
 }
