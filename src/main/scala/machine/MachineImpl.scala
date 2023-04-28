@@ -82,7 +82,10 @@ object MachineImpl extends MachineDialogue {
   def reinit(): Unit = {
     LangueImpl.reinitLangue //réinitialise la langue
     changementEnCours = false //réinitialise la changement de langue au cas où il y en avait un en cours
+    ConstructionImpl.choix_en_cours = false //réinitialise le choix du user
+    ConstructionImpl.liste_propositions_saved = Nil //réinitialise la liste des lieux proposés sauvegardée
   }
+  
   def test(l: List[String]): List[String] = {
     l.flatMap(ask(_))
   }

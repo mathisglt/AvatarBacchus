@@ -587,4 +587,38 @@ class TestAnalyse {
     
   }
 
+  // tests chercherChoixUser
+
+  @Test
+  def test_chercherChoixUser_01(): Unit = {
+    assertEquals(
+      None,
+      AnalyseImpl.chercherChoixUser("")
+    )
+  }
+
+  @Test
+  def test_chercherChoixUser_02(): Unit = {
+    assertEquals(
+      None,
+      AnalyseImpl.chercherChoixUser("1 2 3")
+    )
+  }
+
+  @Test
+  def test_chercherChoixUser_03(): Unit = {
+    assertEquals(
+      Some(1),
+      AnalyseImpl.chercherChoixUser("je choisis la1")
+    )
+  }
+  
+  @Test
+  def test_chercherChoixUser_04(): Unit = {
+    assertEquals(
+      Some(18),
+      AnalyseImpl.chercherChoixUser("je choisis la 18")
+    )
+  }
+
 }

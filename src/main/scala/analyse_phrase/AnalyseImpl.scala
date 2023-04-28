@@ -27,13 +27,13 @@ object AnalyseImpl extends AnalyseTrait {
   def analyser(phrase: String): List[(String, String)] = {
     // on enleve les accents :
     val sans_accents = BDDImpl.removeAccents(phrase)
-    print("sans_accents : " + sans_accents + " ; ")
+    // print("sans_accents : " + sans_accents + " ; ")
     // on enleve les mots de liaisons :
     val sans_liaison = assembler(filtreLiaison(decouper(sans_accents)))
-    print("sans_liaison : " + sans_liaison + " ; ")
+    // print("sans_liaison : " + sans_liaison + " ; ")
     // on enleve les mots de recherche et de politesse :
     val sans_rech_poli = filtrePolitesseRecherche(sans_liaison)
-    print("sans_rech_poli : " + sans_rech_poli + " ; ")
+    // print("sans_rech_poli : " + sans_rech_poli + " ; ")
     // a ce stade, on cherche "tnb" et "hotel ville" :
     val exceptions = List(("hotel ville","mairie"),("tnb","tnb"))
     val correction = assembler(FautesImpl.correction(decouper(sans_rech_poli),List("hotel","ville","tnb")))
@@ -44,15 +44,15 @@ object AnalyseImpl extends AnalyseTrait {
     }
     // on selectionne des mots a corriger qui ne sont pas dans la bdd :
     val mots_a_corriger = decouper(sans_rech_poli).filter(mot => !liste_mots_bdd_xml.contains(mot.toLowerCase()))
-    print("mots_a_corriger : " + mots_a_corriger + " ; ")
+    // print("mots_a_corriger : " + mots_a_corriger + " ; ")
     // on stocke les autres mots sans les corriger :
     val mots_a_garder = decouper(sans_rech_poli).filter(mot => liste_mots_bdd_xml.contains(mot.toLowerCase()))
-    print("mots à garder : " + mots_a_garder + " ; ")
+    // print("mots à garder : " + mots_a_garder + " ; ")
     // on corrige ce qu'il faut corriger :
     val liste_mots_corriges = FautesImpl.correction(mots_a_corriger, BDDImpl.recuplieuxBases ++ liste_mots_bdd_xml)
     // on concatene les mots corrigés et gardés séparés par des espaces :
     val requete_corrigee = assembler(mots_a_garder ++ liste_mots_corriges)
-    println("requete corrigée : " + requete_corrigee)
+    // println("requete corrigée : " + requete_corrigee)
     // Cas où l'on demande l'adresse directement, sans aucun mot supplémentaire :
     if(BDDImpl.chercherAdresse(requete_corrigee) != "Adresse non trouvée") {
       return List((BDDImpl.chercherLieu(requete_corrigee), BDDImpl.chercherAdresse(requete_corrigee)))
@@ -66,9 +66,11 @@ object AnalyseImpl extends AnalyseTrait {
         if (BDDImpl.chercherAdresse(head) != "Adresse non trouvée") {
           List((head, BDDImpl.chercherAdresse(head)))
         } else Nil
-      case head :: next => // TODO F6 il faudra gérer les cas avec plusieurs résultats 
-        val lieu_le_plus_courant = lieux.groupBy(identity).maxBy(_._2.length)._1
-        List((lieu_le_plus_courant,BDDImpl.chercherAdresse(lieu_le_plus_courant)))
+      case head :: next =>
+        val groupedLieux = lieux.groupBy(identity)
+        val maxOccurences = groupedLieux.values.map(_.length).max
+        val lieux_les_plus_courants = groupedLieux.filter(_._2.length == maxOccurences).keys.toList
+        lieux_les_plus_courants.map{case lieu => (lieu,BDDImpl.chercherAdresse(lieu))}
     }
   }
 
@@ -147,6 +149,30 @@ object AnalyseImpl extends AnalyseTrait {
   def assembler(list: List[String]): String = {
     if (list.isEmpty) return ""
     else list.reduce(_ + " " + _)
+  }
+
+  /**
+    * fonction appelée lorsque le user doit faire un choix entre plusieurs lieux proposés
+    *
+    * @param reponse du user contenant éventuellement un choix (le numéro d'un lieu proposé)
+    * @return le int correspondant à son choix
+    */
+  def chercherChoixUser(requete: String): Option[Int] = {
+    val requete_decoupee = decouper(requete)
+    print("requete_decoupee : " + requete_decoupee + " ; ")
+    val nombre_only = requete_decoupee.map(mot => mot.replaceAll("\\D","")).filter(_!="")
+    println("nombre_only : " + nombre_only)
+    nombre_only match {
+      case Nil => None
+      case head :: Nil => 
+        try {
+          Some(head.toInt)
+        }
+        catch {
+          case _: NumberFormatException => None
+        } 
+      case head :: next => None
+    }
   }
 
   //Analyse politesse
