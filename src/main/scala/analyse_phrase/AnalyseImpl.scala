@@ -68,7 +68,9 @@ object AnalyseImpl extends AnalyseTrait {
         } else Nil
       case head :: next =>
         val groupedLieux = lieux.groupBy(identity)
+        println(groupedLieux)
         val maxOccurences = groupedLieux.values.map(_.length).max
+        println(maxOccurences)
         val lieux_les_plus_courants = groupedLieux.filter(_._2.length == maxOccurences).keys.toList
         lieux_les_plus_courants.map{case lieu => (lieu,BDDImpl.chercherAdresse(lieu))}
     }
@@ -138,7 +140,7 @@ object AnalyseImpl extends AnalyseTrait {
     * @param phrase qui est le string à découper
     * @return une liste de string représentant la phrase decoupee
     */
-  def decouper(phrase: String): List[String] = phrase.split("[ .!?,;']+").toList
+  def decouper(phrase: String): List[String] = phrase.split("[ .!?,;'()]+").toList
 
   /** 
     *  assemble une liste de mot (string) pour former une phrase sous forme de string avec un espace entre chaque mot
