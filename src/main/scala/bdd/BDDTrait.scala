@@ -65,16 +65,61 @@ trait BaseDeDonnees {
     * @return la liste de toutes les "recherche" dans cette langue
     */
   def createDicoRecherche(langueActuelleStr: String, langueActuelle: Int): List[String]
-
+  /**
+    *  Renvoie la variable dicoExpr
+    */
   def getDicoExpr(): List[List[String]]
   /**
-    *  Recupère la variable dictionnairePRNInternationale
+    *  Renvoie la variable dictionnairePRNInternationale
     */
   def getDicoPRN(): List[List[String]]
-  
   /** Récupère le fichier xml et récupère les noms trouvés dans la balise name , et les lieux associés dans la balise name de street
     *@param un lieu(String) à chercher dans une base de donnée (bdd sous forme de List de couple String (lieu,adrese))
     * @return la liste de couple (lieu, adresse) de la base de donnees de Rennes correspondant au lieu pris en paramètre
     */
-    def chercherCouplesXML(lieu : String, bdd:List[(String,String)]): List[(String,String)]
+  def chercherCouplesXML(lieu : String, bdd:List[(String,String)]): List[(String,String)]
+  /**
+    * Renvoie les mots des 4 lieux de bases pour F1 F2
+    * @return List de tous les mots des 4 lieux
+    */
+  def recuplieuxBases() : List[String]
+  /** Récupère le fichier xml et récupère les noms trouvés dans la balise name , et les lieux associés dans la balise name de street
+    *
+    * @return la liste de couple (lieu, adresse) de la base de donnees de Rennes (1629 couples)
+    */
+  def createListFromXML(): List[(String, String)]
+  /**
+    * cree la liste de tous les lieux de la bdd xml uniquement s'ils ont une adresse
+    *
+    * @return la liste des lieux du doc vAr.xml
+    */
+  def createListLieuFromXML(): List[String] 
+  /**
+    * Méthode supprimant tous les accents de la chaine de caractères en paramètre
+    *
+    * @param str
+    * @return
+    */
+  def removeAccents(str: String): String 
+  /**
+    * Méthode supprimants tous les accents et mots de liaison de la chaine de caractères donnée en paramètre
+    *
+    * @param str
+    * @return
+    */
+  def removeLiaisonAccentsWords(str: String): String 
+  /**
+    * Donne la langue du mot en paramètre parmi les 5 disponibles (fr,en,es,de,it)
+    *
+    * @param mot
+    * @return
+    */
+  def langueDuMot(mot: String): String 
+  /**
+    * Récupère tous les premiers éléments d'une Liste de couple (string, string). Ici , les lieux de la liste xml
+    *
+    * @param List[(String,String)]
+    * @return List de tous les lieux sous forme d'une List de String
+    */
+  def lieuXML(bdd : List[(String,String)]): List[String]
 }

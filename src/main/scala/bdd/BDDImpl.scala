@@ -189,14 +189,6 @@ object BDDImpl extends BaseDeDonnees {
         listefr :: listeen :: listees :: listede :: listeit :: Nil
     }
   }
-
-  /**
-    * renvoie la liste de toutes les formes de salutations dans la langue demandée
-    *
-    * @param langueActuelleStr la langue actuelle sous forme de String
-    * @param langueActuelle la langue actuelle sous forme de Int
-    * @return la liste de tous les "bonjour" dans cette langue
-    */
   def createDicoSalutations(langueActuelleStr: String, langueActuelle: Int): List[String] = {
     val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
     val listeSalutations = List[String](lignesInter(7 + langueActuelle))
@@ -205,13 +197,6 @@ object BDDImpl extends BaseDeDonnees {
     listeFinale
   }
 
-  /**
-    * renvoie la liste de toutes les formes de recherches dans la langue demandée
-    *
-    * @param langueActuelleStr la langue actuelle sous forme de String
-    * @param langueActuelle la langue actuelle sous forme de Int
-    * @return la liste de toutes les "recherche" dans cette langue
-    */
   def createDicoRecherche(langueActuelleStr: String, langueActuelle: Int): List[String] = {
     val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
     val listeRecherche= List[String](lignesInter(14 + langueActuelle))
@@ -238,15 +223,6 @@ object BDDImpl extends BaseDeDonnees {
   def getDicoExpr(): List[List[String]] = {
     createDicoExpr; dictionnaireExpressionsInternationale
   }
-
-  def gettostrDicoExpr(): Unit = {
-    println(dictionnaireExpressionsInternationale)
-  }
-
-  def gettostrDicoPRN(): Unit = {
-    println(dictionnairePRNInternationale)
-  }
-
   def getDicoPRN(): List[List[String]] = {
     createDicoPRN; dictionnairePRNInternationale
   }
@@ -255,10 +231,6 @@ object BDDImpl extends BaseDeDonnees {
     val dico = lignesBDD.flatMap(_.split(";").head.split("\\s+")).toList
     dico.map(mot => removeAccents(mot.toLowerCase))
   }
-  /** Récupère le fichier xml et récupère les noms trouvés dans la balise name , et les lieux associés dans la balise name de street
-    *
-    * @return la liste de couple (lieu, adresse) de la base de donnees de Rennes (1629 couples)
-    */
   def createListFromXML(): List[(String, String)] = {
     val organizations = xml \\ "organization"
     organizations.flatMap { organization =>
@@ -272,11 +244,6 @@ object BDDImpl extends BaseDeDonnees {
     }.toList
   }
 
-    /**
-      * cree la liste de tous les lieux de la bdd uniquement s'ils ont une adresse
-      *
-      * @return la liste des lieux du doc vAr.xml
-      */
     def createListLieuFromXML(): List[String] = {
         val organizations = xml \\ "organization"
         organizations.flatMap { organization => 
