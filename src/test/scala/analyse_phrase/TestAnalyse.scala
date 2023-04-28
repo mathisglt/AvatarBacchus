@@ -587,37 +587,37 @@ class TestAnalyse {
     
   }
 
-  // tests chercherChoixUser
+  // tests analyserChoix
 
   @Test
-  def test_chercherChoixUser_01(): Unit = {
+  def test_analyserChoix_01(): Unit = {
     assertEquals(
       None,
-      AnalyseImpl.chercherChoixUser("")
+      AnalyseImpl.analyserChoix("")
     )
   }
 
   @Test
-  def test_chercherChoixUser_02(): Unit = {
+  def test_analyserChoix_02(): Unit = {
     assertEquals(
       None,
-      AnalyseImpl.chercherChoixUser("1 2 3")
+      AnalyseImpl.analyserChoix("1 2 3")
     )
   }
 
   @Test
-  def test_chercherChoixUser_03(): Unit = {
+  def test_analyserChoix_03(): Unit = {
     assertEquals(
       Some(1),
-      AnalyseImpl.chercherChoixUser("je choisis la1")
+      AnalyseImpl.analyserChoix("je choisis la1")
     )
   }
   
   @Test
-  def test_chercherChoixUser_04(): Unit = {
+  def test_analyserChoix_04(): Unit = {
     assertEquals(
       Some(18),
-      AnalyseImpl.chercherChoixUser("je choisis la 18")
+      AnalyseImpl.analyserChoix("je choisis la 18")
     )
   }
 

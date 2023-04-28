@@ -62,7 +62,7 @@ object ConstructionImpl extends ConstructionTrait {
     if (!choix_en_cours) {liste_propositions_saved = liste_lieux.sorted}
     // lorsque l'on doit identifier le choix du user parmi nos propositions :
     if (choix_en_cours) {
-      val choix = AnalyseImpl.chercherChoixUser(requete)
+      val choix = AnalyseImpl.analyserChoix(requete)
       val dicoExpr = AnalyseImpl.getDicoLangue
       choix_en_cours = false
       choix match {

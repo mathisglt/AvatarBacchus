@@ -157,7 +157,7 @@ object AnalyseImpl extends AnalyseTrait {
     * @param reponse du user contenant éventuellement un choix (le numéro d'un lieu proposé)
     * @return le int correspondant à son choix
     */
-  def chercherChoixUser(requete: String): Option[Int] = {
+  def analyserChoix(requete: String): Option[Int] = {
     val requete_decoupee = decouper(requete)
     print("requete_decoupee : " + requete_decoupee + " ; ")
     val nombre_only = requete_decoupee.map(mot => mot.replaceAll("\\D","")).filter(_!="")
