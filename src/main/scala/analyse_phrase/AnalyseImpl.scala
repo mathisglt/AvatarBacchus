@@ -166,7 +166,7 @@ object AnalyseImpl extends AnalyseTrait {
     * @param phrase qui est le string à découper
     * @return une liste de string représentant la phrase decoupee
     */
-  def decouper(phrase: String): List[String] = phrase.split("[ .!?,;']+").toList
+  def decouper(phrase: String): List[String] = phrase.split("[ .!?,;'()]+").toList
 
   /** 
     *  assemble une liste de mot (string) pour former une phrase sous forme de string avec un espace entre chaque mot
@@ -185,7 +185,7 @@ object AnalyseImpl extends AnalyseTrait {
     * @param reponse du user contenant éventuellement un choix (le numéro d'un lieu proposé)
     * @return le int correspondant à son choix
     */
-  def chercherChoixUser(requete: String): Option[Int] = {
+  def analyserChoix(requete: String): Option[Int] = {
     val requete_decoupee = decouper(requete)
     print("requete_decoupee : " + requete_decoupee + " ; ")
     val nombre_only = requete_decoupee.map(mot => mot.replaceAll("\\D","")).filter(_!="")
