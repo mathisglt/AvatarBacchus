@@ -77,8 +77,10 @@ class URLFiltres extends FiltrageURLs{
     def trouveAdresse(l:List[(String,String)],children: List[Html]):String={
         for ((name,url)<-l){
             if (name=="class"&& url.contains("icomoon-location")) return children(1) match{
+                case Texte(content) => content
                 case Tag(name, attributes, children2) => children2.head match{
                     case Texte(content) => content
+                    case Tag(name, attributes, children) => name
                 }
             }
         }
@@ -87,8 +89,10 @@ class URLFiltres extends FiltrageURLs{
     def trouveNom(l:List[(String,String)],children: List[Html]):String={
         for ((name,url)<-l){
             if (name=="class"&& url.contains("grid_left w80")) return children(1) match{
+                case Texte(content) => content
                 case Tag(name, attributes, children2) => children2.head match{
                     case Texte(content) => content.replaceAll("&#039","\'")
+                    case Tag(name, attributes, children) => name
                 }
             }
         }

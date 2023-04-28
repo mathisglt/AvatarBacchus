@@ -45,18 +45,22 @@ object AnalyseImpl extends AnalyseTrait {
         return List((BDDImpl.chercherLieu(elem._2), BDDImpl.chercherAdresse(elem._2)))
       }
     }
-    if (correction.contains("restaurant") || correction.contains("creperie") || correction.contains("pizzeria")) {
+    val langue = LangueImpl.getLangueActuelle()
+    val dicoExpr = BDDImpl.getDicoExpr()(langue)(8).split(",")
+    correction =  FautesImpl.correction(correction.split(" ").toList, dicoExpr.toList).mkString(" ")
+    println("corrrrrr : "+correction)
+    if (correction.contains(dicoExpr(0)) || correction.contains(dicoExpr(1)) || correction.contains(dicoExpr(2))) {
       var url = ""
-      correction = correction.replace("restaurante ","restaurant") //TODO traduire les mots restaurant en 5 langues
+      
       correction match {
-        case _ if correction.contains("restaurant") =>
-          var restaurant = correction.split("restaurant")(1).replaceAll(" ", "+")
+        case _ if correction.contains(dicoExpr(0)) =>
+          var restaurant = correction.split(dicoExpr(0))(1).replaceAll(" ", "+")
           url = s"https://www.linternaute.com/restaurant/guide/ville-rennes-35000/?name=$restaurant"
-        case _ if correction.contains("creperie") =>
-          val creperie = correction.split("creperie")(1).trim.replaceAll(" ", "+")
+        case _ if correction.contains(dicoExpr(1)) =>
+          val creperie = correction.split(dicoExpr(1))(1).trim.replaceAll(" ", "+")
           url = s"https://www.linternaute.com/restaurant/guide/ville-rennes-35000/?name=$creperie"
-        case _ if correction.contains("pizzeria") =>
-          val pizzeria = correction.split("pizzeria")(1).trim.replaceAll(" ", "+")
+        case _ if correction.contains(dicoExpr(2))=>
+          val pizzeria = correction.split(dicoExpr(2))(1).trim.replaceAll(" ", "+")
           url = s"https://www.linternaute.com/restaurant/guide/ville-rennes-35000/?name=$pizzeria"
       }
       println(url)
@@ -95,45 +99,23 @@ object AnalyseImpl extends AnalyseTrait {
         lieux_les_plus_courants.map{case lieu => (lieu,BDDImpl.chercherAdresse(lieu))}
     }
   }
-
   def getAdressFromHtml(html : Html) : (String,String) = {
     val objFiltrageUrls:URLFiltres = new URLFiltres
     val cleanhtml = objFiltrageUrls.filtreAnnonce(html)
     val htmldeladresse = OutilsWebObjet.obtenirHtml("https://www.linternaute.com/" + cleanhtml(0))
     return (objFiltrageUrls.filtreAnnonceNom(htmldeladresse)(0),objFiltrageUrls.filtreAnnonceAdresse(htmldeladresse)(0))
   }
-  /** 
-    * permet de retirer les mots de liaisons de phrase sous formes de liste de string
-    * - on retire les mots ayant une longueur inf a 2
-    * - on retire d'autres mots choisis
-    * 
-    * @param requete sous forme de liste de string
-    * @return la phrase sous forme de liste de string sans les mots de liaisons
-    */
-    def filtreLiaison(requete: List[String]): List[String] = {
-      val liaisons = List("se", "de", "des", "du", "d", "le", "la", "les", "l", "un", "une", "et", "je", "for")
-      requete.filter(mot => !liaisons.contains(mot.toLowerCase())).filter(_.length > 1)
-    }
+  def filtreLiaison(requete: List[String]): List[String] = {
+    val liaisons = List("se", "de", "des", "du", "d", "le", "la", "les", "l", "un", "une", "et", "je", "for")
+    requete.filter(mot => !liaisons.contains(mot.toLowerCase())).filter(_.length > 1)
+  }
 
-  /**
-    * enleve de la requete du user tous les mots de Recherche ou de Politesse (on enleve "Rennes" aussi)
-    *
-    * @param requete la requete du user (String)
-    * @return la requete sans les mots de Recherche ou de Politesse
-    */
   def filtrePolitesseRecherche(requete: String): String = {
     val dicoUniversel = BDDImpl.getDicoPRN().flatten
     val requete_corrigee = FautesImpl.correction(decouper(requete),dicoUniversel)
     assembler(requete_corrigee.filter(mot => !dicoUniversel.contains(mot.toLowerCase()) && !mot.toLowerCase().equals("rennes")))
   }
   
-  /**
-    * on cherche tous les lieux que cherche le user dans sa requete en regardant chaque mot un à un
-    * attention : les filtres anti parasites sont déjà appliqués
-    *
-    * @param requete la requete du user en List[String]
-    * @return la liste des lieux
-    */
   def analyserList(requete: List[String]): List[String] = {
     requete match {
       case Nil => Nil
@@ -141,13 +123,7 @@ object AnalyseImpl extends AnalyseTrait {
     }
   }
 
-  /** 
-    * cherche tous les lieux de la bdd qui contiennent le mot passé en param
-    * 
-    * @param mot le mot que l'on cherche dans la base de données
-    * @param list, la liste des lieux de vAr.xml (à Rennes et ayant une adresse)
-    * @return une liste de string représentant la liste des lieux contenant mot
-    */
+
   def quiContient(mot: String, list: List[String]): List[String] = {
     list match {
       case Nil => Nil
@@ -160,31 +136,13 @@ object AnalyseImpl extends AnalyseTrait {
     }
   }
 
-  /**
-    * découpe un string en liste de mots
-    *
-    * @param phrase qui est le string à découper
-    * @return une liste de string représentant la phrase decoupee
-    */
   def decouper(phrase: String): List[String] = phrase.split("[ .!?,;'()]+").toList
 
-  /** 
-    *  assemble une liste de mot (string) pour former une phrase sous forme de string avec un espace entre chaque mot
-    * 
-    *  @param list une list de mot
-    *  @return un string qui sera la phrase décrit par les éléments de départ
-    */
   def assembler(list: List[String]): String = {
     if (list.isEmpty) return ""
     else list.reduce(_ + " " + _)
   }
 
-  /**
-    * fonction appelée lorsque le user doit faire un choix entre plusieurs lieux proposés
-    *
-    * @param reponse du user contenant éventuellement un choix (le numéro d'un lieu proposé)
-    * @return le int correspondant à son choix
-    */
   def analyserChoix(requete: String): Option[Int] = {
     val requete_decoupee = decouper(requete)
     print("requete_decoupee : " + requete_decoupee + " ; ")
@@ -247,11 +205,6 @@ object AnalyseImpl extends AnalyseTrait {
     dicoExpr(langue_actuelle).filter(_ != LangueImpl.langueIntToString(langue_actuelle))
   }
 
-  /** meme chose que getDicoLangue à la difference qu'ici on peut choisir le dictionnaire de la langue que l'on veut
-    *
-    * @param lang un int compris entre 0 et 4 correspondant à la langue voulue
-    * @return le dico de la langue choisie, renvoie une liste vide si le int n'est pas compris entre 0 et 4
-    */
   def getDicoLangue(lang: Int): List[String] = {
     lang match {
       case n if (lang >= 0 && lang <= 4) =>
