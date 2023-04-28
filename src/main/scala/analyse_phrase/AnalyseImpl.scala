@@ -5,6 +5,9 @@ import scala.io.BufferedSource
 import bdd.BDDImpl
 import tolerance_fautes.FautesImpl
 import langue.LangueImpl
+import library._
+import application.URLFiltres
+import scala.annotation.varargs
 
 object AnalyseImpl extends AnalyseTrait {
   val liste_lieux = BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt"))
@@ -36,12 +39,31 @@ object AnalyseImpl extends AnalyseTrait {
     // print("sans_rech_poli : " + sans_rech_poli + " ; ")
     // a ce stade, on cherche "tnb" et "hotel ville" :
     val exceptions = List(("hotel ville","mairie"),("tnb","tnb"))
-    val correction = assembler(FautesImpl.correction(decouper(sans_rech_poli),List("hotel","ville","tnb")))
+    var correction = assembler(FautesImpl.correction(decouper(sans_rech_poli),List("hotel","ville","tnb")))
     for (elem <- exceptions){ 
       if (correction.contains(elem._1)){
         return List((BDDImpl.chercherLieu(elem._2), BDDImpl.chercherAdresse(elem._2)))
       }
     }
+    if (correction.contains("restaurant") || correction.contains("creperie") || correction.contains("pizzeria")) {
+      var url = ""
+      correction = correction.replace("restaurante ","restaurant") //TODO traduire les mots restaurant en 5 langues
+      correction match {
+        case _ if correction.contains("restaurant") =>
+          var restaurant = correction.split("restaurant")(1).replaceAll(" ", "+")
+          url = s"https://www.linternaute.com/restaurant/guide/ville-rennes-35000/?name=$restaurant"
+        case _ if correction.contains("creperie") =>
+          val creperie = correction.split("creperie")(1).trim.replaceAll(" ", "+")
+          url = s"https://www.linternaute.com/restaurant/guide/ville-rennes-35000/?name=$creperie"
+        case _ if correction.contains("pizzeria") =>
+          val pizzeria = correction.split("pizzeria")(1).trim.replaceAll(" ", "+")
+          url = s"https://www.linternaute.com/restaurant/guide/ville-rennes-35000/?name=$pizzeria"
+      }
+      println(url)
+      val leHtml : Html = OutilsWebObjet.obtenirHtml(url)
+      return List(getAdressFromHtml(leHtml))
+    }
+
     // on selectionne des mots a corriger qui ne sont pas dans la bdd :
     val mots_a_corriger = decouper(sans_rech_poli).filter(mot => !liste_mots_bdd_xml.contains(mot.toLowerCase()))
     // print("mots_a_corriger : " + mots_a_corriger + " ; ")
@@ -69,11 +91,17 @@ object AnalyseImpl extends AnalyseTrait {
       case head :: next =>
         val groupedLieux = lieux.groupBy(identity)
         val maxOccurences = groupedLieux.values.map(_.length).max
-        val lieux_les_plus_courants = groupedLieux.filter(_._2.length == maxOccurences).keys.toList
+        val lieux_les_plus_courants = groupedLieux.filter(_._2.length == maxOccurences).keys.toList.sorted
         lieux_les_plus_courants.map{case lieu => (lieu,BDDImpl.chercherAdresse(lieu))}
     }
   }
 
+  def getAdressFromHtml(html : Html) : (String,String) = {
+    val objFiltrageUrls:URLFiltres = new URLFiltres
+    val cleanhtml = objFiltrageUrls.filtreAnnonce(html)
+    val htmldeladresse = OutilsWebObjet.obtenirHtml("https://www.linternaute.com/" + cleanhtml(0))
+    return (objFiltrageUrls.filtreAnnonceNom(htmldeladresse)(0),objFiltrageUrls.filtreAnnonceAdresse(htmldeladresse)(0))
+  }
   /** 
     * permet de retirer les mots de liaisons de phrase sous formes de liste de string
     * - on retire les mots ayant une longueur inf a 2

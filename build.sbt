@@ -9,6 +9,7 @@ javaOptions += "-Dfile.encoding=UTF8"
 libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-xml" % "2.0.0-M3",
   "org.scala-lang.modules" %% "scala-swing" % "2.1.1",
+  "com.twitter" %% "util-core" % "21.11.0",
   "junit" % "junit" % "4.12" % Test,
   "com.novocode" % "junit-interface" % "0.11" % Test exclude ("junit", "junit-dep"),
   "org.apache.commons" % "commons-lang3" % "3.12.0",
