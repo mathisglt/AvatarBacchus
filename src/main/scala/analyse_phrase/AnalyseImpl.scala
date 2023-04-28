@@ -68,9 +68,7 @@ object AnalyseImpl extends AnalyseTrait {
         } else Nil
       case head :: next =>
         val groupedLieux = lieux.groupBy(identity)
-        println(groupedLieux)
         val maxOccurences = groupedLieux.values.map(_.length).max
-        println(maxOccurences)
         val lieux_les_plus_courants = groupedLieux.filter(_._2.length == maxOccurences).keys.toList
         lieux_les_plus_courants.map{case lieu => (lieu,BDDImpl.chercherAdresse(lieu))}
     }
