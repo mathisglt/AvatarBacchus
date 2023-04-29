@@ -80,7 +80,7 @@ object Voice extends VoiceTrait {
       audioPlayer.start()
       val TempsFichier =
         ((audio.getFrameLength() / 441 * 10)) // une frame = 1/44100 seconde donc 1/44,1 ms j'ai fait /441*10 pour eviter de passer par un double
-      Thread.sleep(TempsFichier + 700)
+      Thread.sleep(TempsFichier + 1500)
     } catch {
       case ex: SynthesisException =>
         throw new Exception("impossible de dire la phrase")
