@@ -10,11 +10,13 @@ import java.io.IOException
 import marytts.server.Mary
 import java.util.LinkedList
 import application.Application
+import java.util.concurrent.Semaphore
 //les différentes voix : [istc-lucia-hsmm(italien), dfki-pavoque-neutral-hsmm(allemand), upmc-pierre-hsmm(francais), cmu-slt-hsmm(anglais)]
 object Voice extends VoiceTrait {
-  private var interface: MaryInterface = new LocalMaryInterface();
+  private val interface: MaryInterface = new LocalMaryInterface();
   private var audioPlayer: AudioPlayer = new AudioPlayer();
-  private var fileAttente: LinkedList[(String, Int)] = new LinkedList()
+  private val fileAttente: LinkedList[(String, Int)] = new LinkedList()
+  private val PriseDeParole = new Semaphore(1)
 
   def ajouteMessage(message: String, langue: Int): Unit = {
     fileAttente.synchronized {
@@ -34,8 +36,8 @@ object Voice extends VoiceTrait {
         val langue = fileAttente.getFirst()._2
         fileAttente.removeFirst()
         voice(langue)
+        PriseDeParole.acquire()
         say(message)
-        lire()
       }
     }
   }
@@ -54,16 +56,15 @@ object Voice extends VoiceTrait {
   def voice(langue: Int): Unit = {
     try {
       langue match {
-        case 0 => interface.setVoice("upmc-pierre-hsmm");
-        case 1 => interface.setVoice("cmu-slt-hsmm");
-        case 3 => interface.setVoice("dfki-pavoque-neutral-hsmm");
-        case 4 => interface.setVoice("istc-lucia-hsmm");
+        case 0 => interface.setVoice("upmc-pierre-hsmm")
+        case 1 => interface.setVoice("cmu-slt-hsmm")
+        case 3 => interface.setVoice("dfki-pavoque-neutral-hsmm")
+        case 4 => interface.setVoice("istc-lucia-hsmm")
         case _ => throw new Exception("pas une langue audible")
       }
-
-      audioPlayer = new AudioPlayer();
+      audioPlayer = new AudioPlayer
     } catch {
-      case ex: MaryInterface => ex.printStackTrace();
+      case ex: MaryInterface => ex.printStackTrace()
     }
   }
 
@@ -74,13 +75,24 @@ object Voice extends VoiceTrait {
     */
   def say(phrase: String): Unit = {
     try {
-      val audio: AudioInputStream = interface.generateAudio(phrase);
-
-      audioPlayer.setAudio(audio);
-      audioPlayer.start();
+      val audio: AudioInputStream = interface.generateAudio(phrase)
+      audioPlayer.setAudio(audio)
+      audioPlayer.start()
+      val TempsFichier =
+        ((audio.getFrameLength() / 441 * 10)) // une frame = 1/44100 seconde donc 1/44,1 ms j'ai fait /441*10 pour eviter de passer par un double
+      Thread.sleep(TempsFichier + 700)
     } catch {
       case ex: SynthesisException =>
         throw new Exception("impossible de dire la phrase")
+    } finally {
+      PriseDeParole.release()
+      lire()
     }
   }
+}
+object testVoix extends App {
+  Voice.ajouteMessage("A l'ombre d'un grand chêne,", 0)
+  Voice.ajouteMessage("vos laitues naissent-elles ?", 0)
+  Voice.ajouteMessage("Si vos laitues naissent,", 0)
+  Voice.ajouteMessage("mes navets naissent.", 0)
 }
