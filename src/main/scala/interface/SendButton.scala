@@ -29,8 +29,7 @@ class SendButton(conv: BoxPanel,scrollBar: ScrollBar, from: InField) extends But
                                                                                 for (reponse <- MachineImpl.ask(from.text)){
                                                                                   conv.contents += new RobotPanel(reponse); // ajout à la conversation de la/les reponse(s) du robot
                                                                                   if(MachineImpl.getLangueActuelle()!=2){ // on vérifie que la langue n'est pas espagnol car la voix n'existe pas
-                                                                                    Voice.voice(MachineImpl.getLangueActuelle()) // on configure la voix sur la langue actuelle
-                                                                                    Voice.say(reponse) // on fait lire la réponse
+                                                                                    Voice.ajouteMessage(reponse,MachineImpl.getLangueActuelle()) // on configure la voix sur la langue actuelle
                                                                                   }
                                                                                 }
                                                                                 from.text = ""; // efface la zone de texte
