@@ -1,13 +1,10 @@
 package analyse_phrase
 
-import scala.io.Source
-import scala.io.BufferedSource
 import bdd.BDDImpl
 import tolerance_fautes.FautesImpl
 import langue.LangueImpl
 import library._
 import application.URLFiltres
-import scala.annotation.varargs
 
 object AnalyseImpl extends AnalyseTrait {
 
