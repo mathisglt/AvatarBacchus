@@ -13,72 +13,20 @@ trait AnalyseTrait {
   def analyser(phrase: String): List[(String,String)]
 
   /**
-    * Retourne un couple (lieu , adresse) à partir d'un type Html
-    *
-    * @param html
-    * @return (Lieu,Adresse)
-    */
-  def getAdressFromHtml(html : Html) : (String,String)
-
-  /** 
-    * permet de retirer les mots de liaisons de phrase sous formes de liste de string
-    * - on retire les mots ayant une longueur inf a 2
-    * - on retire d'autres mots choisis
-    * 
-    * @param requete sous forme de liste de string
-    * @return la phrase sous forme de liste de string sans les mots de liaisons
-    */
-    def filtreLiaison(requete: List[String]): List[String]
-     /**
-    * enleve de la requete du user tous les mots de Recherche ou de Politesse (on enleve "Rennes" aussi)
-    *
-    * @param requete la requete du user (String)
-    * @return la requete sans les mots de Recherche ou de Politesse
-    */
-  def filtrePolitesseRecherche(requete: String): String 
-  /**
-    * on cherche tous les lieux que cherche le user dans sa requete en regardant chaque mot un à un
-    * attention : les filtres anti parasites sont déjà appliqués
-    *
-    * @param requete la requete du user en List[String]
-    * @return la liste des lieux
-    */
-  def analyserList(requete: List[String]): List[String]
-  /** 
-    * cherche tous les lieux de la bdd qui contiennent le mot passé en param
-    * 
-    * @param mot le mot que l'on cherche dans la base de données
-    * @param list, la liste des lieux de vAr.xml (à Rennes et ayant une adresse)
-    * @return une liste de string représentant la liste des lieux contenant mot
-    */
-  def quiContient(mot: String, list: List[String]): List[String]
-   /**
-    * découpe un string en liste de mots
-    *
-    * @param phrase qui est le string à découper
-    * @return une liste de string représentant la phrase decoupee
-    */
-  def decouper(phrase: String): List[String]
-  /** 
-    *  assemble une liste de mot (string) pour former une phrase sous forme de string avec un espace entre chaque mot
-    * 
-    *  @param list une list de mot
-    *  @return un string qui sera la phrase décrit par les éléments de départ
-    */
-  def assembler(list: List[String]): String
-   /**
     * fonction appelée lorsque le user doit faire un choix entre plusieurs lieux proposés
     *
     * @param reponse du user contenant éventuellement un choix (le numéro d'un lieu proposé)
     * @return le int correspondant à son choix
     */
   def analyserChoix(requete: String): Option[Int]
+
   /** meme chose que getDicoLangue à la difference qu'ici on peut choisir le dictionnaire de la langue que l'on veut
     *
     * @param lang un int compris entre 0 et 4 correspondant à la langue voulue
     * @return le dico de la langue choisie, renvoie une liste vide si le int n'est pas compris entre 0 et 4
     */
   def getDicoLangue(lang: Int): List[String]
+
   /**
     * analyse la phrase du user et renvoie true s'il contient "bonjour", "bonsoir" ou "salut", puis le bonjour à répondre
     *

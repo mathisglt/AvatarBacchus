@@ -577,15 +577,6 @@ class TestAnalyse {
       AnalyseImpl.filtrePolitesseRecherche("je CHERCHE la mairie de ReNnEs")
     )
   }
-   @Test
-  def test_analyseBis :Unit ={
-    print(AnalyseImpl.analyserBis("Direction habitat social"))
-    assertEquals(
-      List(("Direction habitat social","1, Place de la Communauté")),
-      AnalyseImpl.analyserBis("Direction habitat social")
-    )
-    
-  }
 
   // tests analyserChoix
 
