@@ -10,9 +10,6 @@ import application.URLFiltres
 import scala.annotation.varargs
 
 object AnalyseImpl extends AnalyseTrait {
-  val liste_lieux = BDDImpl.recupLieux(Source.fromFile("doc/DonneesInitiales.txt"))
-  val listeAvecLiason = liste_lieux.map(decouper(_))
-  val lieuxXML = BDDImpl.lieuXML(BDDImpl.xmllist)
 
   //Recherche Adresse
 
@@ -99,12 +96,14 @@ object AnalyseImpl extends AnalyseTrait {
         lieux_les_plus_courants.map{case lieu => (lieu,BDDImpl.chercherAdresse(lieu))}
     }
   }
+
   def getAdressFromHtml(html : Html) : (String,String) = {
     val objFiltrageUrls:URLFiltres = new URLFiltres
     val cleanhtml = objFiltrageUrls.filtreAnnonce(html)
     val htmldeladresse = OutilsWebObjet.obtenirHtml("https://www.linternaute.com/" + cleanhtml(0))
     return (objFiltrageUrls.filtreAnnonceNom(htmldeladresse)(0),objFiltrageUrls.filtreAnnonceAdresse(htmldeladresse)(0))
   }
+
   def filtreLiaison(requete: List[String]): List[String] = {
     val liaisons = List("se", "de", "des", "du", "d", "le", "la", "les", "l", "un", "une", "et", "je", "for")
     requete.filter(mot => !liaisons.contains(mot.toLowerCase())).filter(_.length > 1)
@@ -122,7 +121,6 @@ object AnalyseImpl extends AnalyseTrait {
       case head :: next => quiContient(head, BDDImpl.xmlListLieu) ++ analyserList(next)
     }
   }
-
 
   def quiContient(mot: String, list: List[String]): List[String] = {
     list match {
@@ -230,29 +228,5 @@ object AnalyseImpl extends AnalyseTrait {
         }
     }
   }
-  def verif(phrase : String): List[(String, String)] = {
-     BDDImpl.chercherCouplesXML(assembler(FautesImpl.correction(decouper(phrase),filtreLiaison(lieuxXML.flatMap(decouper(_))))), BDDImpl.xmllist)
-  }
-  def verifException(phrase: String):(String, String) = {
-     (assembler(FautesImpl.correction(
-          decouper(phrase),filtreLiaison(liste_lieux.flatMap(decouper(_))))),BDDImpl.chercherLieu(assembler(FautesImpl.correction(
-          decouper(phrase),filtreLiaison(liste_lieux.flatMap(decouper(_)))))))
-}
-
-  
-
-  def analyserBis(phrase: String): List[(String, String)] = {
-    if (verif(phrase) == Nil){
-      if(phrase.contains("pisicine")){
-        verif("piscine")
-      }
-      else {
-        verifException(phrase) :: Nil
-      }
-      }
-      else{
-        verif(phrase)
-      }
-    }
 
 }
