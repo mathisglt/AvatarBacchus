@@ -3,7 +3,6 @@ package interface
 import scala.swing._
 import event._
 import java.awt.{Color, Font}
-import machine.MachineDialogue
 import machine.MachineImpl
 import VoiceManagement.Voice
 

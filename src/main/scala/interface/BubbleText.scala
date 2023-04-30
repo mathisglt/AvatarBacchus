@@ -2,7 +2,6 @@ package interface
 
 import scala.swing._
 import java.awt.{Color, Font}
-import java.awt.geom.RoundRectangle2D
 
 /**
   * création des labels correspondants aux messages du robot et de l'utilisateur
