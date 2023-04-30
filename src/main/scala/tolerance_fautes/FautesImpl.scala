@@ -18,19 +18,6 @@ object FautesImpl extends FautesTrait {
     result.reverse
   }
 
-  def correctionAvecPetitsMots(mots: List[String], modeles: List[String]): List[String] = {
-    var result: List[String] = Nil
-    val modelesCleared = clearAccentToMaj(modeles)
-    val motsTestsCleared = clearAccentToMaj(mots)
-    for (incr <- 0 to motsTestsCleared.length - 1) {
-      testChaqueMotAvecPetitsMots(motsTestsCleared(incr),modelesCleared) match {
-        case -1  => result = mots(incr) :: result
-        case num => result = modeles(num) :: result
-      }
-    }
-    result.reverse
-  }
-
   /** prends un mot et une liste de modele et renvoie
     * son emplacement dans la liste modele ou -1 si il n'y figure pas
     *

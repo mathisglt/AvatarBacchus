@@ -21,12 +21,4 @@ trait FautesTrait {
     * @return la meme liste corrigée
     */
   def correction(mots: List[String], modeles: List[String]): List[String]
-
-  //meme fonction que la precedente mais on corrige les petits mots
-    /** applique testChaqueMotAvecPetitsMots sur toute une liste de mot et en renvoie la string corrigée
-    *
-    * @param mots une liste de mots
-    * @return la meme liste corrigée
-    */
-  def correctionAvecPetitsMots(mots:List[String],modeles:List[String]):List[String]
 }
