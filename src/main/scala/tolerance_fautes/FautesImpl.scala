@@ -36,22 +36,6 @@ object FautesImpl extends FautesTrait {
     }
   }
 
-  /** prends un mot et une liste de modele et renvoie
-    * son emplacement dans la liste modele ou -1 si il n'y figure pas
-    *
-    * @param motATester une String qu'on veut tester
-    * @param modeles une liste des modeles
-    * @return l'emplacement du mot le plus proche dans la liste ou -1 s'il n'y en a pas
-    */
-  def testChaqueMotAvecPetitsMots(motATester: String, modeles: List[String]): Int = {
-    val test = modeles.indexWhere((modele) => modele == motATester)
-    if (test != (-1)) { 
-      test 
-    } else {
-      modeles.indexWhere((modele) => distanceDeHammingInf1(motATester, modele))
-    }
-  }
-
   /** regarde si la distance de Hamming entre deux strings est supérieure ou égal à 1
     * si on voit que la chaine a tester est plus petite que la chaine modele on regarde si c'est du a un decalage
     * si on voit qu'elles sont de meme taille on regarde si il n'y a bien qu'une faute max
