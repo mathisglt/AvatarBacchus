@@ -2,10 +2,10 @@ package VoiceManagement
 
 trait VoiceTrait {
 
-  /** ajoute un message dans la file d'attente et demarre la lecture s'il est le seul
+  /** Ajoute un message dans la file d'attente et démarre la lecture s'il est le seul
     *
-    * @param message un message a lire
-    * @param langue une langue
+    * @param message le message a lire
+    * @param langue la langue dans laquelle lire le message
     */
   def ajouteMessage(message: String, langue: Int): Unit
 }

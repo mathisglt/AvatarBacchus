@@ -12,6 +12,7 @@ import java.util.LinkedList
 import application.Application
 import java.util.concurrent.Semaphore
 //les différentes voix : [istc-lucia-hsmm(italien), dfki-pavoque-neutral-hsmm(allemand), upmc-pierre-hsmm(francais), cmu-slt-hsmm(anglais)]
+
 object Voice extends VoiceTrait {
   private val interface: MaryInterface = new LocalMaryInterface();
   private var audioPlayer: AudioPlayer = new AudioPlayer();
@@ -27,7 +28,8 @@ object Voice extends VoiceTrait {
     }
   }
 
-  /** lis la file d'attente
+  /** Lit les messages dans la file d'attente
+    *   
     */
   def lire(): Unit = {
     fileAttente.synchronized {
@@ -41,8 +43,8 @@ object Voice extends VoiceTrait {
       }
     }
   }
-  
-  /** change la langue en la langue demandée
+
+  /** Change la langue en la langue demandée
     *
     * @param langue un entier correspondant à la langue voulue (l'espagnol n'est pas considéré)
     * @return opère un changement sur la langue de parole
@@ -62,10 +64,9 @@ object Voice extends VoiceTrait {
     }
   }
 
-  /** prononce la phrase en paramètre
+  /** Prononce la phrase passée en paramètre
     *
     * @param phrase une phrase sous forme de String
-    * @return le temps que l'interface met à dire la phrase et dit la phrase
     */
   def say(phrase: String): Unit = {
     try {
