@@ -44,12 +44,4 @@ class TestIntegration {
       MachineImpl.test(List("hola", "si"))
     )
   }
-
-  // @Test
-  // def test3_test(): Unit= {
-  //   assertEquals(
-  //     List("L'adresse de Mairie est : Place de la Mairie", "L'adresse de Gare est : 19, Place de la Gare"),
-  //     MachineImpl.test(List("Donne place de la Mairie et Gare"))
-  //   )
-  // }
 }
