@@ -2,25 +2,46 @@ package langue
 
 trait LangueTrait {
 
-  /** opère un passage à la langue suivante : incrémente d'1 la langue actuelle
+  /** Opère un passage à la langue suivante : incrémente de 1 la langue actuelle
+    * 
     */
   def langueSuivante(): Unit
 
-  /** @return l'entier représentant la langue actuelle
-    */
-  def getLangueActuelle(): Int
-
-  /** change la langue actuelle en celle envoyée en paramêtre
-    * @param langue une langue parmi celles proposées
-    */
-  def setLangueActuelle(langue: String): Unit
-
-  /** met la langue actuelle au français
+  /** Réinitialise la langue (Français par défaut, soit 0)
+    * 
     */
   def reinitLangue(): Unit
 
-  /** @param langue un int représentant une langue
-    * @return la langue en paramêtre sous forme de String ou français si elle est inconnue
+  /** Retourne le numéro de la langue actuelle
+    *
+    * @return le numéro de la langue actuelle
+    */
+  def getLangueActuelle(): Int
+
+  /** configuration de la langue actuelle
+    *
+    * @param langue la langue souhaitée parmi "Anglais", "Espagnol", "Allemand", "Italien" ou any (="Français")
+    */
+  def setLangueActuelle(langue: String): Unit
+  
+  /** Retourne la question pour demander à l'utilisateur s'il parle la langue actuelle
+    * 
+    *
+    * @return la question correspondante
+    */
+  def getLangueQuestion(): String
+
+  /** Renvoie le numéro de la langue actuelle 
+    * 
+    * @param langue sous forme de string
+    * @return le numéro de la langue correspondante
+    */
+  def langueStringToInt(langue: String): Int 
+
+  /** Renvoie la langue actuelle sous forme de string
+    *
+    * @param langue le numéro de la langue
+    * @return la langue correspondante sous forme de string
     */
   def langueIntToString(langue: Int): String
 }
