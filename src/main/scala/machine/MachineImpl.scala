@@ -1,4 +1,5 @@
 package machine
+
 import construction_result.ConstructionImpl
 import tolerance_fautes.FautesImpl
 import langue.LangueImpl
@@ -69,11 +70,6 @@ object MachineImpl extends MachineDialogue {
     }
   }
 
-  /**
-    * Retourne la langue actuelle aux fichiers qui n'y ont pas accès
-    *
-    * @return la langue actuelle
-    */
   def getLangueActuelle (): Int ={
     LangueImpl.getLangueActuelle()
   }
