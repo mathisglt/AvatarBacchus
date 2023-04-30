@@ -20,7 +20,6 @@ trait FautesTrait {
     * @param mots une liste de mots
     * @return la meme liste corrigée
     */
-
   def correction(mots: List[String], modeles: List[String]): List[String]
 
   //meme fonction que la precedente mais on corrige les petits mots
