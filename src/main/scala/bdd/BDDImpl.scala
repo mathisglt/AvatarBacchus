@@ -240,34 +240,6 @@ object BDDImpl extends BaseDeDonnees {
     }.toList
   }
 
-    def createListLieuFromXML(): List[String] = {
-        val organizations = xml \\ "organization"
-        organizations.flatMap { organization => 
-            val name = (organization \\ "name").headOption.map(_.text.trim).getOrElse("")
-            val streetName = (organization \\ "street" \\ "name").text.trim
-            val streetNumber = (organization \\ "street" \\ "number").text.trim
-            val cityName = (organization \\ "city").text.trim
-            if (name.nonEmpty && streetName.nonEmpty && cityName.equals("Rennes")) Some(name) else None // on ne prend le lieu que s'il a une adresse et dans Rennes
-        }.toList
-    }   
 
-   def chercherCouplesXML(lieu: String, bdd:List[(String, String)]): List[(String, String)] = {
-    bdd match {
-      case Nil => Nil
-      case head :: next =>
-        head match {
-          case (first, second)=> if (removeLiaisonAccentsWords(first).contains(removeLiaisonAccentsWords(lieu))){(first, second) :: chercherCouplesXML(lieu, next)}else{chercherCouplesXML(lieu, next)}
-        }
-
-    }
-  }
-  def lieuXML(bdd : List[(String,String)]): List[String] = {
-    bdd match {
-      case Nil => Nil
-      case head :: next => head match {
-        case (lieu, adresse) => lieu :: lieuXML(next)
-      }
-    }
-  }
 
 }
