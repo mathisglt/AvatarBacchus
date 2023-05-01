@@ -85,10 +85,6 @@ object MachineImpl extends MachineDialogue {
       Nil //réinitialise la liste des lieux proposés sauvegardée
   }
 
-  /** test de l'avatar
-    *  @param l une liste de requête
-    *  @return la liste des réponses produites par l'avatar
-    */
   def test(l: List[String]): List[String] = {
     l.flatMap(ask(_))
   }
