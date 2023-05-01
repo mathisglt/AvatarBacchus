@@ -126,8 +126,7 @@ object AnalyseImpl extends AnalyseTrait {
     */
   def filtrePolitesseRecherche(requete: String): String = {
     val dicoUniversel = BDDImpl.getDicoPRN().flatten
-    val requete_corrigee =
-      FautesImpl.correction(decouper(requete), dicoUniversel)
+    val requete_corrigee = FautesImpl.correction(decouper(requete), dicoUniversel)
     assembler(requete_corrigee.filter(mot => !dicoUniversel.contains(mot.toLowerCase()) && !mot.toLowerCase().equals("rennes")))
   }
 
