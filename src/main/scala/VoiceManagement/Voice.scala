@@ -1,11 +1,9 @@
 package VoiceManagement
 
-import javax.sound.sampled.AudioInputStream;
-import marytts.LocalMaryInterface;
-import marytts.MaryInterface;
-import marytts.exceptions.MaryConfigurationException;
-import marytts.exceptions.SynthesisException;
-import marytts.util.data.audio.AudioPlayer;
+import javax.sound.sampled.AudioInputStream
+import marytts.{LocalMaryInterface,MaryInterface}
+import marytts.exceptions.{MaryConfigurationException,SynthesisException}
+import marytts.util.data.audio.AudioPlayer
 import java.io.IOException
 import marytts.server.Mary
 import java.util.LinkedList

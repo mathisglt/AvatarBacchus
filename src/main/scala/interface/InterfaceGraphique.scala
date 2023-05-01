@@ -1,14 +1,9 @@
 package interface
 
-import scala.swing.SimpleSwingApplication
 import scala.swing._
-import java.awt.Color
-import javax.swing.ImageIcon
 import java.io.File
-import scala.swing.event.ButtonClicked
-import java.awt.{Image, Toolkit}
-import scala.swing.event.KeyPressed
-import scala.swing.event.Key
+import scala.swing.event.{ButtonClicked,KeyPressed,Key}
+import java.awt.{Image, Toolkit, Color}
 
 object InterfaceGraphique extends SimpleSwingApplication{
 

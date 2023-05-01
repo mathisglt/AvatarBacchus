@@ -1,16 +1,12 @@
 package bdd
-import scala.io.Source
-import java.io.PrintWriter
-import java.io.File
-import scala.io.BufferedSource
-import java.io.PrintWriter
-import java.io.File
-import bdd.BaseDeDonnees
-import scala.collection.mutable.ArrayBuffer
-import java.util.ArrayList
-import scala.xml.XML
-import scala.xml.NodeSeq
+import scala.io.{Source, BufferedSource}
+import scala.xml.{XML, NodeSeq}
+import java.io.{File, PrintWriter}
 import java.text.Normalizer
+import java.util.ArrayList
+import scala.collection.mutable.ArrayBuffer
+import bdd.BaseDeDonnees
+
 
 object BDDImpl extends BaseDeDonnees {
   // TEST2
