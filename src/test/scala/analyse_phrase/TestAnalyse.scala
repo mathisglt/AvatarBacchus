@@ -620,4 +620,20 @@ class TestAnalyse {
     )
   }
 
+  @Test
+  def test_analyserChoix_05(): Unit = {
+    assertEquals(
+      Some(3),
+      AnalyseImpl.analyserChoix("3")
+    )
+  }
+
+  @Test
+  def test_analyserChoix_06(): Unit = {
+    assertEquals(
+      Some(2),
+      AnalyseImpl.analyserChoix("2 je veux")
+    )
+  }
+
 }
