@@ -12,6 +12,7 @@ interface MachineDialogue {
 	ask(s: String): List[String]
 	reinit(): Unit
 	getLangueActuelle (): Int 
+	test(l: List[String]): List[String]
 }
 
 interface ConstructionTrait{
