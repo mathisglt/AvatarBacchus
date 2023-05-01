@@ -1,15 +1,7 @@
 package analyse_html
 
-import library.FiltrageHtml
-import library.Html
-import library.Expression
-import library.Et
-import library.Ou
-import library.Mot
-import analyse_html.HtmlToString
-import library.Tag
-import library.Texte
-import library.HtmlExample
+import library.{FiltrageHtml, Html, Expression, Et, Ou, Mot, Tag, Texte, HtmlExample}, analyse_html.HtmlToString
+
 
 class FiltreHTML extends FiltrageHtml{
   /**

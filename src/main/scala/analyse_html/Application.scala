@@ -1,14 +1,7 @@
 package analyse_html
 
-import library.Html
-import java.io.FileWriter
-import library.Et
-import library.Ou
-import library.Mot
-import library.Expression
-import library.ParserExpression
-import library.AnalysePage
-import analyse_html.ObjectAnalysePage
+import library.{Html, Et, Ou, Mot, Expression, ParserExpression, AnalysePage}, analyse_html.ObjectAnalysePage, java.io.FileWriter
+
 
 object Application extends App{
   

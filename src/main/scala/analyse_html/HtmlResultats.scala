@@ -1,9 +1,7 @@
 package analyse_html
 
-import library.ProductionResultat
-import library.Html
-import library.Tag
-import library.Texte
+import library.{ProductionResultat, Html, Tag, Texte}
+
 
 object HtmlResultats extends ProductionResultat { 
 
