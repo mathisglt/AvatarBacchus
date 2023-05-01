@@ -18,12 +18,8 @@ object AnalyseImpl extends AnalyseTrait {
     - en séparant les mots comme 'saint-georges' en 2 mots distincts 'saint' et 'georges'
     .flatten sert à transformer une List[List[String]] en List[String]
    */
-  private val tmp = BDDImpl.xmlListLieu
-    .map(l => AnalyseImpl.decouper(BDDImpl.removeAccents(l.toLowerCase())))
-    .flatten
-    .distinct
-  val liste_mots_bdd_xml =
-    tmp.map(mot => mot.split("-").toList).flatten.distinct
+  private val tmp = BDDImpl.xmlListLieu.map(l => AnalyseImpl.decouper(BDDImpl.removeAccents(l.toLowerCase()))).flatten.distinct
+  val liste_mots_bdd_xml = tmp.map(mot => mot.split("-").toList).flatten.distinct
 
   // Fonctions d'analyse pour chercher une adresse
 
@@ -36,12 +32,7 @@ object AnalyseImpl extends AnalyseTrait {
     val sans_rech_poli = filtrePolitesseRecherche(sans_liaison)
     // a ce stade, on cherche "tnb" et "hotel ville" :
     val exceptions = List(("hotel ville", "mairie"), ("tnb", "tnb"))
-    var correction = assembler(
-      FautesImpl.correction(
-        decouper(sans_rech_poli),
-        List("hotel", "ville", "tnb")
-      )
-    )
+    var correction = assembler(FautesImpl.correction(decouper(sans_rech_poli),List("hotel", "ville", "tnb")))
     for (elem <- exceptions) {
       if (correction.contains(elem._1)) {
         return List(
@@ -51,60 +42,43 @@ object AnalyseImpl extends AnalyseTrait {
     }
     val langue = LangueImpl.getLangueActuelle()
     val dicoExpr = BDDImpl.getDicoExpr()(langue)(8).split(",")
-    correction = FautesImpl
-      .correction(correction.split(" ").toList, dicoExpr.toList)
-      .mkString(" ")
-    if (
-      correction.contains(dicoExpr(0)) || correction.contains(
-        dicoExpr(1)
-      ) || correction.contains(dicoExpr(2))
-    ) {
+    correction = FautesImpl.correction(correction.split(" ").toList, dicoExpr.toList).mkString(" ")
+    if (correction.contains(dicoExpr(0)) || correction.contains(dicoExpr(1)) || correction.contains(dicoExpr(2))) {
       var url = ""
       correction match {
         case _ if correction.contains(dicoExpr(0)) =>
           var restaurant = correction.split(dicoExpr(0))(1).replaceAll(" ", "+")
-          url =
-            s"https://www.linternaute.com/restaurant/guide/ville-rennes-35000/?name=$restaurant"
+          url = s"https://www.linternaute.com/restaurant/guide/ville-rennes-35000/?name=$restaurant"
         case _ if correction.contains(dicoExpr(1)) =>
-          val creperie =
-            correction.split(dicoExpr(1))(1).trim.replaceAll(" ", "+")
-          url =
-            s"https://www.linternaute.com/restaurant/guide/ville-rennes-35000/?name=$creperie"
+          val creperie = correction.split(dicoExpr(1))(1).trim.replaceAll(" ", "+")
+          url = s"https://www.linternaute.com/restaurant/guide/ville-rennes-35000/?name=$creperie"
         case _ if correction.contains(dicoExpr(2)) =>
-          val pizzeria =
-            correction.split(dicoExpr(2))(1).trim.replaceAll(" ", "+")
-          url =
-            s"https://www.linternaute.com/restaurant/guide/ville-rennes-35000/?name=$pizzeria"
+          val pizzeria = correction.split(dicoExpr(2))(1).trim.replaceAll(" ", "+")
+          url = s"https://www.linternaute.com/restaurant/guide/ville-rennes-35000/?name=$pizzeria"
       }
       val leHtml: Html = OutilsWebObjet.obtenirHtml(url)
       return List(getAdressFromHtml(leHtml))
     }
     // on selectionne des mots a corriger qui ne sont pas dans la bdd :
-    val mots_a_corriger = decouper(sans_rech_poli).filter(mot =>
-      !liste_mots_bdd_xml.contains(mot.toLowerCase())
-    )
+    val mots_a_corriger = decouper(sans_rech_poli).filter(mot => !liste_mots_bdd_xml.contains(mot.toLowerCase()))
+    
     // on stocke les autres mots sans les corriger :
-    val mots_a_garder = decouper(sans_rech_poli).filter(mot =>
-      liste_mots_bdd_xml.contains(mot.toLowerCase())
-    )
+    val mots_a_garder = decouper(sans_rech_poli).filter(mot =>liste_mots_bdd_xml.contains(mot.toLowerCase()))
+
     // on corrige ce qu'il faut corriger :
-    val liste_mots_corriges = FautesImpl.correction(
-      mots_a_corriger,
-      BDDImpl.recuplieuxBases ++ liste_mots_bdd_xml
-    )
+    val liste_mots_corriges = FautesImpl.correction(mots_a_corriger,BDDImpl.recuplieuxBases ++ liste_mots_bdd_xml)
+    
     // on concatene les mots corrigés et gardés séparés par des espaces :
     val requete_corrigee = assembler(mots_a_garder ++ liste_mots_corriges)
+    
     // Cas où l'on demande l'adresse directement, sans aucun mot supplémentaire :
     if (BDDImpl.chercherAdresse(requete_corrigee) != "Adresse non trouvée") {
-      return List(
-        (
-          BDDImpl.chercherLieu(requete_corrigee),
-          BDDImpl.chercherAdresse(requete_corrigee)
-        )
-      )
+      return List((BDDImpl.chercherLieu(requete_corrigee),BDDImpl.chercherAdresse(requete_corrigee)))
     }
+
     // on recupere la liste des lieux potentiels :
     val lieux = analyserList(decouper(requete_corrigee))
+    
     // étude de cas en fonction du nombre de lieux trouvés :
     lieux match {
       case Nil => Nil
@@ -115,11 +89,8 @@ object AnalyseImpl extends AnalyseTrait {
       case head :: next =>
         val groupedLieux = lieux.groupBy(identity)
         val maxOccurences = groupedLieux.values.map(_.length).max
-        val lieux_les_plus_courants =
-          groupedLieux.filter(_._2.length == maxOccurences).keys.toList.sorted
-        lieux_les_plus_courants.map { case lieu =>
-          (lieu, BDDImpl.chercherAdresse(lieu))
-        }
+        val lieux_les_plus_courants = groupedLieux.filter(_._2.length == maxOccurences).keys.toList.sorted
+        lieux_les_plus_courants.map { case lieu => (lieu, BDDImpl.chercherAdresse(lieu))}
     }
   }
 
@@ -149,25 +120,8 @@ object AnalyseImpl extends AnalyseTrait {
     * @return la phrase sous forme de liste de string sans les mots de liaisons
     */
   def filtreLiaison(requete: List[String]): List[String] = {
-    val liaisons = List(
-      "se",
-      "de",
-      "des",
-      "du",
-      "d",
-      "le",
-      "la",
-      "les",
-      "l",
-      "un",
-      "une",
-      "et",
-      "je",
-      "for"
-    )
-    requete
-      .filter(mot => !liaisons.contains(mot.toLowerCase()))
-      .filter(_.length > 1)
+    val liaisons = List("se","de","des","du","d","le","la","les","l","un","une","et","je","for")
+    requete.filter(mot => !liaisons.contains(mot.toLowerCase())).filter(_.length > 1)
   }
 
   /** enleve de la requete du user tous les mots de Recherche ou de Politesse (on enleve "Rennes" aussi)
