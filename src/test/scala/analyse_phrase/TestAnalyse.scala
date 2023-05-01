@@ -146,6 +146,14 @@ class TestAnalyse {
     )
   }
 
+  @Test
+  def test_analyser_17: Unit = {
+    assertEquals(
+      List(("GIP bretagne environnement","6, RUE DU BIGNON,RUE DU BIGNON")),
+      AnalyseImpl.analyser("pizzeria")
+    )
+  }
+
   // tests unitaires de decouper
 
   @Test
