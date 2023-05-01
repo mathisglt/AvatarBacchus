@@ -76,8 +76,8 @@ object ConstructionImpl extends ConstructionTrait {
       choix_en_cours = true
       construireLesPropositions(liste_lieux)
     }
-    // lorsque l'on a qu'une reponse a proposer, on va onstruire la phrase reponse :
-    else List(construireReponseUnique(requete))
+    // lorsque l'on a qu'une reponse a proposer, on va construire la phrase reponse :
+    else {List(construireReponseUnique(requete))}
   }
 
   /** Construit la phrase de reponse pour l'utilisateur
