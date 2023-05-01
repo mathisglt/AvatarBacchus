@@ -1,11 +1,7 @@
 package analyse_html
 
-import library.FiltrageURLs
-import library.Html
-import library.Tag
-import library.Texte
+import library.{FiltrageURLs, Html, Tag, Texte, OutilsWebObjet}
 import java.net.URL
-import library.OutilsWebObjet
 
 class URLFiltres extends FiltrageURLs{
     /**

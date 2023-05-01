@@ -1,9 +1,7 @@
 package analyse_html
 
-import library.Html
-import library.Tag
-import library.Texte
-import library.HtmlVersString
+import library.{Html, Tag, Texte, HtmlVersString}
+
 
 object  HtmlToString extends HtmlVersString {
   def traduire(h:Html):String = {

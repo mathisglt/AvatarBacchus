@@ -1,17 +1,7 @@
 package analyse_html
 
-import library.Html
-import library.Tag
-import library.Texte
-import library.Expression
-import library.OutilsWebObjet
-import library.AnalysePage
-import library.HtmlExample
-import library.OutilsWeb
-import library.Et
-import library.Mot
-import library.Expression
-import library.Ou
+import library.{Html, Tag, Texte, Expression, OutilsWebObjet, AnalysePage, HtmlExample, OutilsWeb, Et, Mot, Ou}
+
 
 object ObjectAnalysePage extends AnalysePage{
  type URL = String

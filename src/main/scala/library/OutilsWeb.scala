@@ -2,13 +2,8 @@ package library
 
 import java.net.URL
 import scala.jdk.CollectionConverters._
-//import scala.collection.JavaConversions._
-//import scala.collection.JavaConverters._
+import org.htmlcleaner.{HtmlCleaner, BaseToken, HtmlNode, TagNode}
 
-import org.htmlcleaner.BaseToken
-import org.htmlcleaner.HtmlCleaner
-import org.htmlcleaner.HtmlNode
-import org.htmlcleaner.TagNode
 
 trait OutilsWeb {
   /**

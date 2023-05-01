@@ -224,4 +224,38 @@ class BDDTest {
    def newchercheradresse5xmlaccents: Unit = {
       assertEquals("10, Boulevard Albert 1er",BDDImpl.chercherAdresse("Piscine de Bréquigny"))
    }
+  @Test
+  def testRemoveLiaisonAccentsWords1(): Unit = {
+    val phrasedetest = "C'est un test"
+    val réponse = "c'est test"
+    assertEquals(réponse, BDDImpl.removeLiaisonAccentsWords(phrasedetest))
+  }
+
+  @Test
+  def testRemoveLiaisonAccentsWords2(): Unit = {
+    val phrasedetest = "De la nourriture et des boissons"
+    val réponse = "nourriture boissons"
+    assertEquals(réponse, BDDImpl.removeLiaisonAccentsWords(phrasedetest))
+  }
+
+  @Test
+  def testRemoveLiaisonAccentsWords3(): Unit = {
+    val phrasedetest = "Une voiture rouge et un camion bleu"
+    val réponse = "voiture rouge camion bleu"
+    assertEquals(réponse, BDDImpl.removeLiaisonAccentsWords(phrasedetest))
+  }
+
+  @Test
+  def testRemoveLiaisonAccentsWords4(): Unit = {
+    val phrasedetest = "L'artiste a créé une œuvre magnifique"
+    val réponse = "l'artiste a cree œuvre magnifique"
+    assertEquals(réponse, BDDImpl.removeLiaisonAccentsWords(phrasedetest))
+  }
+
+  @Test
+  def testRemoveLiaisonAccentsWords5(): Unit = {
+    val phrasedetest = "Le chat noir et la souris blanche"
+    val réponse = "chat noir souris blanche"
+    assertEquals(réponse, BDDImpl.removeLiaisonAccentsWords(phrasedetest))
+  }
 }
