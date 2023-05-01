@@ -8,8 +8,7 @@ object MachineImpl extends MachineDialogue {
   var changementEnCours = false //changement de langue en cours
 
   def ask(requete: String): List[String] = {
-    val msgRobot =
-      ConstructionImpl.construireLangue(requete) //renvoie le message du robot
+    val msgRobot = ConstructionImpl.construireLangue(requete) //renvoie le message du robot
 
     if (!changementEnCours) {
       //s'il n'y a pas de changement de langue en cours et que le message du robot est une question pour savoir la langue,
@@ -21,10 +20,7 @@ object MachineImpl extends MachineDialogue {
     } else {
       //si un changement de langue est en cours on regarde si l'utilisateur à confirmé la langue
 
-      val confirmation = ConstructionImpl.construireConfirmation(
-        requete.replaceAll(" ", ""),
-        LangueImpl.getLangueActuelle()
-      )
+      val confirmation = ConstructionImpl.construireConfirmation(requete.replaceAll(" ", ""),LangueImpl.getLangueActuelle())
       //on construit la phrase en fonction de la confirmation ou non
 
       confirmation match {
@@ -67,7 +63,7 @@ object MachineImpl extends MachineDialogue {
       case "Parli italiano?" =>
         LangueImpl.setLangueActuelle("Italien");
         msgRobot
-      case _ => "Cas par défaut" :: Nil
+      case _                 => "Cas par défaut" :: Nil
     }
   }
 
@@ -78,11 +74,9 @@ object MachineImpl extends MachineDialogue {
   // Pour la partie test par le client
   def reinit(): Unit = {
     LangueImpl.reinitLangue //réinitialise la langue
-    changementEnCours =
-      false //réinitialise la changement de langue au cas où il y en avait un en cours
+    changementEnCours = false //réinitialise la changement de langue au cas où il y en avait un en cours
     ConstructionImpl.choix_en_cours = false //réinitialise le choix du user
-    ConstructionImpl.liste_propositions_saved =
-      Nil //réinitialise la liste des lieux proposés sauvegardée
+    ConstructionImpl.liste_propositions_saved = Nil //réinitialise la liste des lieux proposés sauvegardée
   }
 
   /** test de l'avatar
