@@ -1,5 +1,13 @@
 @startuml Avatar
 
+' Création des interfaces
+interface AnalyseTrait{
+	analyser(phrase: String): List[(String,String)]
+	politeTest_Bonjour(phrase: String): Boolean
+	politeTest_OnlyBonjour(phrase: String): Boolean
+	getDicoLangue(): List[String]
+}
+
 interface BDDTrait{
 	chercherAdresse(str:String): String
 	recupLieux(file:BufferedSource):List[String]
@@ -8,31 +16,9 @@ interface BDDTrait{
 	getDicoPRN(): Array[Array[String]]
 }
 
-interface MachineDialogue {
-	ask(s: String): List[String]
-	reinit(): Unit
-	getLangueActuelle (): Int 
-	test(l: List[String]): List[String]
-}
-
 interface ConstructionTrait{
 	construireLangue(requete: String): List[String]
 	construireConfirmation(requete: String, langueActuelle: Int): String
-}
-
-interface FautesTrait{
-	correction(mots: List[String], modeles: List[String]): List[String]
-}
-
-interface VoiceTrait{
-	ajouteMessage(message: String, langue: Int): Unit
-}
-
-interface AnalyseTrait{
-	analyser(phrase: String): List[(String,String)]
-	politeTest_Bonjour(phrase: String): Boolean
-	politeTest_OnlyBonjour(phrase: String): Boolean
-	getDicoLangue(): List[String]
 }
 
 interface LangueTrait{
@@ -45,27 +31,45 @@ interface LangueTrait{
 	langueIntToString(langue: Int): String
 }
 
+interface MachineDialogue {
+	ask(s: String): List[String]
+	reinit(): Unit
+	getLangueActuelle (): Int 
+	test(l: List[String]): List[String]
+}
 
-class MachineImpl <<(O,Orange)>>
-class InterfaceGraphique <<(O,Orange)>>
-class ConstructionImpl <<(O,Orange)>>
+interface FautesTrait{
+	correction(mots: List[String], modeles: List[String]): List[String]
+}
+
+interface VoiceTrait{
+	ajouteMessage(message: String, langue: Int): Unit
+}
+
+' Création des objects
 class AnalyseImpl <<(O,Orange)>>
 class BDDImpl <<(O,Orange)>>
-class FautesImpl <<(O,Orange)>>
+class ConstructionImpl <<(O,Orange)>>
+class InterfaceGraphique <<(O,Orange)>>
 class LangueImpl <<(O,Orange)>>
+class MachineImpl <<(O,Orange)>>
+class FautesImpl <<(O,Orange)>>
+class Voice <<(O,Orange)>>
 
+' Relations d'héritage
 MachineImpl -|> MachineDialogue
 BDDTrait <|-  BDDImpl
 ConstructionImpl -|>  ConstructionTrait
 AnalyseImpl -|>  AnalyseTrait
 FautesImpl -|> FautesTrait
 LangueTrait <|-  LangueImpl
+Voice -|> VoiceTrait
 
+' Relations d'utilisation
 MachineDialogue --> ConstructionTrait
-InterfaceGraphique --> MachineDialogue 
-InterfaceGraphique -> VoiceTrait 
+MachineDialogue <- InterfaceGraphique
+VoiceTrait <-- InterfaceGraphique
 ConstructionTrait --> AnalyseTrait
-
 AnalyseTrait -> LangueTrait
 AnalyseTrait --> FautesTrait
 AnalyseTrait --> BDDTrait
