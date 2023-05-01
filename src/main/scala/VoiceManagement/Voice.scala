@@ -9,8 +9,9 @@ import marytts.util.data.audio.AudioPlayer;
 import java.io.IOException
 import marytts.server.Mary
 import java.util.LinkedList
-import application.Application
+import analyse_html.Application
 import java.util.concurrent.Semaphore
+
 //les différentes voix : [istc-lucia-hsmm(italien), dfki-pavoque-neutral-hsmm(allemand), upmc-pierre-hsmm(francais), cmu-slt-hsmm(anglais)]
 
 object Voice extends VoiceTrait {

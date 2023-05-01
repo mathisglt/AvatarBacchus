@@ -1,5 +1,4 @@
-//Ca marche(80%)
-package application
+package analyse_html
 
 import library.ProductionResultat
 import library.Html
@@ -27,11 +26,12 @@ object HtmlResultats extends ProductionResultat {
         Tag("center", List(),ListeTag(l)
           )))))
   }
-/**
- * consiste simplement prendre chaque element de la liste l et a le transformer en tag puis de creer une liste de tag avec ceci
-  * @param l une liste de doublet de String de la forme (titre,URL)
-  * @return une liste de Tag etant la liste prise en entree sous forme Html
-  */
+
+  /**
+    * consiste simplement prendre chaque element de la liste l et a le transformer en tag puis de creer une liste de tag avec ceci
+    * @param l une liste de doublet de String de la forme (titre,URL)
+    * @return une liste de Tag etant la liste prise en entree sous forme Html
+    */
   def ListeTag(l:List[(String,String)]):List[Tag]={
     var liste = List[Tag]()
     liste = (Tag("h1", List(),List(Texte("Liste des résultats")))) :: liste

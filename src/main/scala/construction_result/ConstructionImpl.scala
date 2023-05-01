@@ -5,13 +5,10 @@ import langue.LangueImpl
 
 object ConstructionImpl extends ConstructionTrait {
 
-  /*
-    variables qui seront réinitialisées avec MachineImpl.reinit() :
-  */
-  // variable qui devient true lorsque le user doit effectuer un choix entre plusieurs lieux proposés
-  var choix_en_cours = false
-  // variable contenant la liste des lieux proposés au user
-  var liste_propositions_saved: List[String] = List()
+  // variables qui seront réinitialisées avec MachineImpl.reinit() :
+
+  var choix_en_cours = false // devient true lorsque le user doit effectuer un choix entre plusieurs lieux proposés
+  var liste_propositions_saved: List[String] = List() // contient la liste des lieux proposés à l'utlisateur
 
   def construireLangue(requete: String): List[String] = {
     val detection = AnalyseImpl.detecLangue(requete) // recherche de mots de détection dans la phrase
@@ -37,7 +34,9 @@ object ConstructionImpl extends ConstructionTrait {
     }
   }
 
-  /** @param requete la requete de l'utilisateur
+  /** Check les bonjours et repond le cas echéant
+    *
+    * @param requete la requete de l'utilisateur
     * @return un bonjour si bonjour + construire
     */
   def construirePolitesse(requete: String): List[String] = {
@@ -48,8 +47,7 @@ object ConstructionImpl extends ConstructionTrait {
     else construireLesReponses(requete) // reponse du bot sans politesse
   }
 
-  /**
-    * fonction qui va construire les reponses du bot, une liste de propositions ou une liste avec une reponse seule
+  /** Fonction qui va construire les reponses du bot, une liste de propositions ou une liste avec une reponse seule
     * (la gestion de la langue et de la politesse est deja effectuee en amont de cette fonction)
     *
     * @param requete la requete du user
@@ -82,8 +80,7 @@ object ConstructionImpl extends ConstructionTrait {
     else List(construireReponseUnique(requete))
   }
 
-  /** 
-    * fonction appelee pour la construction d'une reponse unique
+  /** Construit la phrase de reponse pour l'utilisateur
     * 
     * @param requete la requete de l'utilisateur
     * @return la phrase representant la reponse dans la langue voulu sous la forme d'une String
@@ -100,8 +97,7 @@ object ConstructionImpl extends ConstructionTrait {
     }
   }
 
-  /**
-    * on construit la liste de reponses lorsque le bot devra proposer plusieurs lieux
+  /** On construit la liste de reponses lorsque le bot devra proposer plusieurs lieux
     *
     * @param liste_lieux la liste des lieux
     * @return une liste de string correspondant a la suite de reponses du bot proposant une liste de choix
@@ -113,5 +109,4 @@ object ConstructionImpl extends ConstructionTrait {
     val question_choix = dicoExpr(7) // "Quel est votre choix?"
     nb_rep :: (lieu_avec_numero :+ question_choix)
   }
-
 }

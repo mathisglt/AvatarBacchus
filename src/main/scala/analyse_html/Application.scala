@@ -1,4 +1,5 @@
-package application
+package analyse_html
+
 import library.Html
 import java.io.FileWriter
 import library.Et
@@ -7,14 +8,14 @@ import library.Mot
 import library.Expression
 import library.ParserExpression
 import library.AnalysePage
+import analyse_html.ObjectAnalysePage
 
-import application.ObjectAnalysePage
 object Application extends App{
   
   val exp=ParserExpression.lireExpression
   val liensURL= OutilsApp.creeURL(exp)
   var coupleResultats= List[(String,String)]()
- for(url<-liensURL){
+  for(url<-liensURL){
     coupleResultats=ObjectAnalysePage.resultats(url,exp).concat(coupleResultats) 
   }
   val result=HtmlResultats.resultatVersHtml(coupleResultats)
@@ -23,8 +24,8 @@ object Application extends App{
   try{
     file.write(resultTraduit)
   } finally file.close()
-  
 }
+
 object OutilsApp {
   /**
     * @param listFinURL la liste des expressions a mettre dans l'url
@@ -39,6 +40,7 @@ object OutilsApp {
     }
     return result
   }
+
   /**
     * @param requete une expression
     * @return les urls satisfaisant l'expression
@@ -50,6 +52,7 @@ object OutilsApp {
       case Mot(w) => return w::Nil
     }
   }
+
   /**
     * @param e1 une expression
     * @param e2 une expression

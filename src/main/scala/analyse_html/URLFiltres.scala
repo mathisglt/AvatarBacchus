@@ -1,4 +1,4 @@
-package application
+package analyse_html
 
 import library.FiltrageURLs
 import library.Html
@@ -19,23 +19,24 @@ class URLFiltres extends FiltrageURLs{
             case _: Html => Nil
         }
     }
-     def filtreAnnonceAdresse(h:Html):List[String]={
- //       val h2=trouvePartieAnnonce(h)
+
+    def filtreAnnonceAdresse(h:Html):List[String]={
+        //val h2=trouvePartieAnnonce(h)
         h match {
             case Tag("li", attributes, children) =>clearVoid(fonctionSurListe[Html,String](children,filtreAnnonceAdresse):+trouveAdresse(attributes,children))
             case Tag(name, attributes, children) => fonctionSurListe[Html,String](children,filtreAnnonceAdresse)
             case _: Html => Nil
         }
     }
-     def filtreAnnonceNom(h:Html):List[String]={
- //       val h2=trouvePartieAnnonce(h)
+
+    def filtreAnnonceNom(h:Html):List[String]={
+        //val h2=trouvePartieAnnonce(h)
         h match {
             case Tag("div", attributes, children) =>clearVoid(fonctionSurListe[Html,String](children,filtreAnnonceNom):+trouveNom(attributes,children))
             case Tag(name, attributes, children) => fonctionSurListe[Html,String](children,filtreAnnonceNom)
             case _: Html => Nil
         }
     }
-
 
     /** 
       * @param list une list de String
@@ -47,8 +48,7 @@ class URLFiltres extends FiltrageURLs{
             case head::next=>if (head=="") return clearVoid(next) else head::clearVoid(next)
             case Nil=>Nil
         }
-        }
-
+    }
 
     /**
      * @param l une liste
@@ -64,6 +64,7 @@ class URLFiltres extends FiltrageURLs{
         }
         result
     }
+
     /**
       * @param l une liste de couple de String (dans ce tp (nom, URL)) 
       * @return l'url de la liste qui a pour nom href et qui contient un lien vivastreet la liste vide sinon
@@ -74,6 +75,7 @@ class URLFiltres extends FiltrageURLs{
         }
         return ""
     }
+
     def trouveAdresse(l:List[(String,String)],children: List[Html]):String={
         for ((name,url)<-l){
             if (name=="class"&& url.contains("icomoon-location")) return children(1) match{
@@ -86,6 +88,7 @@ class URLFiltres extends FiltrageURLs{
         }
         return ""
     }
+
     def trouveNom(l:List[(String,String)],children: List[Html]):String={
         for ((name,url)<-l){
             if (name=="class"&& url.contains("grid_left w80")) return children(1) match{
@@ -97,14 +100,5 @@ class URLFiltres extends FiltrageURLs{
             }
         }
         return ""
-    }
-    
-}
-object testFiltreAnnonce extends App{//batterie de test de urlFiltres parce que mon vs code a des problemes pour run les tests 
-    val a=new URLFiltres
-    val htmlTest=OutilsWebObjet.obtenirHtml("https://search.vivastreet.com/annonces/fr?lb=new&search=1&start_field=1&keywords=train&cat_1=&geosearch_text=&searchGeoId=")
-    val bs=a.filtreAnnonce(htmlTest)
-    for (b<-bs){
-        println(b)
     }
 }

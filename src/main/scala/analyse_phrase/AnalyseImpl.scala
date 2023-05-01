@@ -4,7 +4,7 @@ import bdd.BDDImpl
 import tolerance_fautes.FautesImpl
 import langue.LangueImpl
 import library._
-import application.URLFiltres
+import analyse_html.URLFiltres
 
 object AnalyseImpl extends AnalyseTrait {
 

@@ -11,19 +11,20 @@ interface BDDTrait{
 interface MachineDialogue {
 	ask(s: String): List[String]
 	reinit(): Unit
-	test(l: List[String]): List[String]
+	getLangueActuelle (): Int 
 }
 
 interface ConstructionTrait{
-	construire(phrase: String): List[String]
-}
-
-interface InterfaceGraphique{
-
+	construireLangue(requete: String): List[String]
+	construireConfirmation(requete: String, langueActuelle: Int): String
 }
 
 interface FautesTrait{
-	correction(mots :List[String]): List[String]
+	correction(mots: List[String], modeles: List[String]): List[String]
+}
+
+interface VoiceTrait{
+	ajouteMessage(message: String, langue: Int): Unit
 }
 
 interface AnalyseTrait{
@@ -35,10 +36,12 @@ interface AnalyseTrait{
 
 interface LangueTrait{
 	langueSuivante(): Unit
+	reinitLangue():Unit
  	getLangueActuelle(): Int
   	setLangueActuelle(langue: String): Unit
-  	reinitLangue():Unit
-  	langueActuelleToString(langue_actuelle: Int): String
+  	getLangueQuestion(): String
+  	langueStringToInt(langue: String): Int
+	langueIntToString(langue: Int): String
 }
 
 
@@ -58,7 +61,8 @@ FautesImpl -|> FautesTrait
 LangueTrait <|-  LangueImpl
 
 MachineDialogue --> ConstructionTrait
-MachineDialogue <- InterfaceGraphique
+InterfaceGraphique --> MachineDialogue 
+InterfaceGraphique -> VoiceTrait 
 ConstructionTrait --> AnalyseTrait
 
 AnalyseTrait -> LangueTrait

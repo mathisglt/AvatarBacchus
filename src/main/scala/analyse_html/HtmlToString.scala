@@ -1,5 +1,4 @@
-//ca marche
-package application
+package analyse_html
 
 import library.Html
 import library.Tag
@@ -7,7 +6,7 @@ import library.Texte
 import library.HtmlVersString
 
 object  HtmlToString extends HtmlVersString {
-def traduire(h:Html):String = {
+  def traduire(h:Html):String = {
     var str = ""
     h match {
       case Tag(name,Nil,children) => // pas d'attribut et un enfant (ex : <title>My Page</title>)
@@ -37,6 +36,4 @@ def traduire(h:Html):String = {
     }
     str
   }
-
-
 }
