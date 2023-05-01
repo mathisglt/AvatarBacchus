@@ -30,14 +30,15 @@ object AnalyseImpl extends AnalyseTrait {
     val sans_liaison = assembler(filtreLiaison(decouper(sans_accents)))
     // on enleve les mots de recherche et de politesse :
     val sans_rech_poli = filtrePolitesseRecherche(sans_liaison)
+    // on passe la phrase en minuscules
+    val en_minuscules = sans_rech_poli.toLowerCase()
     // a ce stade, on cherche "tnb" et "hotel ville" :
     val exceptions = List(("hotel ville", "mairie"), ("tnb", "tnb"))
-    var correction = assembler(FautesImpl.correction(decouper(sans_rech_poli),List("hotel", "ville", "tnb")))
+    var correction = assembler(FautesImpl.correction(decouper(en_minuscules),List("hotel", "ville", "tnb")))
+    println(correction)
     for (elem <- exceptions) {
       if (correction.contains(elem._1)) {
-        return List(
-          (BDDImpl.chercherLieu(elem._2), BDDImpl.chercherAdresse(elem._2))
-        )
+        return List((BDDImpl.chercherLieu(elem._2), BDDImpl.chercherAdresse(elem._2)))
       }
     }
     val langue = LangueImpl.getLangueActuelle()
@@ -60,25 +61,19 @@ object AnalyseImpl extends AnalyseTrait {
       return List(getAdressFromHtml(leHtml))
     }
     // on selectionne des mots a corriger qui ne sont pas dans la bdd :
-    val mots_a_corriger = decouper(sans_rech_poli).filter(mot => !liste_mots_bdd_xml.contains(mot.toLowerCase()))
-    
+    val mots_a_corriger = decouper(en_minuscules).filter(mot => !liste_mots_bdd_xml.contains(mot.toLowerCase()))
     // on stocke les autres mots sans les corriger :
-    val mots_a_garder = decouper(sans_rech_poli).filter(mot =>liste_mots_bdd_xml.contains(mot.toLowerCase()))
-
+    val mots_a_garder = decouper(en_minuscules).filter(mot =>liste_mots_bdd_xml.contains(mot.toLowerCase()))
     // on corrige ce qu'il faut corriger :
     val liste_mots_corriges = FautesImpl.correction(mots_a_corriger,BDDImpl.recuplieuxBases ++ liste_mots_bdd_xml)
-    
     // on concatene les mots corrigés et gardés séparés par des espaces :
     val requete_corrigee = assembler(mots_a_garder ++ liste_mots_corriges)
-    
     // Cas où l'on demande l'adresse directement, sans aucun mot supplémentaire :
     if (BDDImpl.chercherAdresse(requete_corrigee) != "Adresse non trouvée") {
       return List((BDDImpl.chercherLieu(requete_corrigee),BDDImpl.chercherAdresse(requete_corrigee)))
     }
-
     // on recupere la liste des lieux potentiels :
     val lieux = analyserList(decouper(requete_corrigee))
-    
     // étude de cas en fonction du nombre de lieux trouvés :
     lieux match {
       case Nil => Nil
@@ -133,12 +128,7 @@ object AnalyseImpl extends AnalyseTrait {
     val dicoUniversel = BDDImpl.getDicoPRN().flatten
     val requete_corrigee =
       FautesImpl.correction(decouper(requete), dicoUniversel)
-    assembler(
-      requete_corrigee.filter(mot =>
-        !dicoUniversel
-          .contains(mot.toLowerCase()) && !mot.toLowerCase().equals("rennes")
-      )
-    )
+    assembler(requete_corrigee.filter(mot => !dicoUniversel.contains(mot.toLowerCase()) && !mot.toLowerCase().equals("rennes")))
   }
 
   /** Retourne un couple (lieu , adresse) à partir d'un type Html
