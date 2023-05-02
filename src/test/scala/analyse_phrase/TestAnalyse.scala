@@ -3,6 +3,8 @@ import org.junit.Test
 import org.junit.Assert._
 import langue.LangueImpl
 import bdd.BDDImpl
+import library.OutilsWebObjet
+import library.Html
 
 class TestAnalyse {
 
@@ -633,6 +635,38 @@ class TestAnalyse {
     assertEquals(
       Some(2),
       AnalyseImpl.analyserChoix("2 je veux")
+    )
+  }
+
+  // tests getAdressFromHTML
+
+  @Test
+  def test_getAdressFromHTML_01: Unit = {
+    val url = s"https://www.linternaute.com/restaurant/guide/ville-rennes-35000/?name=la+tomate"
+    val leHtml: Html = OutilsWebObjet.obtenirHtml(url)
+    assertEquals(
+      ("La Tomate", "18, rue Saint Georges"),
+      AnalyseImpl.getAdressFromHtml(leHtml)
+    )
+  }
+
+  @Test
+  def test_getAdressFromHTML_02: Unit = {
+    val url = "https://www.linternaute.com/restaurant/guide/ville-rennes-35000/?name="
+    val leHtml: Html = OutilsWebObjet.obtenirHtml(url)
+    assertEquals(
+      ("", ""),
+      AnalyseImpl.getAdressFromHtml(leHtml)
+    )
+  }
+
+  @Test
+  def test_getAdressFromHTML_03: Unit = {
+    val url = "https://www.linternaute.com/restaurant/guide/ville-rennes-35000/?name=feiqgfaigzeif"
+    val leHtml: Html = OutilsWebObjet.obtenirHtml(url)
+    assertEquals(
+      ("", ""),
+      AnalyseImpl.getAdressFromHtml(leHtml)
     )
   }
 
