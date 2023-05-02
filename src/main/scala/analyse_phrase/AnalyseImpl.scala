@@ -45,6 +45,9 @@ object AnalyseImpl extends AnalyseTrait {
     val dicoExpr = BDDImpl.getDicoExpr()(langue)(8).split(",")
     correction = FautesImpl.correction(correction.split(" ").toList, dicoExpr.toList).mkString(" ")
     if (correction.contains(dicoExpr(0)) || correction.contains(dicoExpr(1)) || correction.contains(dicoExpr(2))) {
+      if (correction.equals(dicoExpr(0)) || correction.equals(dicoExpr(1)) || correction.equals(dicoExpr(2))){
+        return Nil
+      }
       var url = ""
       correction match {
         case _ if correction.contains(dicoExpr(0)) =>
@@ -138,6 +141,7 @@ object AnalyseImpl extends AnalyseTrait {
   def getAdressFromHtml(html: Html): (String, String) = {
     val objFiltrageUrls: URLFiltres = new URLFiltres
     val cleanhtml = objFiltrageUrls.filtreAnnonce(html)
+    if (cleanhtml.isEmpty){return ("","")}
     val htmldeladresse =
       OutilsWebObjet.obtenirHtml("https://www.linternaute.com/" + cleanhtml(0))
     return (

@@ -90,6 +90,7 @@ object ConstructionImpl extends ConstructionTrait {
     val dicoExpr = AnalyseImpl.getDicoLangue
     resultAnalyse match {
       case Nil => dicoExpr(3) // "Je ne comprends pas votre demande"
+      case head :: Nil if (head == ("",""))=> dicoExpr(3) // "Je ne comprends pas votre demande"
       case head :: Nil => dicoExpr(2).replace("XXX", head._1) + " : " + head._2 // "L'adresse de XXX est"
       case head :: next => 
         // il est normalement impossible de rentrer dans ce case car ce cas est gere dans la fonction precedente
