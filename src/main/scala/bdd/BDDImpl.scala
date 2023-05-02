@@ -13,16 +13,11 @@ object BDDImpl extends BaseDeDonnees {
 
   val lignesBDD = Source.fromFile("doc/DonneesInitiales.txt").getLines.toArray
   var banwords = Set("")
-  var variancesaddr =
-    Map(("tnb", "1, Rue Saint-Hélier"), ("hotel", "Place de la Mairie"))
-  var varianceslieux =
-    Map(("tnb", "Théâtre National de Bretagne"), ("hotel", "Mairie de Rennes"))
-  var dictionnaireExpressionsInternationale: List[List[String]] =
-    List(List(), List(), List(), List(), List())
-  var dictionnairePRNInternationale: List[List[String]] =
-    List(List(), List(), List(), List(), List())
-  var dictionnairePolitesseInternationale: List[List[String]] =
-    List(List(), List(), List(), List(), List())
+  var variancesaddr = Map(("tnb", "1, Rue Saint-Hélier"), ("hotel", "Place de la Mairie"))
+  var varianceslieux = Map(("tnb", "Théâtre National de Bretagne"), ("hotel", "Mairie de Rennes"))
+  var dictionnaireExpressionsInternationale: List[List[String]] = List(List(), List(), List(), List(), List())
+  var dictionnairePRNInternationale: List[List[String]] = List(List(), List(), List(), List(), List())
+  var dictionnairePolitesseInternationale: List[List[String]] = List(List(), List(), List(), List(), List())
   val xml = XML.loadFile("partie2/vAr.xml")
   val xmllist = createListFromXML()
   val xmlListLieu = createListLieuFromXML()
@@ -239,6 +234,18 @@ object BDDImpl extends BaseDeDonnees {
       else None
     }.toList
   }
+
+  def createListLieuFromXML(): List[String] = {
+    val organizations = xml \\ "organization"
+    organizations.flatMap { organization => 
+        val name = (organization \\ "name").headOption.map(_.text.trim).getOrElse("")
+        val streetName = (organization \\ "street" \\ "name").text.trim
+        val streetNumber = (organization \\ "street" \\ "number").text.trim
+        val cityName = (organization \\ "city").text.trim
+        if (name.nonEmpty && streetName.nonEmpty && cityName.equals("Rennes")) Some(name) else None // on ne prend le lieu que s'il a une adresse et dans Rennes
+    }.toList
+  }
+
 
 
 
