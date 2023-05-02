@@ -26,14 +26,12 @@ object FautesImpl extends FautesTrait {
     * @return l'emplacement du mot le plus proche dans la liste ou -1 s'il n'y en a pas (si c'est un petit mot on ne regarde plus)
     */
   def testChaqueMot(motATester: String, modeles: List[String]): Int = {
-    if (motATester.length <= 2) { return -1 }
+    val test = modeles.indexWhere((modele) => modele == motATester)
+    if (test != (-1)) { test }
     else {
-      val test = modeles.indexWhere((modele) => modele == motATester)
-      if (test != (-1)) { test }
-      else {
-        modeles.indexWhere((modele) => distanceDeHammingInf1(motATester, modele))
-      }
+      modeles.indexWhere((modele) => distanceDeHammingInf1(motATester, modele))
     }
+
   }
 
   /** regarde si la distance de Hamming entre deux strings est supérieure ou égal à 1
@@ -45,9 +43,15 @@ object FautesImpl extends FautesTrait {
     * @return true si la string test est à 1 de distance maximum de la string modele
     */
   def distanceDeHammingInf1(strtest: String, strmodele: String): Boolean = {
-    (strmodele.length - strtest.length == 0 && test1FauteMax(strtest,strmodele)) || 
-    (strmodele.length - strtest.length == 1 && testDecalage(strtest,strmodele)) || 
-    (strtest.length - strmodele.length == 1 && testDecalage(strmodele,strtest))
+    (strmodele.length - strtest.length == 0 && test1FauteMax(
+      strtest,
+      strmodele
+    )) ||
+    (strmodele.length - strtest.length == 1 && testDecalage(
+      strtest,
+      strmodele
+    )) ||
+    (strtest.length - strmodele.length == 1 && testDecalage(strmodele, strtest))
   }
 
   /** prends deux string de meme taille et renvoie si elles sont décalées de 1 (en gros si il y a une lettre erronée)
@@ -58,7 +62,10 @@ object FautesImpl extends FautesTrait {
     */
   def test1FauteMax(strtest: String, strmodele: String): Boolean = {
     strtest.isEmpty() ||
-    (strtest(0) == strmodele(0) && test1FauteMax(strtest.tail,strmodele.tail)) ||
+    (strtest(0) == strmodele(0) && test1FauteMax(
+      strtest.tail,
+      strmodele.tail
+    )) ||
     strtest.tail == strmodele.tail
   }
 
@@ -70,7 +77,10 @@ object FautesImpl extends FautesTrait {
     */
   def testDecalage(strtest: String, strmodele: String): Boolean = {
     strtest.isEmpty() ||
-    (strtest(0) == strmodele(0) && testDecalage(strtest.tail,strmodele.tail)) ||
+    (strtest(0) == strmodele(0) && testDecalage(
+      strtest.tail,
+      strmodele.tail
+    )) ||
     strtest == strmodele.tail
   }
 
@@ -81,7 +91,8 @@ object FautesImpl extends FautesTrait {
     */
   def clearAccentToMaj(mots: List[String]): List[String] = {
     mots match {
-      case head :: next => stripAccents(head).toUpperCase :: clearAccentToMaj(next)
+      case head :: next =>
+        stripAccents(head).toUpperCase :: clearAccentToMaj(next)
       case Nil => Nil
     }
   }
