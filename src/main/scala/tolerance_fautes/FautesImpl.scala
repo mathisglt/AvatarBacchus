@@ -26,6 +26,7 @@ object FautesImpl extends FautesTrait {
     * @return l'emplacement du mot le plus proche dans la liste ou -1 s'il n'y en a pas (si c'est un petit mot on ne regarde plus)
     */
   def testChaqueMot(motATester: String, modeles: List[String]): Int = {
+    if (motATester.length <= 2) { return -1 }
     val test = modeles.indexWhere((modele) => modele == motATester)
     if (test != (-1)) { test }
     else {
