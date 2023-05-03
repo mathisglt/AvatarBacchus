@@ -38,6 +38,7 @@ class SendButton(conv: BoxPanel, scrollBar: ScrollBar, from: InField)
       écritPuisDis(MachineImpl.ask(from.text))
       from.text = "" // efface la zone de texte
       scrollToBottom() // actualise la scrollBar
+      conv.peer.updateUI() // actualise la fenêtre
     }
   }
 
@@ -47,6 +48,7 @@ class SendButton(conv: BoxPanel, scrollBar: ScrollBar, from: InField)
         conv.contents += new RobotPanel(
           head
         ) // ajout à la conversation de la/les reponse(s) du robot
+        scrollToBottom() // actualise la scrollBar
         conv.peer.updateUI() // actualise la fenêtre
         Future {
           if (active) {
