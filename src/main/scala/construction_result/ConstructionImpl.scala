@@ -103,11 +103,10 @@ object ConstructionImpl extends ConstructionTrait {
     val dicoExpr = AnalyseImpl.getDicoLangue
     resultAnalyse match {
       case Nil => dicoExpr(3) // "Je ne comprends pas votre demande"
-      case head :: Nil if (head == ("",""))=> dicoExpr(3) // "Je ne comprends pas votre demande"
+      case head :: Nil if (head == ("","")) => dicoExpr(3) // si la requete est "restaurant [mot_random]"
       case head :: Nil => dicoExpr(2).replace("XXX", head._1) + " : " + head._2 // "L'adresse de XXX est"
-      case head :: next => 
-        // il est normalement impossible de rentrer dans ce case car ce cas est gere dans la fonction precedente
-        dicoExpr(3) // on renvoie cette reponse au cas ou
+      case head :: next => // il est normalement impossible de rentrer dans ce case car ce cas est gere dans la fonction precedente
+        "" // on renvoie cette reponse au cas ou
     }
   }
 
@@ -123,4 +122,5 @@ object ConstructionImpl extends ConstructionTrait {
     val question_choix = dicoExpr(7) // "Quel est votre choix?"
     nb_rep :: (lieu_avec_numero :+ question_choix)
   }
+  
 }
