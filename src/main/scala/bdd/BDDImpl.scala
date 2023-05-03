@@ -1,15 +1,16 @@
 package bdd
+
 import scala.io.{Source, BufferedSource}
 import scala.xml.{XML, NodeSeq}
 import java.io.{File, PrintWriter}
 import java.text.Normalizer
 import java.util.ArrayList
 import scala.collection.mutable.ArrayBuffer
-import bdd.BaseDeDonnees
 
 
 object BDDImpl extends BaseDeDonnees {
-  // TEST2
+
+  //Variables utilisées
 
   val lignesBDD = Source.fromFile("doc/DonneesInitiales.txt").getLines.toArray
   var banwords = Set("")
@@ -28,8 +29,7 @@ object BDDImpl extends BaseDeDonnees {
   }
 
   def removeLiaisonAccentsWords(str: String): String = {
-    val liaisonWords =
-      List("de", "des", "du", "le", "la", "les", "un", "une", "et")
+    val liaisonWords = List("de", "des", "du", "le", "la", "les", "un", "une", "et")
     val words = str.split("\\s+")
     val result = words.flatMap { word =>
       val lowerWord = word.toLowerCase
@@ -38,17 +38,18 @@ object BDDImpl extends BaseDeDonnees {
     }
     removeAccents(result.mkString(" ").replaceAll("d'", ""))
   }
+
   def chercherAdresse(mot: String): String = {
     if (mot.isEmpty()) return "Adresse non trouvée"
     for (ligne <- lignesBDD) {
       val fields = ligne.split(";")
       // Si le mot n'apparait qu'une fois dans les lieux possibles
       if (lignesBDD.filter(x => x.contains(mot)).length <= 1) {
-        //Si c'est un mot variant , on récupère son adresse liée
+        // Si c'est un mot variant, on récupère son adresse liée
         if (variancesaddr.contains(mot.toLowerCase())) {
           return variancesaddr.getOrElse(mot.toLowerCase(), "")
         }
-        //Sinon on récupère son adresse
+        // Sinon on récupère son adresse
         else if (
           ((fields(0).toLowerCase).contains(" " + mot.toLowerCase())
             || (fields(0).toLowerCase).contains(mot.toLowerCase() + " "))
@@ -98,6 +99,11 @@ object BDDImpl extends BaseDeDonnees {
     "Lieu non trouvé"
   }
 
+  /** Récupère les mots des endroits où aller
+    *
+    * @param file un fichier (ici pour utiliser le fichier donneesInitiales)
+    * @return une array[String] contenant les endroits où aller
+    */
   def recupLieux(file: BufferedSource): List[String] = {
     val listeFinale = ArrayBuffer[String]()
     for (line <- file.getLines()) {
@@ -106,9 +112,11 @@ object BDDImpl extends BaseDeDonnees {
     listeFinale.toList
   }
 
+  /** Creer la variable dictionnaireExpressionsInternationale accessible par getDicoExpr
+    * 
+    */
   def createDicoExpr(): Unit = {
-    val lignesInter =
-      Source.fromFile("partie2/international.txt").getLines.toList
+    val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
     var listefr = List[String]()
     var listeen = List[String]()
     var listees = List[String]()
@@ -132,14 +140,12 @@ object BDDImpl extends BaseDeDonnees {
         for (i <- index + 1 to index + 9) {
           listees = listees ::: lignesInter(i) :: Nil
         }
-
       }
       if (lignes.equals("Allemand:")) {
         val index = lignesInter.indexOf(lignes)
         for (i <- index + 1 to index + 9) {
           listede = listede ::: lignesInter(i) :: Nil
         }
-
       }
       if (lignes.equals("Italien:")) {
         val index = lignesInter.indexOf(lignes)
@@ -147,13 +153,15 @@ object BDDImpl extends BaseDeDonnees {
           listeit = listeit ::: lignesInter(i) :: Nil
         }
       }
-      dictionnaireExpressionsInternationale =
-        listefr :: listeen :: listees :: listede :: listeit :: Nil
+      dictionnaireExpressionsInternationale = listefr :: listeen :: listees :: listede :: listeit :: Nil
     }
   }
+
+  /** Creer la variable dictionnairePRNInternationale accessible par getDicoPRN
+    * 
+    */
   def createDicoPRN(): Unit = {
-    val lignesInter =
-      Source.fromFile("partie2/international.txt").getLines.toList
+    val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
     var listefr, listeen, listees, listede, listeit = List[String]()
     for (lignes <- lignesInter) {
       if (lignes.contains("Français:") && !lignes.equals("Français:")) {
@@ -176,22 +184,14 @@ object BDDImpl extends BaseDeDonnees {
         listeit = listeit ::: lignes.split(":")(1).split(",").toList
         listeit = listeit.map(_.replaceAll(" ", ""))
       }
-      dictionnairePRNInternationale =
-        listefr :: listeen :: listees :: listede :: listeit :: Nil
+      dictionnairePRNInternationale = listefr :: listeen :: listees :: listede :: listeit :: Nil
     }
   }
+  
   def createDicoSalutations(langueActuelleStr: String, langueActuelle: Int): List[String] = {
     val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
     val listeSalutations = List[String](lignesInter(7 + langueActuelle))
     val listeSansLangue = listeSalutations(0).split(": ")
-    val listeFinale = listeSansLangue(1).split(",").toList
-    listeFinale
-  }
-
-  def createDicoRecherche(langueActuelleStr: String, langueActuelle: Int): List[String] = {
-    val lignesInter = Source.fromFile("partie2/international.txt").getLines.toList
-    val listeRecherche= List[String](lignesInter(14 + langueActuelle))
-    val listeSansLangue = listeRecherche(0).split(": ")
     val listeFinale = listeSansLangue(1).split(",").toList
     listeFinale
   }
@@ -214,6 +214,7 @@ object BDDImpl extends BaseDeDonnees {
   def getDicoExpr(): List[List[String]] = {
     createDicoExpr; dictionnaireExpressionsInternationale
   }
+
   def getDicoPRN(): List[List[String]] = {
     createDicoPRN; dictionnairePRNInternationale
   }
@@ -222,6 +223,11 @@ object BDDImpl extends BaseDeDonnees {
     val dico = lignesBDD.flatMap(_.split(";").head.split("\\s+")).toList
     dico.map(mot => removeAccents(mot.toLowerCase))
   }
+
+  /** Récupère le fichier xml et récupère les noms trouvés dans la balise name , et les lieux associés dans la balise name de street
+    *
+    * @return la liste de couple (lieu, adresse) de la base de donnees de Rennes (1629 couples)
+    */
   def createListFromXML(): List[(String, String)] = {
     val organizations = xml \\ "organization"
     organizations.flatMap { organization =>
@@ -235,6 +241,10 @@ object BDDImpl extends BaseDeDonnees {
     }.toList
   }
 
+  /** Renvoie les lieux trouvés dans le fichier xml
+    *
+    * @return la liste des lieux
+    */
   def createListLieuFromXML(): List[String] = {
     val organizations = xml \\ "organization"
     organizations.flatMap { organization => 
@@ -245,8 +255,4 @@ object BDDImpl extends BaseDeDonnees {
         if (name.nonEmpty && streetName.nonEmpty && cityName.equals("Rennes")) Some(name) else None // on ne prend le lieu que s'il a une adresse et dans Rennes
     }.toList
   }
-
-
-
-
 }
