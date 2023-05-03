@@ -9,6 +9,7 @@ import langue.LangueImpl
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
+import javax.swing.ImageIcon
 
 /** Création du bouton pour envoyer un message
   * @param conv la conversation à laquelle ajouter le message
@@ -19,15 +20,17 @@ class SendButton(conv: BoxPanel, scrollBar: ScrollBar, from: InField)
     extends Button {
   var active: Boolean = false;
   text = "Envoyer" // texte du bouton
-  maximumSize = new Dimension(120, 40) // taille max du bouton
+  maximumSize = new Dimension(130, 40) // taille max du bouton
   foreground = Color.white // couleur de la police
   background = new Color(0xff2c29) // couleur de fond du bouton
   font = new Font("Arial", Font.BOLD, 16) // choix de la police et de la taille
   borderPainted = false // bordure invisible
   focusPainted = false // tour du texte désactivé
-  contentAreaFilled =
-    true // activation du changelent de couleur au moment du clic
+  contentAreaFilled = true // activation du changelent de couleur au moment du clic
   opaque = true // bouton opaque
+  val image = new ImageIcon("doc/send.png").getImage()
+  val newImage = image.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)
+  icon = new ImageIcon(newImage)
   listenTo(from.keys) // detecte l'activation des touches dans la zone de texte
   reactions += { // actions réalisée quand le bouton ou la touche "Entrée" sont cliqués
     case ButtonClicked(_) | KeyPressed(_, Key.Enter, _, _)
