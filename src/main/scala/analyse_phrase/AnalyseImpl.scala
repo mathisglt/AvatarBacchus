@@ -11,7 +11,7 @@ object AnalyseImpl extends AnalyseTrait {
   //Variables globales
 
   /*
-    on va stocker dans 'liste_mots_bdd_xml' la liste des mots qui composent les lieux de la bdd xml
+    On va stocker dans 'liste_mots_bdd_xml' la liste des mots qui composent les lieux de la bdd xml
     - sans accents
     - en minuscules
     - sans doublons (.distinct)
@@ -31,7 +31,7 @@ object AnalyseImpl extends AnalyseTrait {
     // on enleve les mots de recherche et de politesse :
     val sans_rech_poli = filtrePolitesseRecherche(sans_liaison)
     // on retire les caracteres autres que des lettres non-accentuees (les tirets par exemple)
-    val sans_caracteres_douteux = sans_rech_poli.replaceAll("-"," ")//replaceAll("[^a-zA-Z0-9]", " ")
+    val sans_caracteres_douteux = sans_rech_poli.replaceAll("-"," ") // replaceAll("[^a-zA-Z0-9]", " ")
     // on passe la phrase en minuscules
     val en_minuscules = sans_caracteres_douteux.toLowerCase()
     // a ce stade, on cherche "tnb" et "hotel ville" :
@@ -89,25 +89,26 @@ object AnalyseImpl extends AnalyseTrait {
     }
   }
 
-  /** découpe un string en liste de mots
+  /** Découpe un string en liste de mots
     *
     * @param phrase qui est le string à découper
     * @return une liste de string représentant la phrase decoupee
     */
-  def decouper(phrase: String): List[String] =
+  def decouper(phrase: String): List[String] ={
     phrase.split("[ .!?,;'()]+").toList
+  }
 
-  /**  assemble une liste de mot (string) pour former une phrase sous forme de string avec un espace entre chaque mot
+  /** Assemble une liste de mots (string) pour former une phrase sous forme de string avec un espace entre chaque mot
     *
-    *  @param list une list de mot
-    *  @return un string qui sera la phrase décrit par les éléments de départ
+    * @param list une liste de mots
+    * @return un string qui sera la phrase décrite par les éléments de départ
     */
   def assembler(list: List[String]): String = {
     if (list.isEmpty) return ""
     else list.reduce(_ + " " + _)
   }
 
-  /** permet de retirer les mots de liaisons de phrase sous formes de liste de string
+  /** Permet de retirer les mots de liaisons de phrase sous formes de liste de string
     * - on retire les mots ayant une longueur inf a 2
     * - on retire d'autres mots choisis
     *
@@ -121,7 +122,7 @@ object AnalyseImpl extends AnalyseTrait {
     requete.filter(mot => !liaisons.contains(mot.toLowerCase())).filter(_.length > 1)
   }
 
-  /** enleve de la requete du user tous les mots de Recherche ou de Politesse (on enleve "Rennes" aussi)
+  /** Enleve de la requete du user tous les mots de Recherche ou de Politesse (on enleve "Rennes" aussi)
     *
     * @param requete la requete du user (String)
     * @return la requete sans les mots de Recherche ou de Politesse
@@ -140,16 +141,17 @@ object AnalyseImpl extends AnalyseTrait {
   def getAdressFromHtml(html: Html): (String, String) = {
     val objFiltrageUrls: URLFiltres = new URLFiltres
     val cleanhtml = objFiltrageUrls.filtreAnnonce(html)
-    if (cleanhtml.isEmpty){return ("","")}
-    val htmldeladresse =
-      OutilsWebObjet.obtenirHtml("https://www.linternaute.com/" + cleanhtml(0))
+    if (cleanhtml.isEmpty){
+      return ("","")
+    }
+    val htmldeladresse = OutilsWebObjet.obtenirHtml("https://www.linternaute.com/" + cleanhtml(0))
     return (
       objFiltrageUrls.filtreAnnonceNom(htmldeladresse)(0),
       objFiltrageUrls.filtreAnnonceAdresse(htmldeladresse)(0)
     )
   }
 
-  /** on cherche tous les lieux que cherche le user dans sa requete en regardant chaque mot un à un
+  /** On cherche tous les lieux que cherche le user dans sa requete en regardant chaque mot un à un
     * attention : les filtres anti parasites sont déjà appliqués
     *
     * @param requete la requete du user en List[String]
@@ -158,12 +160,11 @@ object AnalyseImpl extends AnalyseTrait {
   def analyserList(requete: List[String]): List[String] = {
     requete match {
       case Nil => Nil
-      case head :: next =>
-        quiContient(head, BDDImpl.xmlListLieu) ++ analyserList(next)
+      case head :: next => quiContient(head, BDDImpl.xmlListLieu) ++ analyserList(next)
     }
   }
 
-  /** cherche tous les lieux de la bdd qui contiennent le mot passé en param
+  /** Cherche tous les lieux de la bdd qui contiennent le mot passé en param
     *
     * @param mot le mot que l'on cherche dans la base de données
     * @param list, la liste des lieux de vAr.xml (à Rennes et ayant une adresse)
@@ -171,15 +172,11 @@ object AnalyseImpl extends AnalyseTrait {
     */
   def quiContient(mot: String, list: List[String]): List[String] = {
     list match {
-      case Nil          => Nil
+      case Nil => Nil
       case head :: next =>
         // on cherchera si mot est bien un mot complet dans l'adresse :
         // (on prend la premiere adresse, on lui enleve les parasites, on le met en min, on remplace les "-" par des " ")
-        val head_to_list = decouper(
-          BDDImpl.removeLiaisonAccentsWords(
-            BDDImpl.removeAccents(head.toLowerCase()).replace("-", " ")
-          )
-        )
+        val head_to_list = decouper(BDDImpl.removeLiaisonAccentsWords(BDDImpl.removeAccents(head.toLowerCase()).replace("-", " ")))
         if (head_to_list.contains(mot)) head :: quiContient(mot, next)
         else quiContient(mot, next)
     }
@@ -187,8 +184,7 @@ object AnalyseImpl extends AnalyseTrait {
 
   def analyserChoix(requete: String): Option[Int] = {
     val requete_decoupee = decouper(requete)
-    val nombre_only =
-      requete_decoupee.map(mot => mot.replaceAll("\\D", "")).filter(_ != "")
+    val nombre_only = requete_decoupee.map(mot => mot.replaceAll("\\D", "")).filter(_ != "")
     nombre_only match {
       case Nil => None
       case head :: Nil =>
@@ -276,8 +272,7 @@ object AnalyseImpl extends AnalyseTrait {
       List("français", "english", "español", "deutsch", "italiano")
     )
     phrase_corrigee match {
-      case Nil =>
-        (false, LangueImpl.getLangueActuelle(), LangueImpl.getLangueActuelle())
+      case Nil => (false, LangueImpl.getLangueActuelle(), LangueImpl.getLangueActuelle())
       case head :: next =>
         val langue = BDDImpl.langueDuMot(head)
         langue match {
@@ -291,5 +286,4 @@ object AnalyseImpl extends AnalyseTrait {
         }
     }
   }
-
 }
