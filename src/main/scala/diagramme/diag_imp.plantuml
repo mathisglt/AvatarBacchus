@@ -13,11 +13,15 @@ interface AnalyseTrait{
 }
 
 interface BDDTrait{
+	removeAccents(str: String): String 
+	removeLiaisonAccentsWords(str: String): String 
 	chercherAdresse(str:String): String
-	recupLieux(file:BufferedSource):List[String]
 	chercherLieu(mot: String): String
-	getDicoExpr(): Array[Array[String]]
-	getDicoPRN(): Array[Array[String]]
+	createDicoSalutations(langueActuelleStr: String, langueActuelle: Int): List[String] 
+	langueDuMot(mot: String): String 
+	getDicoExpr(): List[List[String]]
+	getDicoPRN(): List[List[String]]
+	recuplieuxBases() : List[String]
 }
 
 interface ConstructionTrait{
