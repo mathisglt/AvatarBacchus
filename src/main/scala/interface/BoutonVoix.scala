@@ -4,6 +4,7 @@ import scala.swing._
 import event._
 import java.awt.{Color, Font}
 import machine.MachineImpl
+import javax.swing.ImageIcon
 
 /**
   * Création du bouton pour activer ou desactive la voix
@@ -17,6 +18,9 @@ class BoutonVoix(conv: BoxPanel,send : SendButton) extends Button{
   focusPainted = false                      // tour du texte désactivé
   contentAreaFilled = true                  // activation du changelent de couleur au moment du clic
   opaque = true                             // bouton opaque
+  val image = new ImageIcon("doc/mic.png").getImage()
+  val newImage = image.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)
+  icon = new ImageIcon(newImage)
   text = "Voix : Désactivé"    // texte du bouton
   reactions +={                             // actions effectuées par le bouton
   case ButtonClicked(_) => {
@@ -25,7 +29,6 @@ class BoutonVoix(conv: BoxPanel,send : SendButton) extends Button{
                              }
                              else {
                                 text = "Voix : Activé"
-                                
                              }
                              send.active = !send.active
                              conv.peer.updateUI;       // actualisation de l'affichage

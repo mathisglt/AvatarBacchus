@@ -4,6 +4,7 @@ import scala.swing._
 import event._
 import java.awt.{Color, Font}
 import machine.MachineImpl
+import javax.swing.ImageIcon
 
 /**
   * Création du bouton pour reinitiliser la conversation 
@@ -18,6 +19,9 @@ class ReinitButton(conv: BoxPanel) extends Button{
   contentAreaFilled = true                  // activation du changelent de couleur au moment du clic
   opaque = true                             // bouton opaque
   text = "Réinitialiser la conversation"    // texte du bouton
+  val image = new ImageIcon("doc/reset.png").getImage()
+  val newImage = image.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)
+  icon = new ImageIcon(newImage)
   reactions +={                             // actions effectuées par le bouton
     case ButtonClicked(_) => {conv.contents.clear(); // vide le contenu du panel de conversation
                               MachineImpl.reinit()
