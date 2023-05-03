@@ -1,8 +1,8 @@
 package VoiceManagement
 
 import javax.sound.sampled.AudioInputStream
-import marytts.{LocalMaryInterface,MaryInterface}
-import marytts.exceptions.{MaryConfigurationException,SynthesisException}
+import marytts.{LocalMaryInterface, MaryInterface}
+import marytts.exceptions.{MaryConfigurationException, SynthesisException}
 import marytts.util.data.audio.AudioPlayer
 import java.io.IOException
 import marytts.server.Mary
@@ -27,7 +27,6 @@ object Voice extends VoiceTrait {
   }
 
   /** Lit les messages dans la file d'attente
-    *   
     */
   def lire(): Unit = {
     fileAttente.synchronized {
@@ -75,7 +74,7 @@ object Voice extends VoiceTrait {
       Thread.sleep(TempsFichier + 1500)
     } catch {
       case ex: SynthesisException =>
-        throw new Exception("impossible de dire la phrase")
+        ()
     } finally {
       lire()
     }
