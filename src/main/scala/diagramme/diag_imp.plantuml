@@ -1,11 +1,15 @@
 @startuml Avatar
 
 ' Création des interfaces
+
 interface AnalyseTrait{
 	analyser(phrase: String): List[(String,String)]
-	politeTest_Bonjour(phrase: String): Boolean
-	politeTest_OnlyBonjour(phrase: String): Boolean
+	analyserChoix(requete: String): Option[Int]
+	politeTest_Bonjour(phrase: String): (Boolean, String)
+	politeTest_OnlyBonjour(phrase: String): (Boolean, String)
 	getDicoLangue(): List[String]
+	getDicoLangue(lang: Int): List[String]
+	detecLangue(phrase: String): (Boolean, Int, Int)
 }
 
 interface BDDTrait{
@@ -17,7 +21,7 @@ interface BDDTrait{
 }
 
 interface ConstructionTrait{
-	construireLangue(requete: String): List[String]
+	construire(requete: String): List[String]
 	construireConfirmation(requete: String, langueActuelle: Int): String
 }
 
@@ -46,7 +50,12 @@ interface VoiceTrait{
 	ajouteMessage(message: String, langue: Int): Unit
 }
 
+
 ' Création des objects
+
+' Objet issu du projet Robot Web 
+class AnalyseHtml <<(O,LightGreen)>> 
+
 class AnalyseImpl <<(O,Orange)>>
 class BDDImpl <<(O,Orange)>>
 class ConstructionImpl <<(O,Orange)>>
@@ -73,6 +82,7 @@ ConstructionTrait --> AnalyseTrait
 AnalyseTrait -> LangueTrait
 AnalyseTrait --> FautesTrait
 AnalyseTrait --> BDDTrait
+AnalyseHtml <- AnalyseTrait
 MachineDialogue --> LangueTrait
 
 @enduml
