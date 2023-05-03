@@ -2,14 +2,16 @@ package construction_result
 
 trait ConstructionTrait {
 
-  /** Si une langue est détectée, on demande à l'utilisateur s'il parle cette langue,
-    * sinon on renvoie les réponses du robot correspondantes à la requête 
+  /**
+    * fonction de lancement de la construction de la réponse du robot
+    * - elle s'adressera dans la bonne langue avec construireLangue
+    * - elle ajoutera eventuellement 'bonjour' avec construirePolitesse
+    * - elle construira ensuite la liste de reponses avec construireLesReponses, construireReponseUnique et construireLesPropositions
     *
-    * @param requete, la requête de l'utilisateur
-    * @return soit, la question pour demander à l'utilisateur s'il parle la langue détectée
-    * soit, les réponses du robot à la requête
+    * @param requete la requete du user
+    * @return la liste complete de reponses du robot bien construite
     */
-  def construireLangue(requete: String): List[String]
+  def construire(requete: String): List[String]
 
   /** Renvoie la confirmation à l'utilisateur que la langue à bien été changée 
     * si sa requête était "oui" dans la même langue, et renvoie "Pas de confirmation" sinon 

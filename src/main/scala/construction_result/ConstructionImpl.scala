@@ -10,16 +10,10 @@ object ConstructionImpl extends ConstructionTrait {
   var choix_en_cours = false // devient true lorsque le user doit effectuer un choix entre plusieurs lieux proposés
   var liste_propositions_saved: List[String] = List() // contient la liste des lieux proposés à l'utlisateur
 
-  def construireLangue(requete: String): List[String] = {
-    val detection = AnalyseImpl.detecLangue(requete) // recherche de mots de détection dans la phrase
-    val dicoExpr = AnalyseImpl.getDicoLangue(detection._2) // on récupère le dico correspondant à la langue détéctée
-    if (detection._1 && detection._2 != detection._3) { 
-      // detection._1 = une langue est détéctée, detection._2 = la langue détéctée, detection._3 la langue actuelle car construction n'y a pas accès
-      dicoExpr(4) :: Nil 
-      // on renvoie la question correspondante si jamais la langue détectée est différente de la langue actuelle
-    } else {
-      construirePolitesse(requete)
-    }
+  // méthodes de constructions :
+
+  def construire(requete: String): List[String] = {
+    construireLangue(requete)
   }
 
   def construireConfirmation(requete: String, langueActuelle: Int): String = {
@@ -31,6 +25,25 @@ object ConstructionImpl extends ConstructionTrait {
       case "ja" if (langueActuelle == 3)  => dicoExpr(5) //"Okay, was ist Ihr Wunsch?"
       case "si" if (langueActuelle == 4)  => dicoExpr(5) //"Va bene, qual è la tua richiesta?"
       case _                              => "Pas de confirmation"
+    }
+  }
+
+  /** Si une langue est détectée, on demande à l'utilisateur s'il parle cette langue,
+    * sinon on renvoie les réponses du robot correspondantes à la requête 
+    *
+    * @param requete, la requête de l'utilisateur
+    * @return soit, la question pour demander à l'utilisateur s'il parle la langue détectée
+    * soit, les réponses du robot à la requête
+    */
+  def construireLangue(requete: String): List[String] = {
+    val detection = AnalyseImpl.detecLangue(requete) // recherche de mots de détection dans la phrase
+    val dicoExpr = AnalyseImpl.getDicoLangue(detection._2) // on récupère le dico correspondant à la langue détéctée
+    if (detection._1 && detection._2 != detection._3) { 
+      // detection._1 = une langue est détéctée, detection._2 = la langue détéctée, detection._3 la langue actuelle car construction n'y a pas accès
+      dicoExpr(4) :: Nil 
+      // on renvoie la question correspondante si jamais la langue détectée est différente de la langue actuelle
+    } else {
+      construirePolitesse(requete)
     }
   }
 
@@ -71,7 +84,7 @@ object ConstructionImpl extends ConstructionTrait {
           else { List(dicoExpr(3)) } // "Je ne comprends pas votre demande"
       }
     }
-    // lorsque l'on a plusieurs lieux a proposer, on va construire la liste de message les presentant :
+    // lorsque l'on a plusieurs lieux a proposer, on va construire la liste de messages les presentant :
     else if (liste_couples.length > 1) {
       choix_en_cours = true
       construireLesPropositions(liste_lieux)

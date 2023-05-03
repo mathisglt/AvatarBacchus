@@ -8,7 +8,7 @@ object MachineImpl extends MachineDialogue {
   var changementEnCours = false //changement de langue en cours
 
   def ask(requete: String): List[String] = {
-    val msgRobot = ConstructionImpl.construireLangue(requete) //renvoie le message du robot
+    val msgRobot = ConstructionImpl.construire(requete) //renvoie le message du robot
 
     if (!changementEnCours) {
       //s'il n'y a pas de changement de langue en cours et que le message du robot est une question pour savoir la langue,
