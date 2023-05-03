@@ -33,9 +33,10 @@ class SendButton(conv: BoxPanel,scrollBar: ScrollBar, from: InField) extends But
             conv.peer.updateUI; // actualise la fenêtre
             if(active){
               if(MachineImpl.getLangueActuelle()!=2){ // on vérifie que la langue n'est pas espagnol car la voix n'existe pas
-              val langue = MachineImpl.getLangueActuelle()
+              
               Voice.ajouteMessage(reponse,MachineImpl.getLangueActuelle()) // on ajoute tous les messages à la file d'attente pour la lecture avec la bonne langue
               }
+              else Voice.ajouteMessage(reponse,4) // Si le message est espagnol , on le fait parler avec la voix italienne car la voix espagnole n'existe pas
             }
         }
         from.text = ""; // efface la zone de texte
