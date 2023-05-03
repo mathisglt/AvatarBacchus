@@ -55,8 +55,9 @@ object ConstructionImpl extends ConstructionTrait {
   def construirePolitesse(requete: String): List[String] = {
     val couple = AnalyseImpl.politeTest_OnlyBonjour(requete)
     val couple2 = AnalyseImpl.politeTest_Bonjour(requete)
-    if (couple._1) couple._2 :: Nil // couple._1 = seulement bonjour, couple._2 = bonjour dans la langue correspondante
-    else if (couple2._1) couple2._2 :: construireLesReponses(requete) // couple2._1 = bonjour + une requete, couple._2 = bonjour dans la langue correspondante
+    val rep = couple2._2.capitalize
+    if (couple._1) rep:: Nil // couple._1 = seulement bonjour, couple._2 = bonjour dans la langue correspondante
+    else if (couple2._1) rep :: construireLesReponses(requete) // couple2._1 = bonjour + une requete, couple._2 = bonjour dans la langue correspondante
     else construireLesReponses(requete) // reponse du bot sans politesse
   }
 
@@ -104,6 +105,7 @@ object ConstructionImpl extends ConstructionTrait {
     resultAnalyse match {
       case Nil => dicoExpr(3) // "Je ne comprends pas votre demande"
       case head :: Nil if (head == ("","")) => dicoExpr(3) // si la requete est "restaurant [mot_random]"
+      case head :: Nil if (head == ("ca","va")) => "Ça va super ! J'espère que c'est aussi votre cas . :)"
       case head :: Nil => dicoExpr(2).replace("XXX", head._1) + " : " + head._2 // "L'adresse de XXX est"
       case head :: next => // il est normalement impossible de rentrer dans ce case car ce cas est gere dans la fonction precedente
         "" // on renvoie cette reponse au cas ou

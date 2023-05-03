@@ -42,6 +42,7 @@ object AnalyseImpl extends AnalyseTrait {
         return List((BDDImpl.chercherLieu(elem._2), BDDImpl.chercherAdresse(elem._2)))
       }
     }
+    if (en_minuscules == "ca va" ||en_minuscules =="sa va") return("ca","va")::Nil
     val langue = LangueImpl.getLangueActuelle()
     val dicoExpr = BDDImpl.getDicoExpr()(langue)(8).split(",")
     correction = FautesImpl.correction(correction.split(" ").toList, dicoExpr.toList).mkString(" ")
