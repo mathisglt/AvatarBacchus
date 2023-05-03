@@ -4,6 +4,7 @@ import scala.swing._
 import java.io.File
 import scala.swing.event.{ButtonClicked,KeyPressed,Key}
 import java.awt.{Image, Toolkit, Color}
+import javax.swing.ImageIcon
 
 object InterfaceGraphique extends SimpleSwingApplication{
 
@@ -13,7 +14,11 @@ object InterfaceGraphique extends SimpleSwingApplication{
 class UI extends MainFrame {
 
     title = "Avatar"
+    val image = new ImageIcon("doc/bzhicon.png").getImage()
+    val newImage = image.getScaledInstance(60, 45, java.awt.Image.SCALE_SMOOTH)
+    iconImage = newImage
     preferredSize = new Dimension (1020,750)
+    minimumSize = new Dimension (1020,750)
 
     //Création des composants
     val input = new InField                                // zone de texte à taper
