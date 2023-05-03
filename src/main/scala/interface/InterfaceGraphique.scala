@@ -28,12 +28,13 @@ class UI extends MainFrame {
     var scrollBar = scrollPanel.verticalScrollBar          // création de la barre de scroll
     val reinit = new ReinitButton(conversation)            // création du bouton de réinitialisation
     val send = new SendButton(conversation,scrollBar,input) // création du bouton d'envoie
-             
+    val voice = new BoutonVoix(conversation,send)           //création du bouton activateur de la voix (F8)
     // Ajout des composants à la fenêtre
     contents = new BoxPanel(Orientation.Vertical) {        // panel principal
       background = grisFonce
       contents += new BoxPanel(Orientation.Horizontal) {   // panel contenant le bouton de reinitialisation
         contents += reinit
+        contents += voice
       }
       contents += scrollPanel                              // ajout du panel avec la conversation
       contents += new BoxPanel(Orientation.Horizontal) {   // panel en bas avec la zone de texte et le bouton envoi

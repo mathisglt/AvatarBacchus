@@ -5,6 +5,7 @@ import event._
 import java.awt.{Color, Font}
 import machine.MachineImpl
 import VoiceManagement.Voice
+import langue.LangueImpl
 
 /**
   * Création du bouton pour envoyer un message
@@ -13,6 +14,7 @@ import VoiceManagement.Voice
   * @param from la zone de texte dans laquelle récupérer le message
   */
 class SendButton(conv: BoxPanel,scrollBar: ScrollBar, from: InField) extends Button{
+  var active: Boolean = false;
   text = "Envoyer"                         // texte du bouton
   maximumSize = new Dimension(120,40)      // taille max du bouton
   foreground = Color.white                 // couleur de la police
@@ -24,17 +26,22 @@ class SendButton(conv: BoxPanel,scrollBar: ScrollBar, from: InField) extends But
   opaque = true                            // bouton opaque
   listenTo(from.keys)                      // detecte l'activation des touches dans la zone de texte
   reactions += {                           // actions réalisée quand le bouton ou la touche "Entrée" sont cliqués
-  case ButtonClicked(_) | KeyPressed(_, Key.Enter, _, _) if(from.text != "")=> {conv.contents += new UserPanel(from.text); // ajout à la conversation d'un message de l'utilisateur avec le texte qu'il a tapé
-                                                                                for (reponse <- MachineImpl.ask(from.text)){
-                                                                                  conv.contents += new RobotPanel(reponse); // ajout à la conversation de la/les reponse(s) du robot
-                                                                                  if(MachineImpl.getLangueActuelle()!=2){ // on vérifie que la langue n'est pas espagnol car la voix n'existe pas
-                                                                                    Voice.ajouteMessage(reponse,MachineImpl.getLangueActuelle()) // on ajoute tous les messages à la file d'attente pour la lecture avec la bonne langue
-                                                                                  }
-                                                                                }
-                                                                                from.text = ""; // efface la zone de texte
-                                                                                conv.peer.updateUI; // actualise la fenêtre
-                                                                                scrollToBottom(); // actualise la scrollBar
-                                                                              }
+  case ButtonClicked(_) | KeyPressed(_, Key.Enter, _, _) if(from.text != "")=> 
+    {conv.contents += new UserPanel(from.text); // ajout à la conversation d'un message de l'utilisateur avec le texte qu'il a tapé
+      for (reponse <- MachineImpl.ask(from.text)){
+            conv.contents += new RobotPanel(reponse); // ajout à la conversation de la/les reponse(s) du robot
+            conv.peer.updateUI; // actualise la fenêtre
+            if(active){
+              if(MachineImpl.getLangueActuelle()!=2){ // on vérifie que la langue n'est pas espagnol car la voix n'existe pas
+              val langue = MachineImpl.getLangueActuelle()
+              Voice.ajouteMessage(reponse,MachineImpl.getLangueActuelle()) // on ajoute tous les messages à la file d'attente pour la lecture avec la bonne langue
+              }
+            }
+        }
+        from.text = ""; // efface la zone de texte
+        conv.peer.updateUI; // actualise la fenêtre
+        scrollToBottom(); // actualise la scrollBar
+      }
   }
   
   /**

@@ -35,7 +35,6 @@ object AnalyseImpl extends AnalyseTrait {
     // a ce stade, on cherche "tnb" et "hotel ville" :
     val exceptions = List(("hotel ville", "mairie"), ("tnb", "tnb"))
     var correction = assembler(FautesImpl.correction(decouper(en_minuscules),List("hotel", "ville", "tnb")))
-    println(correction)
     for (elem <- exceptions) {
       if (correction.contains(elem._1)) {
         return List((BDDImpl.chercherLieu(elem._2), BDDImpl.chercherAdresse(elem._2)))
