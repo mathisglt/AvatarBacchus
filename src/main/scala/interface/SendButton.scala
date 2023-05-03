@@ -35,14 +35,14 @@ class SendButton(conv: BoxPanel, scrollBar: ScrollBar, from: InField)
       conv.contents += new UserPanel(
         from.text
       ) // ajout à la conversation d'un message de l'utilisateur avec le texte qu'il a tapé
-      écritPuisDis(MachineImpl.ask(from.text))
+      ecritPuisDis(MachineImpl.ask(from.text))
       from.text = "" // efface la zone de texte
       scrollToBottom() // actualise la scrollBar
       conv.peer.updateUI() // actualise la fenêtre
     }
   }
 
-  def écritPuisDis(messages: List[String]): Unit = {
+  def ecritPuisDis(messages: List[String]): Unit = {
     messages match {
       case head :: next =>
         conv.contents += new RobotPanel(
@@ -59,7 +59,7 @@ class SendButton(conv: BoxPanel, scrollBar: ScrollBar, from: InField)
               ) // on ajoute tous les messages à la file d'attente pour la lecture avec la bonne langue
             }
           }
-          écritPuisDis(next)
+          ecritPuisDis(next)
         }
       case Nil => ()
     }
