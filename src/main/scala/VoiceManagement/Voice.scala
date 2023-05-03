@@ -16,7 +16,6 @@ object Voice extends VoiceTrait {
   private val interface: MaryInterface = new LocalMaryInterface();
   private var audioPlayer: AudioPlayer = new AudioPlayer();
   private val fileAttente: LinkedList[(String, Int)] = new LinkedList()
-  private val PriseDeParole = new Semaphore(1)
 
   def ajouteMessage(message: String, langue: Int): Unit = {
     fileAttente.synchronized {
@@ -37,7 +36,6 @@ object Voice extends VoiceTrait {
         val langue = fileAttente.getFirst()._2
         fileAttente.removeFirst()
         voice(langue)
-        PriseDeParole.acquire()
         say(message)
       }
     }
@@ -79,7 +77,6 @@ object Voice extends VoiceTrait {
       case ex: SynthesisException =>
         throw new Exception("impossible de dire la phrase")
     } finally {
-      PriseDeParole.release()
       lire()
     }
   }
