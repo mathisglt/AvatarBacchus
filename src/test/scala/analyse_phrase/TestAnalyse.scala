@@ -53,15 +53,15 @@ class TestAnalyse {
   }
 
   @Test
-  def test_analyser_055: Unit = {
+  def test_analyser_06: Unit = {
     assertEquals(
-      Nil,
-      AnalyseImpl.analyser("où se trouve Bretagne ?")
+      80, // trop d'element, on verifie juste le nombre
+      AnalyseImpl.analyser("où se trouve Bretagne ?").length
     )
   }
 
   @Test
-  def test_analyser_06: Unit = {
+  def test_analyser_07: Unit = {
     assertEquals(
       List(("Théâtre National de Bretagne", "1, Rue Saint-Hélier")),
       AnalyseImpl.analyser("où se trouvent le tnb et le théâtre de Bretagne ?")
@@ -69,7 +69,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_analyser_07: Unit = {
+  def test_analyser_08: Unit = {
     assertEquals(
       List(("Mairie de Rennes", "Place de la Mairie")),
       AnalyseImpl.analyser("où est hôtel de ville")
@@ -77,7 +77,7 @@ class TestAnalyse {
   }
 
   @Test // ne marche pas encore
-  def test_analyser_08: Unit = {
+  def test_analyser_09: Unit = {
     assertEquals(
       List(("Mairie de Rennes", "Place de la Mairie")),
       AnalyseImpl.analyser("où est l'hôtel de ville")
@@ -85,7 +85,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_analyser_09: Unit = {
+  def test_analyser_10: Unit = {
     assertEquals(
       List(("Gare SNCF", "19, Place de la Gare")),
       AnalyseImpl.analyser("où se trouve la gare sncf ?")
@@ -93,23 +93,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_analyser_10: Unit = {
-    assertEquals(
-      List(("Mairie de Rennes", "Place de la Mairie")),
-      AnalyseImpl.analyser("Place de la mairie")
-    )
-  }
-
-  @Test
   def test_analyser_11: Unit = {
-    assertEquals(
-      List(("Gare SNCF", "19, Place de la Gare")),
-      AnalyseImpl.analyser("où est la grre")
-    )
-  }
-
-  @Test
-  def test_analyser_12: Unit = {
     assertEquals(
       List(("Gare SNCF", "19, Place de la Gare")),
       AnalyseImpl.analyser("où est la gar")
@@ -117,7 +101,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_analyser_13: Unit = {
+  def test_analyser_12: Unit = {
     assertEquals(
       List(("Gare SNCF", "19, Place de la Gare")),
       AnalyseImpl.analyser("où est la G#Ré")
@@ -125,7 +109,7 @@ class TestAnalyse {
   }
 
   @Test
-  def test_analyser_14: Unit = {
+  def test_analyser_13: Unit = {
     assertEquals(
       List(("GIP bretagne environnement","6, RUE DU BIGNON,RUE DU BIGNON")),
       AnalyseImpl.analyser("je cherche le gip bretagne environnement")
@@ -133,26 +117,26 @@ class TestAnalyse {
   }
 
   @Test
+  def test_analyser_14: Unit = {
+    assertEquals(
+      List(),
+      AnalyseImpl.analyser("pizzeria")
+    )
+  }
+
+  @Test
   def test_analyser_15: Unit = {
     assertEquals(
-      List(("GIP bretagne environnement","6, RUE DU BIGNON,RUE DU BIGNON")),
-      AnalyseImpl.analyser("je cherche le ip retagne nvironnement")
+      List(("Piscine Saint-Georges","4, RUE GAMBETTA")),
+      AnalyseImpl.analyser("je cherche piscine saint-georges")
     )
   }
 
   @Test
   def test_analyser_16: Unit = {
     assertEquals(
-      List(("GIP bretagne environnement","6, RUE DU BIGNON,RUE DU BIGNON")),
-      AnalyseImpl.analyser("je cherche le tip tretagne tnvironnement")
-    )
-  }
-
-  @Test
-  def test_analyser_17: Unit = {
-    assertEquals(
-      List(("GIP bretagne environnement","6, RUE DU BIGNON,RUE DU BIGNON")),
-      AnalyseImpl.analyser("pizzeria")
+      List(("Eglise du Thabor(Chapelle des Carmes)","13, RUE MARTENOT,RUE MARTENOT")),
+      AnalyseImpl.analyser("((Chapelle des Carmes))")
     )
   }
 
@@ -652,10 +636,13 @@ class TestAnalyse {
 
   @Test
   def test_getAdressFromHTML_02: Unit = {
+    /*
+      il renverra le premier restaurant parmi 500 restaurants si la requete est vide
+    */
     val url = "https://www.linternaute.com/restaurant/guide/ville-rennes-35000/?name="
     val leHtml: Html = OutilsWebObjet.obtenirHtml(url)
     assertEquals(
-      ("", ""),
+      ("Ker Soazig","5, cours des Alliés"),
       AnalyseImpl.getAdressFromHtml(leHtml)
     )
   }

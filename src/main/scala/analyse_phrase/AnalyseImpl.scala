@@ -30,8 +30,10 @@ object AnalyseImpl extends AnalyseTrait {
     val sans_liaison = assembler(filtreLiaison(decouper(sans_accents)))
     // on enleve les mots de recherche et de politesse :
     val sans_rech_poli = filtrePolitesseRecherche(sans_liaison)
+    // on retire les caracteres autres que des lettres non-accentuees (les tirets par exemple)
+    val sans_caracteres_douteux = sans_rech_poli.replaceAll("-"," ")//replaceAll("[^a-zA-Z0-9]", " ")
     // on passe la phrase en minuscules
-    val en_minuscules = sans_rech_poli.toLowerCase()
+    val en_minuscules = sans_caracteres_douteux.toLowerCase()
     // a ce stade, on cherche "tnb" et "hotel ville" :
     val exceptions = List(("hotel ville", "mairie"), ("tnb", "tnb"))
     var correction = assembler(FautesImpl.correction(decouper(en_minuscules),List("hotel", "ville", "tnb")))
@@ -70,10 +72,6 @@ object AnalyseImpl extends AnalyseTrait {
     val liste_mots_corriges = FautesImpl.correction(mots_a_corriger,BDDImpl.recuplieuxBases ++ liste_mots_bdd_xml)
     // on concatene les mots corrigés et gardés séparés par des espaces :
     val requete_corrigee = assembler(mots_a_garder ++ liste_mots_corriges)
-    // Cas où l'on demande l'adresse directement, sans aucun mot supplémentaire :
-    if (BDDImpl.chercherAdresse(requete_corrigee) != "Adresse non trouvée") {
-      return List((BDDImpl.chercherLieu(requete_corrigee),BDDImpl.chercherAdresse(requete_corrigee)))
-    }
     // on recupere la liste des lieux potentiels :
     val lieux = analyserList(decouper(requete_corrigee))
     // étude de cas en fonction du nombre de lieux trouvés :
