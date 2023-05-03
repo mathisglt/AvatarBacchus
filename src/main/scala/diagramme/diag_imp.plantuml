@@ -4,9 +4,12 @@
 
 interface AnalyseTrait{
 	analyser(phrase: String): List[(String,String)]
-	politeTest_Bonjour(phrase: String): Boolean
-	politeTest_OnlyBonjour(phrase: String): Boolean
+	analyserChoix(requete: String): Option[Int]
+	politeTest_Bonjour(phrase: String): (Boolean, String)
+	politeTest_OnlyBonjour(phrase: String): (Boolean, String)
 	getDicoLangue(): List[String]
+	getDicoLangue(lang: Int): List[String]
+	detecLangue(phrase: String): (Boolean, Int, Int)
 }
 
 interface BDDTrait{
