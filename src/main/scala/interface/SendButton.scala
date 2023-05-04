@@ -40,7 +40,6 @@ class SendButton(conv: BoxPanel, scrollBar: ScrollBar, from: InField)
       ) // ajout à la conversation d'un message de l'utilisateur avec le texte qu'il a tapé
       ecritPuisDis(MachineImpl.ask(from.text))
       from.text = "" // efface la zone de texte
-      scrollToBottom() // actualise la scrollBar
       conv.peer.updateUI() // actualise la fenêtre
     }
   }
@@ -64,13 +63,13 @@ class SendButton(conv: BoxPanel, scrollBar: ScrollBar, from: InField)
           }
           ecritPuisDis(next)
         }
-      case Nil => ()
+      case Nil => scrollToBottom()
     }
   }
 
   /** Sert à envoyer la scrollBar en bas de la conversation à chaque fois qu'un message est envoyé
     */
   def scrollToBottom(): Unit = {
-    scrollBar.peer.setValue(scrollBar.peer.getMaximum + 1)
+    Swing.onEDT(scrollBar.peer.setValue(scrollBar.peer.getMaximum))
   }
 }
