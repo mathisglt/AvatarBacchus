@@ -16,32 +16,29 @@ import javax.swing.ImageIcon
   * @param scrollBar la scrollBar (on va s'en servir pour actualiser sa position après l'envoi)
   * @param from la zone de texte dans laquelle récupérer le message
   */
-class SendButton(conv: BoxPanel, scrollBar: ScrollBar, from: InField)
-    extends Button {
+class SendButton(conv: BoxPanel, scrollBar: ScrollBar, from: InField) extends Button {
   var active: Boolean = false;
-  text = "Envoyer" // texte du bouton
-  maximumSize = new Dimension(130, 40) // taille max du bouton
-  foreground = Color.white // couleur de la police
-  background = new Color(0xff2c29) // couleur de fond du bouton
-  font = new Font("Arial", Font.BOLD, 16) // choix de la police et de la taille
-  borderPainted = false // bordure invisible
-  focusPainted = false // tour du texte désactivé
-  contentAreaFilled = true // activation du changelent de couleur au moment du clic
-  opaque = true // bouton opaque
+  text = "Envoyer"                          // texte du bouton
+  maximumSize = new Dimension(130, 40)      // taille max du bouton
+  foreground = Color.white                  // couleur de la police
+  background = new Color(0xff2c29)          // couleur de fond du bouton
+  font = new Font("Arial", Font.BOLD, 16)   // choix de la police et de la taille
+  borderPainted = false                     // bordure invisible
+  focusPainted = false                      // tour du texte désactivé
+  contentAreaFilled = true                  // activation du changelent de couleur au moment du clic
+  opaque = true                             // bouton opaque
   val image = new ImageIcon("doc/send.png").getImage()
   val newImage = image.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH)
   icon = new ImageIcon(newImage)
-  listenTo(from.keys) // detecte l'activation des touches dans la zone de texte
-  reactions += { // actions réalisée quand le bouton ou la touche "Entrée" sont cliqués
+  listenTo(from.keys)                       // detecte l'activation des touches dans la zone de texte
+  reactions += {                            // actions réalisée quand le bouton ou la touche "Entrée" sont cliqués
     case ButtonClicked(_) | KeyPressed(_, Key.Enter, _, _)
-        if (from.text != "") => {
-      conv.contents += new UserPanel(
-        from.text
-      ) // ajout à la conversation d'un message de l'utilisateur avec le texte qu'il a tapé
-      ecritPuisDis(MachineImpl.ask(from.text))
-      from.text = "" // efface la zone de texte
-      conv.peer.updateUI() // actualise la fenêtre
-    }
+      if (from.text != "") => {
+        conv.contents += new UserPanel(from.text) // ajout à la conversation d'un message de l'utilisateur avec le texte qu'il a tapé
+        ecritPuisDis(MachineImpl.ask(from.text))
+        from.text = ""                        // efface la zone de texte
+        conv.peer.updateUI()                  // actualise la fenêtre
+      }
   }
 
   def ecritPuisDis(messages: List[String]): Unit = {
@@ -50,8 +47,8 @@ class SendButton(conv: BoxPanel, scrollBar: ScrollBar, from: InField)
         conv.contents += new RobotPanel(
           head
         ) // ajout à la conversation de la/les reponse(s) du robot
-        scrollToBottom() // actualise la scrollBar
-        conv.peer.updateUI() // actualise la fenêtre
+        scrollToBottom()                    // actualise la scrollBar
+        conv.peer.updateUI()                // actualise la fenêtre
         Future {
           if (active) {
             if (MachineImpl.getLangueActuelle() != 2) { // on vérifie que la langue n'est pas espagnol car la voix n'existe pas
