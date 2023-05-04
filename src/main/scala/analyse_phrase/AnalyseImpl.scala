@@ -119,7 +119,7 @@ object AnalyseImpl extends AnalyseTrait {
   def filtreLiaison(requete: List[String]): List[String] = {
     val articlesDefinis = List("le", "la", "les", "the", "der", "die", "das", "il", "i", "el", "la", "los", "las")
     val articlesIndefinis = List("un", "une", "des", "a", "an", "ein", "eine", "un", "uno", "una", "un", "un", "una", "unos", "unas")
-    val liaisons = List("se","de","des","du","d","l","un","une","et","je","for","where","wer") ++ articlesIndefinis ++ articlesDefinis
+    val liaisons = List("se","de","des","du","d","l","un","une","et","je","for","wer") ++ articlesIndefinis ++ articlesDefinis
     requete.filter(mot => !liaisons.contains(mot.toLowerCase())).filter(_.length > 1)
   }
 
