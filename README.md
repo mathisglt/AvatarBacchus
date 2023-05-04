@@ -14,7 +14,12 @@ ERREURS TROUVÉES :
 
 DIRECTION ARTISTIQUE :
 - lorsqu'une requête comporte plusieurs langues, le robot va répondre dans la langue du premier mot détectée (ex : bonjour where is la gare => en français)
-- pour l'analyse, on va retirer un certain nombres de "parasytes" (accents, déterminants, mots de politesse, mots de recherche, etc.) puis, XXX (kaw : je vais continuer)
+- on ne traite que les lieux étant dans la ville de Rennes (<city>Rennes</city> dans vAr.xml)
+- on ne renvoie "Je ne comprends pas votre demande" pour un lieu qui n'a pas d'adresse dans vAr.xml (les balises <name> et <number> dans <address> ne doivent pas être vides)
+- pour l'analyse, on va retirer un certain nombres de "parasites" (accents, déterminants, mots de politesse, mots de recherche, etc.) puis, on va chercher dans un premier temps si la demande concerne "tnb" ou l'hotel de ville. Ensuite, on va traiter le cas de la recherche d'une pizzeria, d'un restaurant ou d'une creperie via le site "linternaute". Si aucun résultat n'est encore renvoyé, on va séparer les mots restants dans deux listes : les mots apparaissant dans "liste_mots_bdd_xml" (la liste des mots composant les lieux de vAr.xml) et les mots qui n'y apparaissent pas. On tente une correction de la 2e liste puis on les concatene : cela nous donne notre liste de mots finale sur laquelle on lance une recherche mot par mot dans la bdd via analyserList et quiContient. Avec ces fonctions, on obtient une liste de lieux dont le user demande potentiellement l'adresse. (ex : à ce stade "gare sncf" renvoie => List("Gare SNCF","Gare SNCF","Service Fret - SNCF"))
+  - si la liste est vide on renvoit ("","") et ConstructionImpl s'occupera de renvoyer une réponse adéquate
+  - s'il n'y a qu'un élément dans la liste, on renvoie le couple (lieu, adresse)
+  - s'il y a plusieurs éléments, le processus consiste à prendre le lieu ayant le plus d'occurence dans la liste, on renverra alors le couple (lieu, adresse). Si plusieurs éléments ont le nombre d'occurence maximal, on renverra la liste de ces couples (lieu, adresse).
 
 UML (résumé) :
  - Le programme commence dans l'Objet Interface Graphique
