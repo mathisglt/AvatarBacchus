@@ -83,10 +83,17 @@ object AnalyseImpl extends AnalyseTrait {
         if (BDDImpl.chercherAdresse(head) != "Adresse non trouvée") {
           List((head, BDDImpl.chercherAdresse(head)))
         } else Nil
-      case head :: next =>
+      case head :: next => // Pour cette partie, nous avons été un peu aidé de Chat GPT :
+        // un crée une Map[String,List[String]] avec pour clés les lieux apparaissant dans la val 'lieux'
+        // et pour valeurs les éléments de 'lieux' égales à la clés :
         val groupedLieux = lieux.groupBy(identity)
+        // ensuite on stocke dans maxOccurences le nombre max d'occurences pour un lieu
+        // (on prend les valeurs de la map, on les transforme en leur longueur et on garde le int max) :
         val maxOccurences = groupedLieux.values.map(_.length).max
+        // on filtre les lieux dont la valeur dans groupedLieux a une longueur égale à maxOccurences
         val lieux_les_plus_courants = groupedLieux.filter(_._2.length == maxOccurences).keys.toList.sorted
+        // on recupere les lieux de lieux_les_plus_courants et on les transforme en couples (lieu,adresse)
+        // on se retrouve donc avec une List[(String,String)] :
         lieux_les_plus_courants.map { case lieu => (lieu, BDDImpl.chercherAdresse(lieu))}
     }
   }
